@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring2go.upms.biz.mapper.SysUserMapper">
+    <!-- userVo结果集 -->
+    <resultMap id="userVoResultMap" type="com.spring2go.upms.api.dto.UserInfo">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="phone" property="phone"/>
+        <result column="avatar" property="avatar"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="lock_flag" property="lockFlag"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+    </resultMap>
+
+    <select id="getUserInfoById" resultMap="userVoResultMap">
+        SELECT
+        *
+        FROM
+        sys_user AS `user`
+        WHERE
+        `user`.user_id = #{id}
+    </select>
+</mapper>
