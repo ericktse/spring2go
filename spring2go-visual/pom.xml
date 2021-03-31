@@ -12,6 +12,10 @@
     <description>图形化相关功能</description>
     <packaging>pom</packaging>
 
-    <modules></modules>
+    <modules>
+        <module>spring2go-codegen</module>
+        <module>spring2go-job</module>
+        <module>spring2go-monitor</module>
+    </modules>
 
 </project>
