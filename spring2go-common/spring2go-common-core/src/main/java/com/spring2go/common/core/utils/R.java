@@ -7,7 +7,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
- * @Description: TODO
+ * @Description: 公共Response类
  * @author: xiaobin
  * @date: 2021-03-29 17:07
  */
