@@ -1,4 +1,4 @@
-package com.spring2go.common.core.utils;
+package com.spring2go.common.core.domain;
 
 import java.io.Serializable;
 

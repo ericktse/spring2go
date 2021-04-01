@@ -1,7 +1,7 @@
 package com.spring2go.upms.biz.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.spring2go.common.core.utils.R;
+import com.spring2go.common.core.domain.R;
 import com.spring2go.upms.api.entity.SysUser;
 import com.spring2go.upms.biz.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("系统用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/sys/user")
+public class SysUserController {
     private final SysUserService userService;
 
     /**
