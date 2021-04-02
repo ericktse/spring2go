@@ -1,4 +1,4 @@
-package com.spring2go.common.core.utils;
+package com.spring2go.common.core.util;
 
 import com.spring2go.common.core.constant.CommonConstants;
 import org.springframework.web.context.request.RequestAttributes;

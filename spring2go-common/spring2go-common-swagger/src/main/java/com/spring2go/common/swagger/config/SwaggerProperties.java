@@ -1,4 +1,4 @@
-package com.spring2go.swagger.config;
+package com.spring2go.common.swagger.config;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

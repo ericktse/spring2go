@@ -1,6 +1,6 @@
-package com.spring2go.swagger.annotation;
+package com.spring2go.common.swagger.annotation;
 
-import com.spring2go.swagger.config.SwaggerAutoConfiguration;
+import com.spring2go.common.swagger.config.SwaggerAutoConfiguration;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

@@ -1,6 +1,6 @@
-package com.spring2go.swagger.config;
+package com.spring2go.common.swagger.config;
 
-import com.spring2go.swagger.constant.SwaggerConstants;
+import com.spring2go.common.swagger.constant.SwaggerConstants;
 import io.swagger.annotations.Api;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

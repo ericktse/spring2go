@@ -1,8 +1,9 @@
 package com.spring2go.upms.biz;
 
-import com.spring2go.swagger.annotation.EnableCustomSwagger;
+import com.spring2go.common.swagger.annotation.EnableCustomSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @description: 系统管理模块

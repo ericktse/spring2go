@@ -1,4 +1,4 @@
-package com.spring2go.common.core.utils;
+package com.spring2go.common.core.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

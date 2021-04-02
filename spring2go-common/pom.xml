@@ -15,5 +15,6 @@
     <modules>
         <module>spring2go-common-core</module>
         <module>spring2go-common-swagger</module>
+        <module>spring2go-common-log</module>
     </modules>
 </project>

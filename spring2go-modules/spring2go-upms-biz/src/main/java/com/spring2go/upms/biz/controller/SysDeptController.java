@@ -3,6 +3,7 @@ package com.spring2go.upms.biz.controller;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.log.annotation.Log;
 import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.biz.service.SysDeptService;
 import io.swagger.annotations.Api;
@@ -36,6 +37,7 @@ public class SysDeptController extends BaseController {
     /**
      * 获取部门列表
      */
+    @Log("获取部门列表")
     @GetMapping("/list")
     public R list(SysDept dept) {
 

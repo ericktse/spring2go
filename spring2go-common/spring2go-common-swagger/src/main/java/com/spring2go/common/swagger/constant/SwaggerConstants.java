@@ -1,4 +1,4 @@
-package com.spring2go.swagger.constant;
+package com.spring2go.common.swagger.constant;
 
 import java.util.Arrays;
 import java.util.List;
