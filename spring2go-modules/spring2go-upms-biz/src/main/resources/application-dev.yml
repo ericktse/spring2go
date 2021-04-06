@@ -18,3 +18,6 @@ mybatis-plus:
 swagger:
   enabled: true
   title: UPMS 系统模块接口文档
+
+spring2go:
+  upms-service-endpoint: http://localhost:4000

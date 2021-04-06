@@ -5,7 +5,7 @@ import com.spring2go.upms.api.entity.SysLog;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Description: TODO
+ * @Description: 系统日志Mapper
  * @author: xiaobin
  * @date: 2021-04-02 16:40
  */

@@ -5,7 +5,7 @@ import com.spring2go.upms.api.entity.SysDept;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @Description: 系统部门信息
+ * @Description: 系统部门信息Mapper
  * @author: xiaobin
  * @date: 2021-03-31 17:10
  */

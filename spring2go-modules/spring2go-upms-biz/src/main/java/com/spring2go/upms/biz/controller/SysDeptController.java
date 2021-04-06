@@ -40,7 +40,6 @@ public class SysDeptController extends BaseController {
     @Log("获取部门列表")
     @GetMapping("/list")
     public R list(SysDept dept) {
-
         List<SysDept> list = sysDeptService.selectDeptList(dept);
         return R.ok(list);
     }

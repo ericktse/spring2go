@@ -14,7 +14,6 @@
 
     <dependencies>
         <!-- spring2go 内部依赖-->
-
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-core</artifactId>

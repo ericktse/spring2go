@@ -2,9 +2,11 @@ package com.spring2go.common.log.config;
 
 import com.spring2go.common.log.aspect.SysLogAspect;
 import com.spring2go.common.log.event.SysLogListener;
+import com.spring2go.upms.api.feign.service.RemoteLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,14 +26,14 @@ import java.util.concurrent.ThreadPoolExecutor;
 @RequiredArgsConstructor
 @ConditionalOnWebApplication
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnProperty(name = "syslog.enabled", matchIfMissing = true)
 public class LogAutoConfiguration implements AsyncConfigurer {
 
-    //private final RemoteLogService remoteLogService;
+    private final RemoteLogService remoteLogService;
 
     @Bean
     public SysLogListener sysLogListener() {
-        //return new SysLogListener(remoteLogService);
-        return new SysLogListener();
+        return new SysLogListener(remoteLogService);
     }
 
     @Bean

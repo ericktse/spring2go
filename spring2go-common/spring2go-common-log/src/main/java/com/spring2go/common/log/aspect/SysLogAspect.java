@@ -1,5 +1,7 @@
 package com.spring2go.common.log.aspect;
 
+import com.spring2go.common.core.util.IpUtils;
+import com.spring2go.common.core.util.ServletUtils;
 import com.spring2go.common.core.util.SpringContextHolder;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.log.event.SysLogEvent;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 /**
- * @Description: TODO
+ * @Description: 系统日志拦截器
  * @author: xiaobin
  * @date: 2021-04-02 16:55
  */
@@ -55,19 +57,17 @@ public class SysLogAspect {
 
 
     private SysLog getSysLog() {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects
-                .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         SysLog sysLog = new SysLog();
-//        sysLog.setCreateBy(Objects.requireNonNull(getUsername()));
-//        sysLog.setType(LogTypeEnum.NORMAL.getType());
-//        sysLog.setRemoteAddr(ServletUtil.getClientIP(request));
-//        sysLog.setRequestUri(URLUtil.getPath(request.getRequestURI()));
-//        sysLog.setMethod(request.getMethod());
-//        sysLog.setUserAgent(request.getHeader("user-agent"));
-//        sysLog.setParams(HttpUtil.toParams(request.getParameterMap()));
-//        sysLog.setServiceId(getClientId());
+        sysLog.setCreateBy(Objects.requireNonNull(""));
+        sysLog.setType("0");
+        HttpServletRequest request = ServletUtils.getRequest();
+        sysLog.setRemoteAddr(IpUtils.getIpAddr(request));
+        sysLog.setRequestUri(request.getRequestURI());
+        sysLog.setMethod(request.getMethod());
+        sysLog.setUserAgent(request.getHeader("user-agent"));
+        sysLog.setParams("");
+        sysLog.setServiceId("");
         return sysLog;
     }
-
 
 }
