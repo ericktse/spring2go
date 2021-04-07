@@ -1,6 +1,8 @@
 package com.spring2go.upms.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.StringUtils;
@@ -38,17 +40,17 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     @Override
     public List<SysDept> selectDeptList(SysDept dept) {
 
-        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<SysDept> queryWrapper = Wrappers.lambdaQuery();
         if (dept.getParentId() != null && dept.getParentId() != 0) {
-            queryWrapper.eq("parent_id", dept.getParentId());
+            queryWrapper.eq(SysDept::getParentId, dept.getParentId());
         }
         if (StringUtils.isNotEmpty(dept.getDeptName())) {
-            queryWrapper.like("dept_name", dept.getDeptName());
+            queryWrapper.like(SysDept::getDeptName, dept.getDeptName());
         }
         if (StringUtils.isNotEmpty(dept.getStatus())) {
-            queryWrapper.eq("status", dept.getStatus());
+            queryWrapper.eq(SysDept::getStatus, dept.getStatus());
         }
-        queryWrapper.orderByAsc("parent_id", "order_num");
+        queryWrapper.orderByAsc(SysDept::getParentId, SysDept::getOrderNum);
 
         List<SysDept> list = this.list(queryWrapper);
         return list;

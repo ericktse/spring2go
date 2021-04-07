@@ -20,9 +20,16 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--spring2go 公共模块-->
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-log</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-mybatis</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -41,13 +48,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-
-        <!-- mybatis -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
         </dependency>
 
     </dependencies>

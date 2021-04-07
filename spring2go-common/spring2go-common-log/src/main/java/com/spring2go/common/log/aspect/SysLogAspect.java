@@ -1,20 +1,21 @@
 package com.spring2go.common.log.aspect;
 
-import com.spring2go.common.core.util.IpUtils;
-import com.spring2go.common.core.util.ServletUtils;
-import com.spring2go.common.core.util.SpringContextHolder;
+import com.google.common.base.Joiner;
+import com.spring2go.common.core.util.*;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.log.event.SysLogEvent;
+import com.spring2go.common.log.util.LogType;
 import com.spring2go.upms.api.entity.SysLog;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,40 +34,48 @@ public class SysLogAspect {
         String strMethodName = point.getSignature().getName();
         log.debug("[类名]:{},[方法]:{}", strClassName, strMethodName);
 
-        SysLog logVo = getSysLog();
-        logVo.setTitle(sysLog.value());
+        SysLog logVo = getSysLog(sysLog);
 
         // 发送异步日志事件
         Long startTime = System.currentTimeMillis();
-        Object obj;
+        Object obj = null;
 
         try {
             obj = point.proceed();
         } catch (Exception e) {
-            logVo.setType("1");
+            logVo.setType(LogType.ERROR.getType());
             logVo.setException(e.getMessage());
             throw e;
         } finally {
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
+            if (obj != null) {
+                logVo.setResult(StringUtils.substring(obj.toString(), 0, 2000));
+            }
             SpringContextHolder.publishEvent(new SysLogEvent(logVo));
         }
 
         return obj;
     }
 
-
-    private SysLog getSysLog() {
+    private SysLog getSysLog(Log log) {
         SysLog sysLog = new SysLog();
-        sysLog.setCreateBy(Objects.requireNonNull(""));
-        sysLog.setType("0");
+        sysLog.setTitle(log.value());
+        sysLog.setCreateBy(Objects.requireNonNull("admin"));
+        sysLog.setCreateTime(DateUtils.now());
+        sysLog.setType(LogType.NORMAL.getType());
         HttpServletRequest request = ServletUtils.getRequest();
         sysLog.setRemoteAddr(IpUtils.getIpAddr(request));
         sysLog.setRequestUri(request.getRequestURI());
         sysLog.setMethod(request.getMethod());
         sysLog.setUserAgent(request.getHeader("user-agent"));
-        sysLog.setParams("");
-        sysLog.setServiceId("");
+        String params = "";
+        Map<String, String[]> map = request.getParameterMap();
+        for (String key : request.getParameterMap().keySet()) {
+            String[] value = map.get(key);
+            params = StringUtils.isNotEmpty(params) ? params + "," + key + "=" + Arrays.toString(value) : key + "=" + Arrays.toString(value);
+        }
+        sysLog.setParams(StringUtils.substring(params, 0, 2000));
         return sysLog;
     }
 

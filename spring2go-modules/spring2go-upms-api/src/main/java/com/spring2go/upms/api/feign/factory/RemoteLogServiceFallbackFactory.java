@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description: Feign调用熔断处理
+ * @Description: 日志服务Feign调用熔断处理
  * @author: xiaobin
  * @date: 2021-04-06 15:00
  */

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 /**
- * @Description: TODO
+ * @Description: 系统日志远程服务
  * @author: xiaobin
  * @date: 2021-04-06 14:59
  */

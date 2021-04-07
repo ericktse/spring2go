@@ -61,7 +61,6 @@ public class SysDeptController extends BaseController {
             return R.failed("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
         //dept.setCreateBy(SecurityUtils.getUsername());
-
         return R.ok(sysDeptService.save(dept));
     }
 

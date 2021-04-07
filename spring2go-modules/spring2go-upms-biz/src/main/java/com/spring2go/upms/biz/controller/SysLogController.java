@@ -1,14 +1,13 @@
 package com.spring2go.upms.biz.controller;
 
+import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.upms.api.dto.SysLogDto;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.biz.service.SysLogService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description: 系统日志
@@ -22,6 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class SysLogController {
 
     private final SysLogService sysLogService;
+
+    /**
+     * 分页查询
+     *
+     * @param sysLog   系统日志
+     * @param pageNo   分页下标
+     * @param pageSize 分页大小
+     * @return
+     */
+    @GetMapping("/page")
+    public R getLogPage(SysLogDto sysLog,
+                        @RequestParam(name = "pageNo", defaultValue = PageConstants.DEFAULT_PAGE_NO) Integer pageNo,
+                        @RequestParam(name = "pageSize", defaultValue = PageConstants.DEFAULT_PAGE_SIZE) Integer pageSize) {
+        return R.ok(sysLogService.getLogByPage(sysLog, pageNo, pageSize));
+    }
 
     /**
      * 插入日志

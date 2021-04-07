@@ -1,6 +1,11 @@
 package com.spring2go.upms.biz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.upms.api.dto.SysLogDto;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.biz.mapper.SysLogMapper;
 import com.spring2go.upms.biz.service.SysLogService;
@@ -13,4 +18,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements SysLogService {
+
+    /**
+     * 分页查询日志
+     *
+     * @param sysLog
+     * @param pageNo   分页下标
+     * @param pageSize 分页大小
+     * @return
+     */
+    @Override
+    public Page getLogByPage(SysLogDto sysLog, Integer pageNo, Integer pageSize) {
+        LambdaQueryWrapper<SysLog> wrapper = Wrappers.lambdaQuery();
+        if (StringUtils.isNotEmpty(sysLog.getType())) {
+            wrapper.eq(SysLog::getType, sysLog.getType());
+        }
+
+        if (sysLog.getCreateTime() != null) {
+            wrapper.ge(SysLog::getCreateTime, sysLog.getCreateTime()[0]).le(SysLog::getCreateTime,
+                    sysLog.getCreateTime()[1]);
+        }
+        Page page = new Page(pageNo, pageSize);
+        return this.page(page, wrapper);
+    }
 }

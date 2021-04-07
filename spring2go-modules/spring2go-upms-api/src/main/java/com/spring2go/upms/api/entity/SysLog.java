@@ -3,10 +3,11 @@ package com.spring2go.upms.api.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.spring2go.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,10 @@ import java.util.Date;
  * @date: 2021-04-02 16:35
  */
 @Data
-public class SysLog extends BaseEntity {
+public class SysLog implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 编号
      */
@@ -34,24 +38,6 @@ public class SysLog extends BaseEntity {
      */
     @ApiModelProperty(value = "日志标题")
     private String title;
-
-    /**
-     * 创建者
-     */
-    @ApiModelProperty(value = "创建人")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    @ApiModelProperty(value = "更新时间")
-    private Date updateTime;
 
     /**
      * 操作IP地址
@@ -78,15 +64,33 @@ public class SysLog extends BaseEntity {
     private String method;
 
     /**
-     * 操作提交的数据
+     * 创建者
      */
-    @ApiModelProperty(value = "数据")
+    @ApiModelProperty(value = "创建人")
+    private String createBy;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty(value = "创建时间")
+    private Date createTime;
+
+    /**
+     * 请求参数
+     */
+    @ApiModelProperty(value = "请求参数")
     private String params;
+
+    /**
+     * 返回结果
+     */
+    @ApiModelProperty(value = "返回结果")
+    private String result;
 
     /**
      * 执行时间
      */
-    @ApiModelProperty(value = "方法执行时间")
+    @ApiModelProperty(value = "执行时间")
     private Long time;
 
     /**
@@ -96,14 +100,9 @@ public class SysLog extends BaseEntity {
     private String exception;
 
     /**
-     * 服务ID
+     * 操作状态
      */
-    @ApiModelProperty(value = "应用标识")
-    private String serviceId;
+    @ApiModelProperty(value = "操作状态")
+    private String status;
 
-    /**
-     * 删除标记
-     */
-    @TableLogic
-    private String delFlag;
 }
