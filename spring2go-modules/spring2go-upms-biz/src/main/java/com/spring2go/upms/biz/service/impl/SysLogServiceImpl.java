@@ -33,10 +33,11 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         if (StringUtils.isNotEmpty(sysLog.getType())) {
             wrapper.eq(SysLog::getType, sysLog.getType());
         }
-
-        if (sysLog.getCreateTime() != null) {
-            wrapper.ge(SysLog::getCreateTime, sysLog.getCreateTime()[0]).le(SysLog::getCreateTime,
-                    sysLog.getCreateTime()[1]);
+        if (sysLog.getStartTime() != null) {
+            wrapper.ge(SysLog::getCreateTime, sysLog.getStartTime());
+        }
+        if (sysLog.getEndTime() != null) {
+            wrapper.le(SysLog::getCreateTime, sysLog.getEndTime());
         }
         Page page = new Page(pageNo, pageSize);
         return this.page(page, wrapper);

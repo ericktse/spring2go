@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,8 +17,7 @@ import java.util.Date;
  * @date: 2021-03-30 10:09
  */
 @Data
-public class SysUser implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class SysUser extends BaseEntity {
 
     /**
      * 主键ID
@@ -29,6 +29,11 @@ public class SysUser implements Serializable {
      * 部门ID
      */
     private Integer deptId;
+
+    /**
+     * 岗位ID
+     */
+    private Integer postId;
 
     /**
      * 用户名
@@ -90,18 +95,4 @@ public class SysUser implements Serializable {
      */
     private Date loginDate;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 备注
-     */
-    private String remark;
 }

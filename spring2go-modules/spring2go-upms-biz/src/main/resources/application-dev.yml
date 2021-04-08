@@ -20,6 +20,7 @@ mybatis-plus:
 swagger:
   enabled: true
   title: UPMS 系统模块接口文档
+  groupName: upms
 
 # feign配置
 spring2go:

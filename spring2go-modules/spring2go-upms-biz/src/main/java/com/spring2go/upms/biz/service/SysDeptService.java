@@ -2,6 +2,7 @@ package com.spring2go.upms.biz.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spring2go.upms.api.dto.DeptTree;
+import com.spring2go.upms.api.dto.SysDeptDto;
 import com.spring2go.upms.api.entity.SysDept;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface SysDeptService extends IService<SysDept> {
      * @param dept 部门信息
      * @return 部门信息集合
      */
-    List<SysDept> selectDeptList(SysDept dept);
+    List<SysDept> selectDeptList(SysDeptDto dept);
 
     /**
      * 查询部门数据-下拉树结构
@@ -27,7 +28,7 @@ public interface SysDeptService extends IService<SysDept> {
      * @param dept 部门列表
      * @return 下拉树结构列表
      */
-    List<DeptTree> selectDeptTree(SysDept dept);
+    List<DeptTree> selectDeptTree(SysDeptDto dept);
 
     /**
      * 校验部门名称是否唯一

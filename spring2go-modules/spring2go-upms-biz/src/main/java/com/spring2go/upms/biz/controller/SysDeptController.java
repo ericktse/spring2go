@@ -4,6 +4,7 @@ import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.log.annotation.Log;
+import com.spring2go.upms.api.dto.SysDeptDto;
 import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.biz.service.SysDeptService;
 import io.swagger.annotations.Api;
@@ -39,7 +40,7 @@ public class SysDeptController extends BaseController {
      */
     @Log("获取部门列表")
     @GetMapping("/list")
-    public R list(SysDept dept) {
+    public R list(SysDeptDto dept) {
         List<SysDept> list = sysDeptService.selectDeptList(dept);
         return R.ok(list);
     }
@@ -48,7 +49,7 @@ public class SysDeptController extends BaseController {
      * 获取部门下拉树列表
      */
     @GetMapping("/tree")
-    public R tree(SysDept dept) {
+    public R tree(SysDeptDto dept) {
         return R.ok(sysDeptService.selectDeptTree(dept));
     }
 

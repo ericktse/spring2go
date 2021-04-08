@@ -21,8 +21,14 @@ public class SysLogDto {
     private String type;
 
     /**
-     * 创建时间区间 [开始时间，结束时间]
+     * 开始时间
      */
-    @ApiModelProperty(value = "创建时间区间")
-    private LocalDateTime[] createTime;
+    @ApiModelProperty(value = "开始时间")
+    private LocalDateTime startTime;
+
+    /**
+     * 结束时间
+     */
+    @ApiModelProperty(value = "结束时间")
+    private LocalDateTime endTime;
 }
