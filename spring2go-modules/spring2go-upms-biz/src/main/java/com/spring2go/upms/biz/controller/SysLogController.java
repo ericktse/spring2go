@@ -44,7 +44,9 @@ public class SysLogController {
      * @return success/false
      */
     @PostMapping
-    public R save(@RequestBody SysLog sysLog) {
+    public R save(@RequestBody SysLog sysLog) throws InterruptedException {
+        //TODO 测试，等待5秒，后续删除
+        Thread.sleep(5000);
         return R.ok(sysLogService.save(sysLog));
     }
 }

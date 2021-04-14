@@ -5,7 +5,6 @@ import com.spring2go.common.swagger.annotation.EnableCustomSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @description: 系统管理模块
@@ -15,8 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCustomSwagger
-//@EnableSpring2goFeignClients
-@EnableFeignClients(basePackages = {"com.spring2go"})
+@EnableSpring2goFeignClients
 public class Spring2goUpmsApplication {
 
     public static void main(String[] args) {
