@@ -1,0 +1,11 @@
+# 端口
+server:
+  port: 4000
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-upms
+  profiles:
+    # 环境配置
+    active: dev

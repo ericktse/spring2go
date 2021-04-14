@@ -29,7 +29,6 @@ import java.util.function.Predicate;
  */
 @EnableOpenApi
 @Configuration
-@EnableAutoConfiguration
 //TODO: 一个很奇葩的问题，设置enabled=false时，配置不生效，但是启用了swagger默认配置
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
 public class SwaggerAutoConfiguration {

@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.spring2go"})
 public @interface EnableSpring2goFeignClients {
     String[] value() default {};
 

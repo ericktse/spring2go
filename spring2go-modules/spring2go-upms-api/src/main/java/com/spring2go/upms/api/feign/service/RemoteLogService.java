@@ -1,6 +1,6 @@
 package com.spring2go.upms.api.feign.service;
 
-import com.spring2go.common.core.constant.SecurityConstants;
+import com.spring2go.common.core.constant.ServiceNameConstants;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.api.feign.factory.RemoteLogServiceFallbackFactory;
@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @author: xiaobin
  * @date: 2021-04-06 14:59
  */
-@FeignClient(name = "spring2go-upms", url = "${spring2go.upms-service-endpoint}",
-        fallbackFactory = RemoteLogServiceFallbackFactory.class)
+@FeignClient(name = ServiceNameConstants.UPMS_SERVICE, fallbackFactory = RemoteLogServiceFallbackFactory.class)
 public interface RemoteLogService {
 
     /**
