@@ -22,5 +22,4 @@ public class Spring2goUpmsApplication {
         SpringApplication.run(Spring2goUpmsApplication.class, args);
         System.out.println("(♥◠‿◠)ﾉﾞ  UPMS 启动成功   ლ(´ڡ`ლ)ﾞ  \n");
     }
-
 }

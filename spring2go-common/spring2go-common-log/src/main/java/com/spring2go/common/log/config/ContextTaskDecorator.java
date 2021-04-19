@@ -23,9 +23,11 @@ public class ContextTaskDecorator implements TaskDecorator {
         //将当前线程的 context 装饰到指定的 Runnable，最后重置当前线程上下文
         RequestAttributes context = RequestContextHolder.currentRequestAttributes();
 
-        //当http请求连接关闭的时候就会清除掉contentLength、headers 之类的信息，调用tomcat的Http11InputBuffer有个recycle方法
+        //当http请求连接关闭的时候就会清除掉contentLength、headers 之类的信息，调用tomcat的Http11InputBuffer.recycle方法
         //所以采用浅拷贝RequestAttributes的方式，有可能会获取不到header
-        //所以这里将header拷贝一份单独传输
+        //RequestAttributes的方式适用于-主线程等待子线程完成任务后的情况
+        //如果主线程不等待，需深拷贝一份RequestAttributes，
+        //由于spring2go只用到header信息，所以这里将header拷贝一份单独传输
         Map<String, String> map = wrapHeaders(context);
         return () -> {
             try {

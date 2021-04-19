@@ -19,7 +19,7 @@ public class SysLogListener {
 
     private final RemoteLogService remoteLogService;
 
-    //@Async
+    @Async
     @Order
     @EventListener(SysLogEvent.class)
     public void saveSysLog(SysLogEvent event) {
