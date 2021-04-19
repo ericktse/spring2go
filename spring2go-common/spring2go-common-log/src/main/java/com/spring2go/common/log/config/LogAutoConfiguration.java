@@ -55,6 +55,8 @@ public class LogAutoConfiguration implements AsyncConfigurer {
         executor.setQueueCapacity(1000);
         executor.setKeepAliveSeconds(300);
         executor.setThreadNamePrefix("Log-Executor-");
+        //Task装饰器，把主流程的参数同步到子流程中
+        executor.setTaskDecorator(new ContextTaskDecorator());
         // 拒绝策略
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         executor.initialize();

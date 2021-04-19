@@ -1,4 +1,4 @@
-package com.spring2go.common.core.feign;
+package com.spring2go.common.feign.annotation;
 
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
@@ -14,7 +14,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@EnableFeignClients(basePackages = {"com.spring2go"})
+@EnableFeignClients
 public @interface EnableSpring2goFeignClients {
     String[] value() default {};
 

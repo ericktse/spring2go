@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
  * @date: 2021-04-06 15:01
  */
 @Slf4j
+@Component
 public class RemoteLogServiceFallbackImpl implements RemoteLogService {
 
     @Setter

@@ -17,5 +17,6 @@
         <module>spring2go-common-swagger</module>
         <module>spring2go-common-log</module>
         <module>spring2go-common-mybatis</module>
+        <module>spring2go-common-feign</module>
     </modules>
 </project>

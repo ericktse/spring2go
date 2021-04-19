@@ -1,6 +1,7 @@
 package com.spring2go.upms.biz;
 
-import com.spring2go.common.core.feign.EnableSpring2goFeignClients;
+
+import com.spring2go.common.feign.annotation.EnableSpring2goFeignClients;
 import com.spring2go.common.swagger.annotation.EnableCustomSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

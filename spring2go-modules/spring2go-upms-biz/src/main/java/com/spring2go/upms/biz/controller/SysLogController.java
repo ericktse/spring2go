@@ -1,13 +1,21 @@
 package com.spring2go.upms.biz.controller;
 
+import com.google.common.net.HttpHeaders;
+import com.spring2go.common.core.constant.AuthConstants;
 import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.ServletUtils;
 import com.spring2go.upms.api.dto.SysLogDto;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.biz.service.SysLogService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: 系统日志
