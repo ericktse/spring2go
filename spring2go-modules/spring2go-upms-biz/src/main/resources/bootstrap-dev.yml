@@ -1,6 +1,6 @@
-#nacos
 spring:
   cloud:
+    #nacos
     nacos:
       discovery:
         # 服务注册地址
