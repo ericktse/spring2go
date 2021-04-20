@@ -1,0 +1,38 @@
+# 端口
+server:
+  port: 4000
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-upms
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+  # mysql
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring2go_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+# mybatis配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# swagger配置
+swagger:
+  enabled: true
+  title: UPMS 系统模块接口文档
+  groupName: upms
+
+# feign配置
+spring2go:
+  upms-service-endpoint: http://localhost:4000
