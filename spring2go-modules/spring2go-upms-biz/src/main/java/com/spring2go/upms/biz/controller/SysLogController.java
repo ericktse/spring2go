@@ -2,7 +2,7 @@ package com.spring2go.upms.biz.controller;
 
 import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.domain.R;
-import com.spring2go.upms.api.dto.SysLogDto;
+import com.spring2go.upms.api.dto.SysLogDTO;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.biz.service.SysLogService;
 import io.swagger.annotations.Api;
@@ -31,7 +31,7 @@ public class SysLogController {
      * @return
      */
     @GetMapping("/page")
-    public R getLogPage(SysLogDto sysLog,
+    public R getLogPage(SysLogDTO sysLog,
                         @RequestParam(name = "pageNo", defaultValue = PageConstants.DEFAULT_PAGE_NO) Integer pageNo,
                         @RequestParam(name = "pageSize", defaultValue = PageConstants.DEFAULT_PAGE_SIZE) Integer pageSize) {
         return R.ok(sysLogService.getLogByPage(sysLog, pageNo, pageSize));

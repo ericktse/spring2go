@@ -1,0 +1,25 @@
+# 端口
+server:
+  port: 5000
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-auth
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}

@@ -1,9 +1,7 @@
 package com.spring2go.upms.biz.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spring2go.upms.api.dto.DeptTree;
 import com.spring2go.upms.api.dto.MenuTree;
-import com.spring2go.upms.api.dto.SysDeptDto;
 import com.spring2go.upms.api.entity.SysMenu;
 
 import java.util.List;

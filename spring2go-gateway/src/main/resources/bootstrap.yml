@@ -1,0 +1,56 @@
+# 端口
+server:
+  port: 9000
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-gateway
+  profiles:
+    # 环境配置
+    active: dev
+  main:
+    #允许重写bean
+    allow-bean-definition-overriding: true
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    gateway:
+      enabled: true
+      # @link:https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-loadbalancerclient-filter
+      # 当service实例不存在时默认返回503，显示配置返回404
+      loadbalancer:
+        use404: true
+      # 根据注册中心自动配置routes
+      # @link :https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-discoveryclient-route-definition-locator
+      # 效果：/serviceId/path1/args ==> /path1/args
+      #      discovery:
+      #        locator:
+      #          lowerCaseServiceId: true
+      #          enabled: true
+      routes:
+        # 系统模块
+        - id: spring2go-upms
+          uri: lb://spring2go-upms
+          predicates:
+            - Path=/upms/**
+          filters:
+            - StripPrefix=1
+
+# 不校验白名单
+spring2go:
+  gateway:
+    encode-key: 1231
+    white-list:
+      - /sys/dept/*

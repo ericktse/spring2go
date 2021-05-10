@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "部门查询对象")
-public class SysDeptDto {
+public class SysDeptDTO {
 
     /**
      * 父部门ID

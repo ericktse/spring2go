@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value = "日志查询对象")
-public class SysLogDto {
+public class SysLogDTO {
     /**
      * 查询日志类型
      */
