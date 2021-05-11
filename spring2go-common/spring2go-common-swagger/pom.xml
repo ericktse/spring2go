@@ -29,10 +29,19 @@
         </dependency>
 
         <!-- swagger -->
+        <!--        <dependency>-->
+        <!--            <groupId>io.springfox</groupId>-->
+        <!--            <artifactId>springfox-boot-starter</artifactId>-->
+        <!--            <version>${springfox-boot-starter.version}</version>-->
+        <!--        </dependency>-->
+
+        <!--将springfox替换为knife4j,knife4j是为Java MVC框架集成Swagger生成Api文档的增强解决方案
+        @link:https://xiaoym.gitee.io/knife4j/
+        -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox-boot-starter.version}</version>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
         </dependency>
 
         <!-- 网关 swagger 聚合服务 -->
