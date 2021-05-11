@@ -33,6 +33,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
 
         return chain.filter(exchange);
+
     }
 
     @Override

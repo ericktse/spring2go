@@ -22,11 +22,6 @@ public class SwaggerProperties {
     private Boolean enabled;
 
     /**
-     * 分组名
-     **/
-    private String groupName = "default";
-
-    /**
      * swagger会解析的包路径
      **/
     private String basePackage = "";

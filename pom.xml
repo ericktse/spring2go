@@ -28,6 +28,7 @@
         <springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
         <guava.version>30.1.1-jre</guava.version>
         <openfeign-okhttp.version>11.1</openfeign-okhttp.version>
+        <swagger-models.version>1.5.21</swagger-models.version>
     </properties>
     <dependencies>
 

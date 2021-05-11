@@ -13,10 +13,19 @@
 
     <dependencies>
 
-        <!-- SpringBoot Web -->
+        <!--swagger初始化的过程中，
+            由于实体类使用@ApiModelProperty时，example属性没有赋值导致的，
+            在AbstractSerializableParameter的getExample方法中会将数值属性的example的转换数值类返回，
+            example的默认值是""，因此当example没有赋值时，就会抛异常：Illegal DefaultValue null for parameter type integer
+            swagger 1.5.21版本以上修复了这个问题，修改如下：
+            if (example == null)改为if (example == null || example.isEmpty())
+            所以显示引入1.5.21版本（谁先声明谁优先）
+            @link:https://blog.csdn.net/weixin_44299027/article/details/105810872
+            -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger-models.version}</version>
         </dependency>
 
         <!-- swagger -->
@@ -24,6 +33,13 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
             <version>${springfox-boot-starter.version}</version>
+        </dependency>
+
+        <!-- 网关 swagger 聚合服务 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gateway-server</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

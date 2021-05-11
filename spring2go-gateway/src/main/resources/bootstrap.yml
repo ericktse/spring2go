@@ -35,10 +35,10 @@ spring:
       # 根据注册中心自动配置routes
       # @link :https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-discoveryclient-route-definition-locator
       # 效果：/serviceId/path1/args ==> /path1/args
-      #      discovery:
-      #        locator:
-      #          lowerCaseServiceId: true
-      #          enabled: true
+#      discovery:
+#        locator:
+#          lowerCaseServiceId: true
+#          enabled: true
       routes:
         # 系统模块
         - id: spring2go-upms

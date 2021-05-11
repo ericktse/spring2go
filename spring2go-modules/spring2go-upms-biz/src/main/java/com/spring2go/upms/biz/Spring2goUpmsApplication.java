@@ -2,7 +2,7 @@ package com.spring2go.upms.biz;
 
 
 import com.spring2go.common.feign.annotation.EnableSpring2goFeignClients;
-import com.spring2go.common.swagger.annotation.EnableCustomSwagger;
+import com.spring2go.common.swagger.annotation.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -14,7 +14,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCustomSwagger
+@EnableSwagger
 @EnableSpring2goFeignClients
 public class Spring2goUpmsApplication {
 

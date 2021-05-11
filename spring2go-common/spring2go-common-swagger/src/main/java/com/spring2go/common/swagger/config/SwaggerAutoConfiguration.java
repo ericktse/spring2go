@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 /**
- * @Description: swagger配置类
+ * @Description: swagger配置类，仅仅对webmvc有效
  * @author: xiaobin
  * @date: 2021-03-30 15:13
  */
@@ -31,6 +32,7 @@ import java.util.function.Predicate;
 @Configuration
 //TODO: 一个很奇葩的问题，设置enabled=false时，配置不生效，但是启用了swagger默认配置
 @ConditionalOnProperty(name = "swagger.enabled", matchIfMissing = true)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class SwaggerAutoConfiguration {
 
     @Bean
@@ -68,9 +70,8 @@ public class SwaggerAutoConfiguration {
         swaggerProperties.getExcludePath().forEach(path -> excludePath.add(PathSelectors.ant(path)));
 
 
-        ApiSelectorBuilder builder = new Docket(DocumentationType.OAS_30)
+        ApiSelectorBuilder builder = new Docket(DocumentationType.SWAGGER_2)
                 .enable(swaggerProperties.getEnabled())
-                .groupName(swaggerProperties.getGroupName())
                 .host(swaggerProperties.getHost())
                 .apiInfo(apiInfo(swaggerProperties))
                 .select()

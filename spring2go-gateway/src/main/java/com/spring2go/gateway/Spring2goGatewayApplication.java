@@ -1,13 +1,15 @@
 package com.spring2go.gateway;
 
+import com.spring2go.common.swagger.annotation.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @description: TODO
+ * @description: 应用网关
  * @author: xiaobin
  * @date: 2021/5/7 14:25
  */
+@EnableSwagger
 @SpringBootApplication
 public class Spring2goGatewayApplication {
 
