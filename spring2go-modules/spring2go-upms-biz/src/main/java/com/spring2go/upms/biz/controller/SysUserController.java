@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("系统用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/user")
 public class SysUserController {
     private final SysUserService userService;
 
@@ -29,9 +29,9 @@ public class SysUserController {
      *
      * @return 用户信息
      */
-    @ApiOperation("系统用户管理-获取当前用户全部信息")
-    @GetMapping(value = {"/info"})
-    public R info() {
+    @ApiOperation("获取用户信息")
+    @GetMapping("/info/{userName}")
+    public R info(@PathVariable String userName) {
         String username = "admin";
         SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUserName, username));
         if (user == null) {

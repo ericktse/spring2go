@@ -19,6 +19,12 @@ public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /** 成功 */
+    public static final int SUCCESS = CommonConstants.SUCCESS;
+
+    /** 失败 */
+    public static final int FAIL = CommonConstants.FAIL;
+
     @Getter
     @Setter
     private int code;

@@ -1,12 +1,18 @@
 package com.spring2go.auth;
 
+import com.spring2go.common.feign.annotation.EnableFeign;
+import com.spring2go.common.swagger.annotation.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @description 认证授权中心
  * @author xiaobin
  */
+@EnableSwagger
+@EnableFeign
+@EnableDiscoveryClient
 @SpringBootApplication
 public class Spring2goAuthApplication {
 
