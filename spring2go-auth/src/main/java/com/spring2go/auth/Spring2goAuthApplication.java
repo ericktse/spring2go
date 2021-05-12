@@ -3,6 +3,10 @@ package com.spring2go.auth;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @description 认证授权中心
+ * @author xiaobin
+ */
 @SpringBootApplication
 public class Spring2goAuthApplication {
 

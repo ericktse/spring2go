@@ -1,6 +1,8 @@
 package com.spring2go.common.feign.annotation;
 
+import com.spring2go.common.feign.config.FeignAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;
 
@@ -15,7 +17,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @EnableFeignClients
-public @interface EnableSpring2goFeignClients {
+@Import({FeignAutoConfiguration.class})
+public @interface EnableFeign {
     String[] value() default {};
 
     String[] basePackages() default {"com.spring2go"};
