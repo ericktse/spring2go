@@ -9,6 +9,10 @@ spring:
   profiles:
     # 环境配置
     active: dev
+  redis:
+    host: localhost
+    port: 6379
+    password:
   cloud:
     #nacos
     nacos:
@@ -23,3 +27,33 @@ spring:
         # 共享配置
         shared-configs:
           - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  # sentinel 熔断限流
+  sentinel:
+    transport:
+      dashboard: localhost:2180
+
+# feign 配置
+feign:
+  sentinel:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 3000
+        readTimeout: 3000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
