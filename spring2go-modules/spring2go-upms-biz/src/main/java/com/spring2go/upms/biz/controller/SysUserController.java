@@ -7,10 +7,7 @@ import com.spring2go.upms.biz.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description: 系统用户
@@ -20,16 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 @Api("系统用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class SysUserController {
     private final SysUserService userService;
+
+    @ApiOperation("通过用户名获取用户信息")
+    @GetMapping("/getInfoByUserName")
+    public R getInfoByUserName(@RequestParam String username) {
+        username = "admin";
+        SysUser user = userService.getOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUserName, username));
+        if (user == null) {
+            return R.failed("获取当前用户信息失败");
+        }
+        return R.ok(user);
+    }
 
     /**
      * 获取当前用户全部信息
      *
      * @return 用户信息
      */
-    @ApiOperation("获取用户信息")
     @GetMapping("/info/{userName}")
     public R info(@PathVariable String userName) {
         String username = "admin";

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Set;
+
 /**
  * @Description: 日志服务熔断默认实现
  * @author: xiaobin
@@ -20,8 +22,18 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
     private final Throwable cause;
 
     @Override
-    public R<SysUser> getUserInfo(String username) {
-        log.error("feign 插入日志失败", cause);
+    public R<SysUser> getInfoByUserName(String username) {
+        log.error("feign失败", cause);
+        return R.failed("熔断");
+    }
+
+    @Override
+    public R<Set<String>> getRoleByUserName(String username) {
+        return R.failed("熔断");
+    }
+
+    @Override
+    public R<Set<String>> getPermsByUserName(String username) {
         return R.failed("熔断");
     }
 }

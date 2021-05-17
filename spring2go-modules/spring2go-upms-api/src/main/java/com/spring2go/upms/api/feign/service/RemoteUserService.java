@@ -8,6 +8,9 @@ import com.spring2go.upms.api.feign.factory.RemoteUserServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Set;
 
 /**
  * @description: 系统会员远程服务
@@ -23,6 +26,12 @@ public interface RemoteUserService {
      * @param username 用户名
      * @return 结果
      */
-    @GetMapping(value = "/user/info/{username}")
-    R<SysUser> getUserInfo(@PathVariable("username") String username);
+    @GetMapping(value = "/sys/user/getInfoByUserName")
+    R<SysUser> getInfoByUserName(@RequestParam("username") String username);
+
+    @GetMapping(value = "/sys/role/getRoleByUserName")
+    R<Set<String>> getRoleByUserName(@RequestParam("username") String username);
+
+    @GetMapping(value = "/sys/role/getPermsByUserName")
+    R<Set<String>> getPermsByUserName(@RequestParam("username") String username);
 }

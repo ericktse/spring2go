@@ -9,6 +9,7 @@ import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.biz.service.SysDeptService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,7 @@ public class SysDeptController extends BaseController {
      */
     @Log("获取部门列表")
     @GetMapping("/list")
+    @RequiresPermissions({"system:role:list"})
     public R list(SysDeptDTO dept) {
         List<SysDept> list = sysDeptService.selectDeptList(dept);
         return R.ok(list);
@@ -49,6 +51,7 @@ public class SysDeptController extends BaseController {
      * 获取部门下拉树列表
      */
     @GetMapping("/tree")
+    @RequiresPermissions({"save"})
     public R tree(SysDeptDTO dept) {
         return R.ok(sysDeptService.selectDeptTree(dept));
     }

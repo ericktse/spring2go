@@ -18,5 +18,7 @@
         <module>spring2go-common-log</module>
         <module>spring2go-common-mybatis</module>
         <module>spring2go-common-feign</module>
+        <module>spring2go-common-redis</module>
+        <module>spring2go-common-security</module>
     </modules>
 </project>

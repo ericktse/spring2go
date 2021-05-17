@@ -3,8 +3,8 @@ package com.spring2go.auth.controller;
 import com.spring2go.auth.domain.LoginModel;
 import com.spring2go.auth.service.InnerAuthorizeService;
 import com.spring2go.common.core.domain.R;
-import com.spring2go.common.redis.service.RedisService;
-import com.spring2go.upms.api.entity.SysUser;
+import com.spring2go.common.redis.util.RedisUtils;
+import com.spring2go.common.security.util.TokenUtils;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,22 +23,19 @@ import java.util.concurrent.TimeUnit;
  * @date: 2021-05-12 10:33
  */
 @Api(tags = "认证校验")
-@RestController
+@RestController("auth/")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthorizeController {
 
     private final InnerAuthorizeService innerAuthorizeService;
 
-    @Autowired
-    private RedisService redisService;
+
 
     @PostMapping("login")
     public R<?> login(@RequestBody LoginModel model) {
         // 用户登录
         R result = innerAuthorizeService.login(model.getUsername(), model.getPassword());
-        redisService.setCacheObject("test", result, 60L, TimeUnit.SECONDS);
-        log.info("------------测试 Redis:"+redisService.getCacheObject("test"));
         return result;
     }
 

@@ -1,7 +1,6 @@
-package com.spring2go.common.redis.service;
+package com.spring2go.common.redis.util;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @date: 2021-05-12 16:30
  */
 @RequiredArgsConstructor
-public class RedisService {
+public class RedisUtils {
     private final RedisTemplate redisTemplate;
 
     /**

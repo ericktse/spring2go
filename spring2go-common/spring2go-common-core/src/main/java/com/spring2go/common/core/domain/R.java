@@ -19,10 +19,14 @@ public class R<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /** 成功 */
+    /**
+     * 成功
+     */
     public static final int SUCCESS = CommonConstants.SUCCESS;
 
-    /** 失败 */
+    /**
+     * 失败
+     */
     public static final int FAIL = CommonConstants.FAIL;
 
     @Getter
@@ -55,6 +59,10 @@ public class R<T> implements Serializable {
 
     public static <T> R<T> failed(String msg) {
         return restResult(null, CommonConstants.FAIL, msg);
+    }
+
+    public static <T> R<T> failed(int code, String msg) {
+        return restResult(null, code, msg);
     }
 
     public static <T> R<T> failed(T data) {

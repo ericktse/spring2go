@@ -30,6 +30,7 @@
         <openfeign-okhttp.version>11.1</openfeign-okhttp.version>
         <swagger-models.version>1.5.21</swagger-models.version>
         <knife4j-spring-boot-starter.version>3.0.2</knife4j-spring-boot-starter.version>
+        <shiro-spring-boot-web-starter.version>1.7.1</shiro-spring-boot-web-starter.version>
     </properties>
     <dependencies>
 

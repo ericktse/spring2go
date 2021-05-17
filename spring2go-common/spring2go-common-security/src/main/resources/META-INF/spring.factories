@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.spring2go.common.security.util.TokenUtils,\
+  com.spring2go.common.security.shiro.ShiroAutoConfiguration,\
+  com.spring2go.common.security.handler.AuthorizeGlobalExceptionHandler
