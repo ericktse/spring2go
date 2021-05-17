@@ -29,6 +29,11 @@ public class R<T> implements Serializable {
      */
     public static final int FAIL = CommonConstants.FAIL;
 
+    /**
+     * 失败
+     */
+    public static final int UN_AUTHORIZED = CommonConstants.UN_AUTHORIZED;
+
     @Getter
     @Setter
     private int code;
@@ -61,16 +66,16 @@ public class R<T> implements Serializable {
         return restResult(null, CommonConstants.FAIL, msg);
     }
 
-    public static <T> R<T> failed(int code, String msg) {
-        return restResult(null, code, msg);
-    }
-
     public static <T> R<T> failed(T data) {
         return restResult(data, CommonConstants.FAIL, null);
     }
 
     public static <T> R<T> failed(T data, String msg) {
         return restResult(data, CommonConstants.FAIL, msg);
+    }
+
+    public static <T> R<T> unauthorized(String msg) {
+        return restResult(null, CommonConstants.UN_AUTHORIZED, msg);
     }
 
     private static <T> R<T> restResult(T data, int code, String msg) {

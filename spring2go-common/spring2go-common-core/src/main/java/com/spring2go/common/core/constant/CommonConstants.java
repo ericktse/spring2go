@@ -38,6 +38,11 @@ public class CommonConstants {
     public static final Integer FAIL = 1;
 
     /**
+     * 未校验标记
+     */
+    public static final Integer UN_AUTHORIZED = 401;
+
+    /**
      * 校验返回结果码-唯一
      */
     public static final String UNIQUE = "0";
@@ -47,10 +52,14 @@ public class CommonConstants {
      */
     public static final String NOT_UNIQUE = "1";
 
-    /** 正常状态 */
+    /**
+     * 正常状态
+     */
     public static final String NORMAL = "0";
 
-    /** 停用状态 */
+    /**
+     * 停用状态
+     */
     public static final String DISABLE = "1";
 
 }

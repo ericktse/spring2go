@@ -30,7 +30,6 @@ public class TokenUtils {
     public String createToken(String username, Object originalUser, Set<String> roles, Set<String> permissions) {
         //TODO：实现JWT Token实现
 
-
         // 生成token
         String token = UUID.randomUUID().toString();
 

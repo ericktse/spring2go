@@ -35,7 +35,7 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
 
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        //Always return true if the request's method is OPTIONS
+        // OPTIONS方法直接返回true
         if (((HttpServletRequest) request).getMethod().equals(RequestMethod.OPTIONS.name())) {
             return true;
         }
@@ -49,7 +49,7 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         try {
             return executeLogin(request, response);
         } catch (Exception e) {
-            throw new AuthenticationException("Token失效，请重新登录", e);
+            throw new UnauthorizedException("Token失效，请重新登录", e);
         }
     }
 
@@ -59,18 +59,15 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Origin", "true");
         httpResponse.setCharacterEncoding("UTF-8");
-        String json = JSON.toJSONString(R.failed(401, "token非法无效，请重新登录"));
+        String json = JSON.toJSONString(R.unauthorized("token非法无效，请重新登录"));
         httpResponse.getWriter().print(json);
         return false;
     }
 
     /**
-     * 对跨域提供支持
-     *
-     * @param request
-     * @param response
-     * @return
-     * @throws Exception
+     * @description: 对跨域提供支持
+     * @author: xiaobin
+     * @date: 2021/5/17 13:44
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {

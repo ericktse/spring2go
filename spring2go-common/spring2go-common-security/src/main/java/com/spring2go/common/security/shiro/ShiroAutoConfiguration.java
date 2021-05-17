@@ -50,23 +50,8 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         return securityManager;
     }
 
-//    @Bean
-//    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
-//        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-//        shiroFilterFactoryBean.setSecurityManager(securityManager);
-//        //获取shiroFilterFactoryBean里的Filters集合
-//        Map filters = shiroFilterFactoryBean.getFilters();
-//        //put进一个自己编写的过滤器，并命名，上面会引用到
-//        filters.put("auth", new ShiroAuthorizeFilter());
-//        shiroFilterFactoryBean.setFilters(filters);
-//
-//        return shiroFilterFactoryBean;
-//    }
-
     @Override
     protected ShiroFilterFactoryBean shiroFilterFactoryBean() {
-        //TODO:直接使用shiroAutoConfiguration来继承ShiroWebFilterConfiguration 的话，会出现循环依赖的bug而导致无法启动。
-
         //采用父类的默认方法生成shiroFilterFactoryBean
         ShiroFilterFactoryBean shiroFilterFactoryBean = super.shiroFilterFactoryBean();
         //获取shiroFilterFactoryBean里的Filters集合
@@ -100,7 +85,6 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         chainDefinition.addPathDefinition("/**", "auth");
         return chainDefinition;
     }
-
 
     /**
      * 下面的代码是添加注解支持

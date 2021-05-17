@@ -27,9 +27,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Slf4j
 public class ShiroAuthorizeRealm extends AuthorizingRealm {
-
     private final TokenUtils tokenUtils;
-
 
     /**
      * @description: 授权校验
