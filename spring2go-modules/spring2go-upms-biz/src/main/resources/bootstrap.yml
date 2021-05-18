@@ -31,3 +31,9 @@ shiro:
     /sys/role/getPermsByUserName: anon
     /sys/log: anon
 
+spring2go:
+  #分布式锁配置
+  redisson:
+    address: 127.0.0.1:6379
+    password:
+    type: STANDALONE

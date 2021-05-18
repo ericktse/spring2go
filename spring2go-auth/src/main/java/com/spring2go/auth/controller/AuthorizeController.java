@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @date: 2021-05-12 10:33
  */
 @Api(tags = "认证校验")
-@RestController("auth/")
+@RestController("auth")
 @RequiredArgsConstructor
 @Slf4j
 public class AuthorizeController {
