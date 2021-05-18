@@ -1,6 +1,6 @@
 package com.spring2go.gateway.config;
 
-import com.spring2go.gateway.filter.AuthGlobalFilter;
+import com.spring2go.gateway.filter.AuthorizeGlobalFilter;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2021-05-07 11:31
  */
 @Configuration
-public class AuthGatewayConfiguration {
+public class AuthorizeGatewayConfiguration {
 
     @Bean
-    public GlobalFilter authGlobalFilter(GatewayConfigProperties gatewayConfigProperties) {
-        return new AuthGlobalFilter(gatewayConfigProperties);
+    public GlobalFilter authorizeGlobalFilter(GatewayConfigProperties gatewayConfigProperties) {
+        return new AuthorizeGlobalFilter(gatewayConfigProperties);
     }
 }

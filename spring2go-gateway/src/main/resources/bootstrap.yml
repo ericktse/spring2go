@@ -35,11 +35,18 @@ spring:
       # 根据注册中心自动配置routes
       # @link :https://docs.spring.io/spring-cloud-gateway/docs/current/reference/html/#the-discoveryclient-route-definition-locator
       # 效果：/serviceId/path1/args ==> /path1/args
-#      discovery:
-#        locator:
-#          lowerCaseServiceId: true
-#          enabled: true
+      #      discovery:
+      #        locator:
+      #          lowerCaseServiceId: true
+      #          enabled: true
       routes:
+        # 认证模块
+        - id: spring2go-auth
+          uri: lb://spring2go-auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
         # 系统模块
         - id: spring2go-upms
           uri: lb://spring2go-upms
@@ -51,6 +58,7 @@ spring:
 # 不校验白名单
 spring2go:
   gateway:
-    encode-key: 1231
     white-list:
-      - /sys/dept/*
+      - /auth/login
+      - /auth/logout
+      - /*/v2/api-docs
