@@ -1,6 +1,7 @@
 package com.spring2go.common.feign.config;
 
 import com.spring2go.common.core.constant.AuthConstants;
+import com.spring2go.common.core.constant.SecurityConstants;
 import com.spring2go.common.core.util.HeaderContextHolder;
 import com.spring2go.common.core.util.IpUtils;
 import com.spring2go.common.core.util.ServletUtils;
@@ -32,6 +33,10 @@ public class FeignRequestInterceptor implements RequestInterceptor {
 
                 System.out.println("auth：++++" + authentication);
             }
+            String from = headers.get(SecurityConstants.FROM);
+            if (StringUtils.isNotEmpty(from)) {
+                requestTemplate.header(SecurityConstants.FROM, from);
+            }
             // 配置客户端IP
             requestTemplate.header("X-Forwarded-For", IpUtils.getIpAddr(ServletUtils.getRequest()));
         } else { //当前为子流程(异步)
@@ -39,6 +44,10 @@ public class FeignRequestInterceptor implements RequestInterceptor {
             if (StringUtils.isNotEmpty(authentication)) {
                 requestTemplate.header(AuthConstants.AUTHORIZATION_HEADER, authentication);
                 System.out.println("auth：----" + authentication);
+            }
+            String from = HeaderContextHolder.getHeader(SecurityConstants.FROM);
+            if (StringUtils.isNotEmpty(from)) {
+                requestTemplate.header(SecurityConstants.FROM, from);
             }
 
             //TODO:如果为子流程调用，远程地址默认为本地，后续优化

@@ -22,18 +22,18 @@ public class RemoteUserServiceFallbackImpl implements RemoteUserService {
     private final Throwable cause;
 
     @Override
-    public R<SysUser> getInfoByUserName(String username) {
+    public R<SysUser> getInfoByUserName(String username, String from) {
         log.error("feign失败", cause);
         return R.failed("熔断");
     }
 
     @Override
-    public R<Set<String>> getRoleByUserName(String username) {
+    public R<Set<String>> getRoleByUserName(String username, String from) {
         return R.failed("熔断");
     }
 
     @Override
-    public R<Set<String>> getPermsByUserName(String username) {
+    public R<Set<String>> getPermsByUserName(String username, String from) {
         return R.failed("熔断");
     }
 }

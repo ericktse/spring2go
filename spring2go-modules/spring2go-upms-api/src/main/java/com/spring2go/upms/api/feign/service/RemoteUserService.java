@@ -1,5 +1,6 @@
 package com.spring2go.upms.api.feign.service;
 
+import com.spring2go.common.core.constant.SecurityConstants;
 import com.spring2go.common.core.constant.ServiceNameConstants;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.upms.api.dto.LoginUser;
@@ -8,6 +9,7 @@ import com.spring2go.upms.api.feign.factory.RemoteUserServiceFallbackFactory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Set;
@@ -27,11 +29,11 @@ public interface RemoteUserService {
      * @return 结果
      */
     @GetMapping(value = "/sys/user/getInfoByUserName")
-    R<SysUser> getInfoByUserName(@RequestParam("username") String username);
+    R<SysUser> getInfoByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
     @GetMapping(value = "/sys/role/getRoleByUserName")
-    R<Set<String>> getRoleByUserName(@RequestParam("username") String username);
+    R<Set<String>> getRoleByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
     @GetMapping(value = "/sys/role/getPermsByUserName")
-    R<Set<String>> getPermsByUserName(@RequestParam("username") String username);
+    R<Set<String>> getPermsByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 }

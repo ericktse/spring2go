@@ -2,6 +2,7 @@ package com.spring2go.upms.biz.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.upms.api.entity.SysUser;
 import com.spring2go.upms.biz.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class SysUserController {
     private final SysUserService userService;
 
+    @Inner
     @ApiOperation("通过用户名获取用户信息")
     @GetMapping("/getInfoByUserName")
     public R getInfoByUserName(@RequestParam String username) {

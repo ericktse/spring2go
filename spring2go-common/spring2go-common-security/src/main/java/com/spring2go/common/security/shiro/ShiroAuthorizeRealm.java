@@ -15,7 +15,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -54,28 +53,19 @@ public class ShiroAuthorizeRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String token = (String) authenticationToken.getCredentials();
         if (token == null) {
-            throw new UnauthorizedException("token非法无效");
+            throw new UnauthorizedException("token非法无效，请重新登录");
         }
 
-        Set<String> roles = new HashSet();
-        roles.add("admin");
-        roles.add("user1");
-        Set<String> perms = new HashSet();
-        perms.add("system:user:list");
-        perms.add("system:role:list");
+        // 校验token有效性
+        SimpleAuthorizeUser user = tokenUtils.getAuthorizeUser(token);
+        if (user == null) {
+            throw new UnauthorizedException("token已过期，请重新登录");
+        }
 
-        SimpleAuthorizeUser user = new SimpleAuthorizeUser("user1", null, roles, perms);
-//        // 校验token有效性
-//        SimpleAuthorizationUser user = tokenUtils.getAuthorizationUser(token);
-//        if (user == null) {
-//            throw new UnauthorizedException("token已过期");
-//        }
-//
-//        // 刷新token,（实现： 用户在线操作不掉线功能）
-//        tokenUtils.refreshToken(token);
+        // 刷新token,（实现： 用户在线操作不掉线功能）
+        tokenUtils.refreshToken(token);
 
-        //查询用户的角色和权限存到SimpleAuthenticationInfo中，这样在其它地方
-        //SecurityUtils.getSubject().getPrincipal()就能拿出用户的所有信息，包括角色和权限
+        //查询用户的角色和权限存到SimpleAuthenticationInfo中，这样在其它地方SecurityUtils.getSubject().getPrincipal()就能拿出用户的所有信息，包括角色和权限
         return new SimpleAuthenticationInfo(user, token, getName());
     }
 }

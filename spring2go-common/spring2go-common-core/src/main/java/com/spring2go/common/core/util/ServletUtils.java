@@ -101,6 +101,12 @@ public class ServletUtils {
         return map;
     }
 
+    public static String getHeader(String header) {
+        Map<String, String> map = new LinkedHashMap<>();
+        String value = getRequest().getHeader(header);
+        return value;
+    }
+
     /**
      * 将字符串渲染到客户端
      *

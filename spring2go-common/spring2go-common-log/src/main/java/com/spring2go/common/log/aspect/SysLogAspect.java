@@ -1,6 +1,5 @@
 package com.spring2go.common.log.aspect;
 
-import com.google.common.base.Joiner;
 import com.spring2go.common.core.util.*;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.log.event.SysLogEvent;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.http.HttpMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

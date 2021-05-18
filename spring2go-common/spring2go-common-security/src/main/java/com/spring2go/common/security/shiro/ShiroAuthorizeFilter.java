@@ -1,10 +1,8 @@
 package com.spring2go.common.security.shiro;
 
 import com.alibaba.fastjson.JSON;
-import com.spring2go.common.core.constant.AuthConstants;
 import com.spring2go.common.core.domain.R;
-import com.spring2go.common.core.util.StringUtils;
-import org.apache.shiro.authc.AuthenticationException;
+import com.spring2go.common.security.util.TokenUtils;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
@@ -25,9 +23,9 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
 
     @Override
     protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
-        String token = getToken(request);
+        String token = TokenUtils.getTokenByRequest((HttpServletRequest) request);
         if (token == null) {
-            throw new UnauthorizedException("token非法无效");
+            throw new UnauthorizedException("token非法无效，请重新登录");
         }
 
         return new AuthorizeToken(token);
@@ -41,7 +39,7 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         }
 
         //token不存在則返回失敗
-        String token = getToken(request);
+        String token = TokenUtils.getTokenByRequest((HttpServletRequest) request);
         if (token == null) {
             return false;
         }
@@ -49,7 +47,7 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         try {
             return executeLogin(request, response);
         } catch (Exception e) {
-            throw new UnauthorizedException("Token失效，请重新登录", e);
+            throw new UnauthorizedException("token非法无效，请重新登录", e);
         }
     }
 
@@ -84,21 +82,4 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         return super.preHandle(request, response);
     }
 
-
-    /**
-     * @description 获取Token
-     * @author xiaobin
-     * @date 2021/5/17 11:38
-     */
-    private String getToken(ServletRequest request) {
-        //获取请求token
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader(AuthConstants.HEADER);
-        //如果header中不存在token，则从参数中获取token
-        if (StringUtils.isEmpty(token)) {
-            token = httpServletRequest.getParameter(AuthConstants.HEADER);
-        }
-
-        return token;
-    }
 }

@@ -1,5 +1,6 @@
 package com.spring2go.auth.service;
 
+import com.spring2go.common.core.constant.SecurityConstants;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.security.util.TokenUtils;
@@ -9,7 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -31,7 +33,7 @@ public class InnerAuthorizeService {
             return R.failed("用户/密码必须填写");
         }
         // 查询用户信息
-        R<SysUser> userResult = remoteUserService.getInfoByUserName(username);
+        R<SysUser> userResult = remoteUserService.getInfoByUserName(username, SecurityConstants.FROM_IN);
         if (userResult == null
                 || R.FAIL == userResult.getCode()
                 || StringUtils.isNull(userResult.getData())) {
@@ -42,13 +44,13 @@ public class InnerAuthorizeService {
         //...
 
         //获取用户权限
-        R<Set<String>> roleResult = remoteUserService.getRoleByUserName(username);
+        R<Set<String>> roleResult = remoteUserService.getRoleByUserName(username, SecurityConstants.FROM_IN);
         if (roleResult == null
                 || R.FAIL == roleResult.getCode()
                 || StringUtils.isNull(roleResult.getData())) {
             return R.failed("角色不存在");
         }
-        R<Set<String>> permsResult = remoteUserService.getPermsByUserName(username);
+        R<Set<String>> permsResult = remoteUserService.getPermsByUserName(username, SecurityConstants.FROM_IN);
         if (permsResult == null
                 || R.FAIL == permsResult.getCode()
                 || StringUtils.isNull(permsResult.getData())) {
@@ -57,16 +59,19 @@ public class InnerAuthorizeService {
 
         //创建Token
         String token = tokenUtils.createToken(username, userResult.getData(), roleResult.getData(), permsResult.getData());
-        log.info("------------测试 Redis:" + tokenUtils.getAuthorizationUser(token));
 
-        return R.ok(token);
+        //返回用户详情和token
+        Map<String, Object> map = new HashMap<>();
+        map.put("user", userResult.getData());
+        map.put("token", token);
+        return R.ok(map);
     }
 
-    public void logout(SysUser loginUser) {
-        if (StringUtils.isNotNull(loginUser)) {
-            //String username = loginUser.getUsername();
+    public void logout() {
+        String token = TokenUtils.getTokenByRequest();
+        if (StringUtils.isNotNull(token)) {
             // 删除用户缓存记录
-            //tokenService.delLoginUser(loginUser.getToken());
+            tokenUtils.deleteToken(token);
             // 记录用户退出日志
             //sysLoginService.logout(username);
         }

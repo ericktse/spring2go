@@ -9,3 +9,25 @@ spring:
   profiles:
     # 环境配置
     active: dev
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+shiro:
+  # TODO:登录相关内部接口，登录时调用，这里不做校验，后续需加内部调用限制
+  pathDefinitions: |
+    /sys/user/getInfoByUserName: anon
+    /sys/role/getRoleByUserName: anon
+    /sys/role/getPermsByUserName: anon
+    /sys/log: anon
+

@@ -1,5 +1,6 @@
 package com.spring2go.common.log.event;
 
+import com.spring2go.common.core.constant.SecurityConstants;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.api.feign.service.RemoteLogService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class SysLogListener {
     public void saveSysLog(SysLogEvent event) {
         SysLog sysLog = (SysLog) event.getSource();
         log.debug("打印日志：" + sysLog.getTitle());
-        remoteLogService.saveLog(sysLog);
+        remoteLogService.saveLog(sysLog, SecurityConstants.FROM_IN);
     }
 
 }

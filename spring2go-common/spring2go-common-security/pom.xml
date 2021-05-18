@@ -28,6 +28,12 @@
             <artifactId>shiro-spring-boot-web-starter</artifactId>
             <version>${shiro-spring-boot-web-starter.version}</version>
         </dependency>
+
+        <!--springBoot的aop-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -2,6 +2,7 @@ package com.spring2go.upms.biz.controller;
 
 import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.upms.api.dto.SysLogDTO;
 import com.spring2go.upms.api.entity.SysLog;
 import com.spring2go.upms.biz.service.SysLogService;
@@ -43,6 +44,7 @@ public class SysLogController {
      * @param sysLog 日志实体
      * @return success/false
      */
+    @Inner
     @PostMapping
     public R save(@RequestBody SysLog sysLog) throws InterruptedException {
         //TODO 测试，等待5秒，后续删除

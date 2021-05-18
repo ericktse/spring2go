@@ -1,5 +1,8 @@
-package com.spring2go.common.security.shiro;
+package com.spring2go.common.security.config;
 
+import com.spring2go.common.security.aspect.InnerAspect;
+import com.spring2go.common.security.shiro.ShiroAuthorizeFilter;
+import com.spring2go.common.security.shiro.ShiroAuthorizeRealm;
 import com.spring2go.common.security.util.TokenUtils;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
@@ -12,6 +15,7 @@ import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -25,6 +29,18 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
+
+    @Bean
+    public InnerAspect innerAspect() {
+        return new InnerAspect();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ShiroProperties shiroProperties() {
+        return new ShiroProperties();
+    }
+
 
     @Bean
     public Realm realm(TokenUtils tokenUtils) {
@@ -56,7 +72,7 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         ShiroFilterFactoryBean shiroFilterFactoryBean = super.shiroFilterFactoryBean();
         //获取shiroFilterFactoryBean里的Filters集合
         Map filters = shiroFilterFactoryBean.getFilters();
-        //put进一个自己编写的过滤器，并命名，上面会引用到
+        //put进一个自己编写的过滤器，并命名
         filters.put("auth", new ShiroAuthorizeFilter());
         shiroFilterFactoryBean.setFilters(filters);
 
@@ -67,11 +83,7 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
     public ShiroFilterChainDefinition shiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         //-- 可以匿名访问的url
-        //登录接口排除
-        chainDefinition.addPathDefinition("/login", "anon");
-        //登出接口排除
-        chainDefinition.addPathDefinition("/logout", "anon");
-        //性能监控  TODO 存在安全漏洞
+        //actuator  TODO 存在安全漏洞
         chainDefinition.addPathDefinition("/actuator/**", "anon");
         //swagger
         chainDefinition.addPathDefinition("/", "anon");
@@ -80,6 +92,9 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         chainDefinition.addPathDefinition("/swagger**/**", "anon");
         chainDefinition.addPathDefinition("/webjars/**", "anon");
         chainDefinition.addPathDefinition("/v2/**", "anon");
+
+        //每个服务自定义匿名访问路径游每个服务的配置文件单独配置
+        chainDefinition.addPathDefinitions(shiroProperties().getPathDefinitions());
 
         //-- 其余资源都需要认证
         chainDefinition.addPathDefinition("/**", "auth");

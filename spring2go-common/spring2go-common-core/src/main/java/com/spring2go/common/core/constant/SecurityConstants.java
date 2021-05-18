@@ -11,4 +11,8 @@ public class SecurityConstants {
      * 内部调用来源
      */
     public static final String FROM = "from";
+    /**
+     * 内部
+     */
+    public static final String FROM_IN = "Y";
 }

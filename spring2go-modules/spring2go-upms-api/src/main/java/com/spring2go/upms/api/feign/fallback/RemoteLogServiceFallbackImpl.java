@@ -19,7 +19,7 @@ public class RemoteLogServiceFallbackImpl implements RemoteLogService {
     private Throwable cause;
 
     @Override
-    public R<Boolean> saveLog(SysLog sysLog) {
+    public R<Boolean> saveLog(SysLog sysLog, String from) {
         log.error("feign 插入日志失败", cause);
         return R.failed("熔断");
     }

@@ -30,8 +30,6 @@ public class AuthorizeController {
 
     private final InnerAuthorizeService innerAuthorizeService;
 
-
-
     @PostMapping("login")
     public R<?> login(@RequestBody LoginModel model) {
         // 用户登录
@@ -41,8 +39,7 @@ public class AuthorizeController {
 
     @DeleteMapping("logout")
     public R<?> logout(HttpServletRequest request) {
-//        LoginUser loginUser = tokenService.getLoginUser(request);
-//        innerAuthorizeService.logout(loginUser);
+        innerAuthorizeService.logout();
         return R.ok();
     }
 }

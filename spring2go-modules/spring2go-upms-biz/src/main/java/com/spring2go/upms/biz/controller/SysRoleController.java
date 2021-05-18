@@ -3,6 +3,7 @@ package com.spring2go.upms.biz.controller;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.upms.api.entity.SysUser;
 import com.spring2go.upms.biz.service.SysRoleService;
 import com.spring2go.upms.biz.service.SysUserService;
@@ -27,6 +28,7 @@ public class SysRoleController extends BaseController {
 
     private final SysRoleService roleService;
 
+    @Inner
     @ApiOperation("通过用户名获取角色信息")
     @GetMapping("/getRoleByUserName")
     public R getRoleByUserName(@RequestParam String username) {
@@ -39,6 +41,7 @@ public class SysRoleController extends BaseController {
         return R.ok(roles);
     }
 
+    @Inner
     @ApiOperation("通过用户名获取权限信息")
     @GetMapping("/getPermsByUserName")
     public R getPermsByUserName(@RequestParam String username) {
@@ -47,6 +50,7 @@ public class SysRoleController extends BaseController {
         Set<String> roles = new HashSet();
         roles.add("system:user:list");
         roles.add("system:role:list");
+        roles.add("system:dept:tree");
 
         return R.ok(roles);
     }
