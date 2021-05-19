@@ -1,4 +1,4 @@
-package com.spring2go.common.lock.Strategy;
+package com.spring2go.common.lock.strategy;
 
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.lock.config.RedisConnectionType;
@@ -6,6 +6,7 @@ import com.spring2go.common.lock.config.RedissonConstant;
 import com.spring2go.common.lock.config.RedissonProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.config.Config;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @date: 2021-05-18 16:55
  */
 @Slf4j
+@Component
 public class MasterslaveRedissonConfigStrategy implements RedissonConfigStrategy {
     @Override
     public Config createRedissonConfig(RedissonProperties redissonProperties) {

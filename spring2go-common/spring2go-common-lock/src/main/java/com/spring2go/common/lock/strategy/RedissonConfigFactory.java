@@ -1,4 +1,4 @@
-package com.spring2go.common.lock.Strategy;
+package com.spring2go.common.lock.strategy;
 
 import com.spring2go.common.core.util.SpringContextHolder;
 import com.spring2go.common.lock.config.RedisConnectionType;
@@ -27,7 +27,6 @@ public class RedissonConfigFactory {
             redissonConfigStrategys.put(v.getType().getCode(), v);
         });
     }
-
 
     public RedissonClient createRedissonClient(RedissonProperties redissonProperties) {
         RedisConnectionType connectionType = redissonProperties.getType();

@@ -1,4 +1,4 @@
-package com.spring2go.common.lock.Strategy;
+package com.spring2go.common.lock.strategy;
 
 import com.spring2go.common.lock.config.RedisConnectionType;
 import com.spring2go.common.lock.config.RedissonProperties;

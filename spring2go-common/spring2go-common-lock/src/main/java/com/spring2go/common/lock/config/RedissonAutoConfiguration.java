@@ -1,15 +1,16 @@
 package com.spring2go.common.lock.config;
 
-import com.spring2go.common.lock.Strategy.RedissonConfigFactory;
+import com.spring2go.common.lock.annotation.DistributedLock;
+import com.spring2go.common.lock.strategy.RedissonConfigFactory;
 import com.spring2go.common.lock.aspect.DistributedLockAspect;
-import com.spring2go.common.lock.util.DistributeLockClient;
+import com.spring2go.common.lock.util.DistributedLockClient;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -21,7 +22,9 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass(RedissonProperties.class)
 @EnableConfigurationProperties(RedissonProperties.class)
 @Slf4j
+@ComponentScan(basePackages = {"com.spring2go.common.lock.strategy"})
 public class RedissonAutoConfiguration {
+
 
     @Bean
     @ConditionalOnMissingBean(RedissonClient.class)
@@ -32,8 +35,8 @@ public class RedissonAutoConfiguration {
     }
 
     @Bean
-    public DistributeLockClient distributeLockClient(RedissonClient redissonClient) {
-        return new DistributeLockClient(redissonClient);
+    public DistributedLockClient distributeLockClient(RedissonClient redissonClient) {
+        return new DistributedLockClient(redissonClient);
     }
 
     @Bean

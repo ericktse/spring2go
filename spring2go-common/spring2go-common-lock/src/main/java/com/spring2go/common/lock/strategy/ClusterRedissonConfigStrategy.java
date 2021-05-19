@@ -1,4 +1,4 @@
-package com.spring2go.common.lock.Strategy;
+package com.spring2go.common.lock.strategy;
 
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.lock.config.RedisConnectionType;
@@ -6,6 +6,7 @@ import com.spring2go.common.lock.config.RedissonConstant;
 import com.spring2go.common.lock.config.RedissonProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.config.Config;
+import org.springframework.stereotype.Component;
 
 /**
  * @description: 集群方式Redisson配置
@@ -15,6 +16,7 @@ import org.redisson.config.Config;
  * @date: 2021-05-18 16:54
  */
 @Slf4j
+@Component
 public class ClusterRedissonConfigStrategy implements RedissonConfigStrategy {
     @Override
     public Config createRedissonConfig(RedissonProperties redissonProperties) {
