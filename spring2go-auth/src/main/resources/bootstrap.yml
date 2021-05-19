@@ -59,7 +59,8 @@ management:
         include: '*'
 
 # 自定义匿名访问路径
-shiro:
-  pathDefinitions: |
-    /login: anon
-    /logout: anon
+spring2go:
+  shiro:
+    pathDefinitions: |
+      /login: anon
+      /logout: anon

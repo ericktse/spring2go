@@ -15,7 +15,10 @@ import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
 import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -28,6 +31,10 @@ import java.util.Map;
  * @date: 2021-05-13 14:35
  */
 @Configuration
+//这里复用shiro.enabled配置项，方便统一暂时屏蔽shiro
+@ConditionalOnProperty(name = "shiro.enabled", matchIfMissing = true)
+@ConditionalOnClass(ShiroProperties.class)
+@EnableConfigurationProperties(ShiroProperties.class)
 public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
 
     @Bean
@@ -35,11 +42,11 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         return new InnerAspect();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ShiroProperties shiroProperties() {
-        return new ShiroProperties();
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public ShiroProperties shiroProperties() {
+//        return new ShiroProperties();
+//    }
 
 
     @Bean
@@ -80,7 +87,7 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
     }
 
     @Bean
-    public ShiroFilterChainDefinition shiroFilterChainDefinition() {
+    public ShiroFilterChainDefinition shiroFilterChainDefinition(ShiroProperties shiroProperties) {
         DefaultShiroFilterChainDefinition chainDefinition = new DefaultShiroFilterChainDefinition();
         //-- 可以匿名访问的url
         //actuator  TODO 存在安全漏洞
@@ -94,7 +101,7 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         chainDefinition.addPathDefinition("/v2/**", "anon");
 
         //每个服务自定义匿名访问路径游每个服务的配置文件单独配置
-        chainDefinition.addPathDefinitions(shiroProperties().getPathDefinitions());
+        chainDefinition.addPathDefinitions(shiroProperties.getPathDefinitions());
 
         //-- 其余资源都需要认证
         chainDefinition.addPathDefinition("/**", "auth");

@@ -12,7 +12,7 @@ import java.util.Map;
  * @date: 2021-05-17 17:41
  */
 @Data
-@ConfigurationProperties("shiro")
+@ConfigurationProperties("spring2go.shiro")
 public class ShiroProperties {
 
     private final static String PATH_SPLIT_N = "\n";
@@ -31,5 +31,8 @@ public class ShiroProperties {
         this.pathDefinitions = pathDefinitions;
     }
 
+    /**
+     * 匿名访问路径
+     */
     private String pathDefinitions;
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2021-03-31 10:24
  */
 @Data
-@ConfigurationProperties("swagger")
+@ConfigurationProperties("spring2go.swagger")
 public class SwaggerProperties {
 
     /**

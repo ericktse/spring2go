@@ -40,7 +40,7 @@ public class TestController {
     }
 
 
-    @Value("${swagger.title}")
+    @Value("${spring2go.swagger.title}")
     private String endpoint;
 
     @RequestMapping("/getEndpoint")
