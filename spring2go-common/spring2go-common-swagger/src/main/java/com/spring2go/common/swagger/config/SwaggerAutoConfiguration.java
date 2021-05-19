@@ -2,10 +2,10 @@ package com.spring2go.common.swagger.config;
 
 import com.spring2go.common.swagger.constant.SwaggerConstants;
 import io.swagger.annotations.Api;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -30,16 +30,10 @@ import java.util.function.Predicate;
  */
 @EnableOpenApi
 @Configuration
-//TODO: 一个很奇葩的问题，设置enabled=false时，配置不生效，但是启用了swagger默认配置
-@ConditionalOnProperty(name = "spring2go.swagger.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "springfox.documentation.enabled", matchIfMissing = true)
+@EnableConfigurationProperties({SwaggerProperties.class})
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class SwaggerAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean
-    public SwaggerProperties swaggerProperties() {
-        return new SwaggerProperties();
-    }
 
     /**
      * 配置swagger2的一些基本的内容，比如扫描的包等等
@@ -71,7 +65,6 @@ public class SwaggerAutoConfiguration {
 
 
         ApiSelectorBuilder builder = new Docket(DocumentationType.SWAGGER_2)
-                .enable(swaggerProperties.getEnabled())
                 .host(swaggerProperties.getHost())
                 .apiInfo(apiInfo(swaggerProperties))
                 .select()

@@ -26,7 +26,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @RequiredArgsConstructor
 @ConditionalOnWebApplication
 @Configuration(proxyBeanMethods = false)
-@ConditionalOnProperty(name = "syslog.enabled", matchIfMissing = true)
+@ConditionalOnProperty(name = "spring2go.syslog.enabled", matchIfMissing = true)
 public class LogAutoConfiguration implements AsyncConfigurer {
 
     private final RemoteLogService remoteLogService;

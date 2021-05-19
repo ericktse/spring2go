@@ -17,12 +17,6 @@ import java.util.List;
 public class SwaggerProperties {
 
     /**
-     * 是否开启swagger
-     * 默认启动
-     */
-    private Boolean enabled = true;
-
-    /**
      * swagger会解析的包路径
      **/
     private String basePackage = "";

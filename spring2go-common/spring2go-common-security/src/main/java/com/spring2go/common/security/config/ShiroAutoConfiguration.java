@@ -42,13 +42,6 @@ public class ShiroAutoConfiguration extends ShiroWebFilterConfiguration {
         return new InnerAspect();
     }
 
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public ShiroProperties shiroProperties() {
-//        return new ShiroProperties();
-//    }
-
-
     @Bean
     public Realm realm(TokenUtils tokenUtils) {
         return new ShiroAuthorizeRealm(tokenUtils);

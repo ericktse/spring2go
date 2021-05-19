@@ -44,7 +44,6 @@ logging:
 spring2go:
   # swagger配置
   swagger:
-    enabled: true
     title: UPMS 系统模块接口文档
   #分布式锁配置
   redisson:
@@ -58,6 +57,11 @@ spring2go:
       /sys/role/getRoleByUserName: anon
       /sys/role/getPermsByUserName: anon
       /sys/log: anon
+
+# swagger 是否启动，这里暂时屏蔽
+springfox:
+  documentation:
+    enabled: true
 
 # shiro的屏蔽非常反人类，必须设置这么多个false
 # TODO：此处仅为了方便测试，暂时关闭，生产禁止使用
