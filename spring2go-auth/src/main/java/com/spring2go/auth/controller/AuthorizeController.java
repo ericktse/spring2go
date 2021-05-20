@@ -3,19 +3,15 @@ package com.spring2go.auth.controller;
 import com.spring2go.auth.domain.LoginModel;
 import com.spring2go.auth.service.InnerAuthorizeService;
 import com.spring2go.common.core.domain.R;
-import com.spring2go.common.redis.util.RedisUtils;
-import com.spring2go.common.security.util.TokenUtils;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @description: 认证校验Controller
