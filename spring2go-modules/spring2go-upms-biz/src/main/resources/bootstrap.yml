@@ -40,6 +40,8 @@ mybatis-plus:
 logging:
   level:
     com.spring2go: debug
+  file:
+    name: logs/${spring.application.name}/info.log
 
 spring2go:
   # swagger配置
