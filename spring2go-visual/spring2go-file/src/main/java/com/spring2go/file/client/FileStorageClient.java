@@ -1,4 +1,4 @@
-package com.spring2go.file.service;
+package com.spring2go.file.client;
 
 import com.spring2go.file.config.FileProperties;
 import org.springframework.web.multipart.MultipartFile;

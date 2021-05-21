@@ -1,4 +1,4 @@
-package com.spring2go.file.service;
+package com.spring2go.file.client;
 
 import com.aliyun.oss.OSSClient;
 import com.spring2go.common.core.util.DateUtils;

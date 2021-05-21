@@ -37,7 +37,7 @@ spring2go:
   swagger:
     title: 文件服务接口文档
   file:
-    type: MINIO
+    type: LOCAL
     local:
       domain: http://127.0.0.1:6500
       path: D:/uploadPath

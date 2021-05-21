@@ -1,4 +1,4 @@
-package com.spring2go.file.service;
+package com.spring2go.file.client;
 
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;

@@ -2,7 +2,7 @@ package com.spring2go.file.controller;
 
 import com.spring2go.common.core.domain.R;
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.service.FileStorageClient;
+import com.spring2go.file.client.FileStorageClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
