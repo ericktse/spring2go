@@ -4,9 +4,7 @@ import com.aliyun.oss.ClientConfiguration;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import com.spring2go.file.domain.FileServiceType;
 import com.spring2go.file.domain.FileStorageType;
-import com.spring2go.file.factory.FileStorageClientFactory;
 import com.spring2go.file.service.AliossFileStorageClient;
 import com.spring2go.file.service.FastDfsFileStorageClient;
 import com.spring2go.file.service.LocalFileStorageClient;
@@ -18,7 +16,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 /**
  * @description: 文件服务自动配置
@@ -29,15 +26,6 @@ import org.springframework.stereotype.Component;
 @EnableConfigurationProperties({FileProperties.class})
 @Slf4j
 public class FileServiceAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean(FileStorageClientFactory.class)
-    public FileStorageClientFactory fileServiceFactory(FileProperties fileProperties) {
-        FileStorageClientFactory fileStorageClientFactory = new FileStorageClientFactory(fileProperties);
-        log.info("FileService,当前连接方式:" + fileProperties.getType());
-        return fileStorageClientFactory;
-    }
-
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnProperty(name = {"spring2go.file.type"}, havingValue = FileStorageType.LOCAL)

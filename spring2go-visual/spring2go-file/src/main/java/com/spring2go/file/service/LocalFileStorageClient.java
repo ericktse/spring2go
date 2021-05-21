@@ -2,12 +2,8 @@ package com.spring2go.file.service;
 
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.domain.FileServiceType;
-import com.spring2go.file.domain.FileStorageType;
 import com.spring2go.file.exception.FileException;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -71,11 +67,6 @@ public class LocalFileStorageClient implements FileStorageClient {
         String url = fileProperties.getLocal().getDomain() + fileProperties.getLocal().getBucket() + "/" + fileName;
 
         return url;
-    }
-
-    @Override
-    public FileServiceType getType() {
-        return FileServiceType.LOCAL;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.spring2go.file.config;
 
-import com.spring2go.file.domain.FileServiceType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -16,7 +15,7 @@ public class FileProperties {
     /**
      * 存储类型
      */
-    private FileServiceType type;
+    private String type;
 
     /**
      * 本地存储

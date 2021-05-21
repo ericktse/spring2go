@@ -2,7 +2,6 @@ package com.spring2go.file.controller;
 
 import com.spring2go.common.core.domain.R;
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.factory.FileStorageClientFactory;
 import com.spring2go.file.service.FileStorageClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RequestMapping("/file")
 public class FileController {
-
-    private final FileStorageClientFactory fileStorageClientFactory;
-
     private final FileStorageClient client;
     private final FileProperties fileProperties;
 
@@ -37,9 +33,6 @@ public class FileController {
     @PostMapping("/upload")
     public R upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
         try {
-//            FileStorageClient client = fileStorageClientFactory.createFileStorageClient();
-//            String url = client.uploadFile(file, fileStorageClientFactory.getFileProperties());
-//
             String url = client.uploadFile(file, fileProperties);
             return R.ok(url);
         } catch (Exception e) {

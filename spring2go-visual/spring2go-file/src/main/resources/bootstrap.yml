@@ -37,7 +37,7 @@ spring2go:
   swagger:
     title: 文件服务接口文档
   file:
-    type: LOCAL
+    type: MINIO
     local:
       domain: http://127.0.0.1:6500
       path: D:/uploadPath
@@ -46,8 +46,8 @@ spring2go:
       domain: http://127.0.0.1:6500
     minio:
       url: http://127.0.0.1:9000
-      accessKey: ""
-      secretKey: ""
+      accessKey: "1"
+      secretKey: "1"
       bucketName: upload
     alioss:
       endpoint: http://127.0.0.1:9000

@@ -1,7 +1,6 @@
 package com.spring2go.file.service;
 
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.domain.FileServiceType;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -20,9 +19,4 @@ public interface FileStorageClient {
      * @throws Exception
      */
     String uploadFile(MultipartFile file, FileProperties fileProperties) throws Exception;
-
-    /**
-     * 文件存储类型
-     */
-    FileServiceType getType();
 }

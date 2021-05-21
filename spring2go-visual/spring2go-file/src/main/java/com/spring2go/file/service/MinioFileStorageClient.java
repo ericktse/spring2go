@@ -2,14 +2,10 @@ package com.spring2go.file.service;
 
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.domain.FileServiceType;
-import com.spring2go.file.domain.FileStorageType;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
@@ -40,10 +36,5 @@ public class MinioFileStorageClient implements FileStorageClient {
         String url = fileProperties.getMinio().getUrl() + "/" + fileProperties.getMinio().getBucketName() + "/" + fileName;
 
         return url;
-    }
-
-    @Override
-    public FileServiceType getType() {
-        return FileServiceType.MINIO;
     }
 }

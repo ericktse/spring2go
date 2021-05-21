@@ -1,17 +1,10 @@
 package com.spring2go.file.service;
 
 import com.aliyun.oss.OSSClient;
-import com.aliyun.oss.model.PutObjectResult;
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.file.config.FileProperties;
-import com.spring2go.file.domain.FileServiceType;
-import com.spring2go.file.domain.FileStorageType;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,10 +35,5 @@ public class AliossFileStorageClient implements FileStorageClient {
         String url = fileProperties.getAlioss().getStaticDomain() + "/" + fileName;
         ossClient.putObject(newBucket, url, file.getInputStream());
         return url;
-    }
-
-    @Override
-    public FileServiceType getType() {
-        return FileServiceType.ALIOSS;
     }
 }
