@@ -1,0 +1,65 @@
+# 端口
+server:
+  port: 6500
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-file
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+
+#日志级别
+logging:
+  level:
+    com.spring2go: debug
+  file:
+    name: logs/${spring.application.name}/info.log
+
+spring2go:
+  # swagger配置
+  swagger:
+    title: 文件服务接口文档
+  file:
+    type: LOCAL
+    local:
+      domain: http://127.0.0.1:6500
+      path: D:/uploadPath
+      bucket: /upload
+    fastdfs:
+      domain: http://127.0.0.1:6500
+    minio:
+      url: http://127.0.0.1:9000
+      accessKey: ""
+      secretKey: ""
+      bucketName: upload
+    alioss:
+      endpoint: http://127.0.0.1:9000
+      accessKey: ""
+      secretKey: ""
+      bucketName: upload
+      staticDomain: http://127.0.0.1:9000
+
+# TODO 暂时使用fastdfs-client的配置项，后续优化整合配置
+# FastDFS配置
+fdfs:
+  domain: http://127.0.0.1
+  soTimeout: 3000
+  connectTimeout: 2000
+  trackerList: 127.0.0.1:22122
