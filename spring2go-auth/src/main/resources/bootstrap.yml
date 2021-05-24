@@ -10,7 +10,7 @@ spring:
     # 环境配置
     active: dev
   redis:
-    host: localhost
+    host: 10.192.180.193
     port: 6379
     password:
   cloud:
@@ -18,7 +18,7 @@ spring:
     nacos:
       discovery:
         # 服务注册地址
-        server-addr: 127.0.0.1:8848
+        server-addr: 10.192.180.193:8848
       config:
         # 配置中心地址
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
@@ -30,7 +30,7 @@ spring:
   # sentinel 熔断限流
   sentinel:
     transport:
-      dashboard: localhost:2180
+      dashboard: 10.192.180.193:2180
 
 # feign 配置
 feign:
