@@ -64,7 +64,7 @@ public class LocalFileStorageClient implements FileStorageClient {
         file.transferTo(desc);
 
         //生成文件路径
-        String url = fileProperties.getLocal().getDomain() + fileProperties.getLocal().getBucket() + "/" + fileName;
+        String url = fileProperties.getLocal().getDomain() + fileProperties.getLocal().getBucketName() + "/" + fileName;
 
         return url;
     }

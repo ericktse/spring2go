@@ -58,7 +58,7 @@ public class FileProperties {
         /**
          * 文件桶
          */
-        private String bucket;
+        private String bucketName;
 
     }
 

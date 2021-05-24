@@ -41,13 +41,13 @@ spring2go:
     local:
       domain: http://127.0.0.1:6500
       path: D:/uploadPath
-      bucket: /upload
+      bucketName: /upload
     fastdfs:
       domain: http://127.0.0.1:6500
     minio:
       url: http://127.0.0.1:9000
-      accessKey: "1"
-      secretKey: "1"
+      accessKey: ""
+      secretKey: ""
       bucketName: upload
     alioss:
       endpoint: http://127.0.0.1:9000

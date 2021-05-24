@@ -22,7 +22,7 @@ public class ResourceConfigurer implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //映射上传静态文件到文件目录
-        registry.addResourceHandler(fileProperties.getLocal().getBucket() + "/**")
+        registry.addResourceHandler(fileProperties.getLocal().getBucketName() + "/**")
                 .addResourceLocations("file:" + fileProperties.getLocal().getPath() + File.separator);
     }
 }
