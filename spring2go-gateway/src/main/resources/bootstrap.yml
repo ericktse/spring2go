@@ -54,6 +54,13 @@ spring:
             - Path=/upms/**
           filters:
             - StripPrefix=1
+        # 文件服务
+        - id: spring2go-file
+          uri: lb://spring2go-file
+          predicates:
+            - Path=/file/**
+          filters:
+            - StripPrefix=1
 
 # 不校验白名单
 spring2go:

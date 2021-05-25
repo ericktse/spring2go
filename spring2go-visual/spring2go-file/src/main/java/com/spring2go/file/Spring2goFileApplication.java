@@ -1,5 +1,6 @@
 package com.spring2go.file;
 
+import com.spring2go.common.swagger.annotation.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author: xiaobin
  * @date: 2021/5/21 10:37
  */
+@EnableSwagger
 @SpringBootApplication
 public class Spring2goFileApplication {
 

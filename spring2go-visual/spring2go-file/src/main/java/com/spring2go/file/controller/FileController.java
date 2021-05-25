@@ -3,6 +3,7 @@ package com.spring2go.file.controller;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.file.config.FileProperties;
 import com.spring2go.file.client.FileStorageClient;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/file")
+@Api("文件服务")
 public class FileController {
     private final FileStorageClient client;
     private final FileProperties fileProperties;

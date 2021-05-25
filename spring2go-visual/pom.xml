@@ -16,6 +16,7 @@
         <module>spring2go-codegen</module>
         <module>spring2go-job</module>
         <module>spring2go-monitor</module>
+        <module>spring2go-file</module>
     </modules>
 
 </project>

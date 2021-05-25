@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+#  spring2go-redis:
+#    image: redis:6.2.3
+#    ports:
+#      - 6379:6379
+#    restart: always
+#    container_name: spring2go-redis
+#    hostname: spring2go-redis
+
+  spring2go-gateway:
+    build:
+      context: ./spring2go-gateway
+    restart: always
+    container_name: spring2go-gateway
+    image: spring2go-gateway
+    ports:
+      - 9000:9000
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+
+  spring2go-auth:
+    build:
+      context: ./spring2go-auth
+    restart: always
+    container_name: spring2go-auth
+    image: spring2go-auth
+
+  spring2go-upms:
+    build:
+      context: ./spring2go-modules/spring2go-upms-biz
+    restart: always
+    container_name: spring2go-upms
+    image: spring2go-upms
+
+  spring2go-file:
+    build:
+      context: ./spring2go-visual/spring2go-file
+    restart: always
+    container_name: spring2go-file
+    image: spring2go-file
+
+  spring2go-monitor:
+    build:
+      context: ./spring2go-visual/spring2go-monitor
+    restart: always
+    container_name: spring2go-monitor
+    image: spring2go-monitor
+    ports:
+      - 9100:9100
