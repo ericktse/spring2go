@@ -21,5 +21,6 @@
         <module>spring2go-common-redis</module>
         <module>spring2go-common-security</module>
         <module>spring2go-common-lock</module>
+        <module>spring2go-common-job</module>
     </modules>
 </project>

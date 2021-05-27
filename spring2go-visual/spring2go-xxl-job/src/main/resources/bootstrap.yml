@@ -1,0 +1,93 @@
+# 端口
+server:
+  port: 7100
+  servlet:
+    context-path: /xxl-job-admin
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-xxl-job
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 10.192.180.193:18848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      auto-commit: true
+      connection-test-query: SELECT 1
+      connection-timeout: 10000
+      idle-timeout: 30000
+      max-lifetime: 900000
+      maximum-pool-size: 30
+      minimum-idle: 10
+      pool-name: HikariCP
+      validation-timeout: 1000
+    url: jdbc:mysql://10.192.180.193:3306/spring2go_xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+  freemarker:
+    charset: UTF-8
+    request-context-attribute: request
+    settings:
+      number_format: 0.##########
+    suffix: .ftl
+    templateLoaderPath: classpath:/templates/
+  mail:
+    from: xxx@qq.com
+    host: smtp.qq.com
+    username: xxx@qq.com
+    password: xxx
+    port: 25
+    properties:
+      mail:
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+  mvc:
+    servlet:
+      load-on-startup: 0
+    static-path-pattern: /static/**
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+management:
+  health:
+    mail:
+      enabled: false
+  server:
+    base-path: /actuator
+
+mybatis:
+  mapper-locations: classpath:/mybatis-mapper/*Mapper.xml
+
+xxl:
+  job:
+    accessToken: ''
+    i18n: zh_CN
+    logretentiondays: 30
+    triggerpool:
+      fast:
+        max: 200
+      slow:
+        max: 100

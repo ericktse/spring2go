@@ -21,4 +21,4 @@ ADD ./target/spring2go-file-0.0.1.jar ./
 #sleep 60;
 #通过sleep实现docker容器启动顺序的控制，
 #通常DB直接启动，中间件（注册中心等）等待30秒启动，业务模块等待60秒启动
-CMD sleep 60;java -Djava.security.egd=file:/dev/./urandom -jar spring2go-file-0.0.1.jar
+CMD sleep 30;java -Djava.security.egd=file:/dev/./urandom -jar spring2go-file-0.0.1.jar

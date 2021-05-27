@@ -23,7 +23,7 @@ spring:
     nacos:
       discovery:
         # 服务注册地址
-        server-addr: 10.192.180.193:8848
+        server-addr: 10.192.180.193:18848
       config:
         # 配置中心地址
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
@@ -48,6 +48,16 @@ logging:
     name: logs/${spring.application.name}/info.log
 
 spring2go:
+  xxljob:
+    enable: true
+    adminAddresses: http://10.192.180.193:7100/xxl-job-admin
+    accessToken:
+    appname: xxl-job-executor-sample
+    address:
+    ip:
+    port:
+    logpath: /applogs
+    logretentiondays: 30
   # swagger配置
   swagger:
     title: UPMS 系统模块接口文档
@@ -77,3 +87,5 @@ shiro:
   web:
     enabled: false
   enabled: false
+
+
