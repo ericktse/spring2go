@@ -18,7 +18,7 @@
     </modules>
 
     <properties>
-        <spring2go.version>0.0.1</spring2go.version>
+        <spring2go.project.version>0.0.1</spring2go.project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>2020.0.2</spring-cloud.version>
@@ -39,6 +39,7 @@
         <aliyun-sdk-oss.version>3.12.0</aliyun-sdk-oss.version>
         <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
         <xxl-job-core.version>2.3.0</xxl-job-core.version>
+        <dynamic-datasource-spring-boot-starter.version>3.3.6</dynamic-datasource-spring-boot-starter.version>
     </properties>
     <dependencies>
 

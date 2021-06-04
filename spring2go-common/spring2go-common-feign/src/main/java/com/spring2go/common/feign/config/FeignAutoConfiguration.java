@@ -10,11 +10,9 @@ import org.springframework.context.annotation.Configuration;
  * @date: 2021-04-16 18:06
  */
 @Configuration
-public class FeignAutoConfiguration
-{
+public class FeignAutoConfiguration {
     @Bean
-    public RequestInterceptor requestInterceptor()
-    {
+    public RequestInterceptor requestInterceptor() {
         return new FeignRequestInterceptor();
     }
 }

@@ -48,3 +48,12 @@ services:
     image: spring2go-monitor
     ports:
       - 9100:9100
+
+  spring2go-xxl-job:
+    build:
+      context: ./spring2go-visual/spring2go-xxl-job
+    restart: always
+    container_name: spring2go-xxl-job
+    image: spring2go-xxl-job
+    ports:
+      - 7100:7100

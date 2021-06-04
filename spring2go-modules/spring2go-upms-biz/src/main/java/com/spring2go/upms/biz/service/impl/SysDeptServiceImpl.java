@@ -1,5 +1,7 @@
 package com.spring2go.upms.biz.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.Master;
+import com.baomidou.dynamic.datasource.annotation.Slave;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -38,6 +40,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      * @param dept 部门信息
      * @return 部门信息集合
      */
+    @Master
     @Override
     public List<SysDept> selectDeptList(SysDeptDTO dept) {
 
@@ -62,6 +65,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      * @param dept 部门列表
      * @return 下拉树结构列表
      */
+    @Slave
     @Override
     public List<DeptTree> selectDeptTree(SysDeptDTO dept) {
         List<SysDept> list = selectDeptList(dept);

@@ -20,9 +20,9 @@ public class SimpleAuthorizeUser implements Serializable {
     private Set<String> permissions;
 
     public SimpleAuthorizeUser(String username, Object originalUser, Set<String> roles, Set<String> permissions) {
-        this.username=username;
-        this.originalUser=originalUser;
-        this.roles=roles;
-        this.permissions=permissions;
+        this.username = username;
+        this.originalUser = originalUser;
+        this.roles = roles;
+        this.permissions = permissions;
     }
 }
