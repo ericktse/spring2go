@@ -32,6 +32,12 @@ spring:
     host: 10.192.180.193
     port: 6379
     password:
+  rabbitmq:
+    #配置rabbitmq连接信息
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     #nacos
     nacos:

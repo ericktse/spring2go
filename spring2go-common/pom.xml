@@ -23,5 +23,6 @@
         <module>spring2go-common-lock</module>
         <module>spring2go-common-job</module>
         <module>spring2go-common-datasource</module>
+        <module>spring2go-common-rabbitmq</module>
     </modules>
 </project>

@@ -1,5 +1,7 @@
 package com.spring2go.upms.biz.controller;
 
+import com.spring2go.common.rabbitmq.template.MqTemplate;
+import com.spring2go.common.rabbitmq.template.RabbitMqTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Description: Nacos示例代码
  * @author: xiaobin
@@ -21,6 +26,9 @@ import org.springframework.web.client.RestTemplate;
 public class TestController {
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private MqTemplate mqTemplate;
 
     // 新增restTemplate对象注入方法，注意，此处LoadBalanced注解一定要加上，否则无法远程调用
     @Bean
@@ -46,5 +54,25 @@ public class TestController {
     @RequestMapping("/getEndpoint")
     public String getEndpoint() {
         return endpoint;
+    }
+
+
+    @GetMapping(value = "/queue/{name}")
+    public String queue(@PathVariable String name) {
+
+        Map mao = new HashMap(2);
+        mao.put("name",name);
+        mao.put("age",10);
+        mqTemplate.sendMessage("direct-exchange-text", "direct-queue-test", mao);
+
+        return "Hello queue " + name;
+    }
+
+    @GetMapping(value = "/queue2/{name}")
+    public String queue2(@PathVariable String name) {
+
+        mqTemplate.sendMessage("direct-text2", "direct-test2", name);
+
+        return "Hello queue " + name;
     }
 }
