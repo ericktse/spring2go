@@ -83,7 +83,6 @@ public class RabbitMqTemplate implements MqTemplate, InitializingBean, Disposabl
                     MqListener methodMqListener = method.getAnnotation(MqListener.class);
                     if (null != methodMqListener) {
                         Queue[] queues = createQueue(methodMqListener.queues(), mqComponent);
-
                         createMessageListenerContainer(queues, method, entry.getValue());
                     } else {
                         RabbitListener methodRabbitListener = method.getAnnotation(RabbitListener.class);
@@ -175,6 +174,8 @@ public class RabbitMqTemplate implements MqTemplate, InitializingBean, Disposabl
                     /**通过basic.qos方法设置prefetch_count=1，这样RabbitMQ就会使得每个Consumer在同一个时间点最多处理一个Message，
                      换句话说,在接收到该Consumer的ack前,它不会将新的Message分发给它 */
                     channel.basicQos(1);
+
+                    // TODO:这里使用的是默认SimpleMessageConverter，如果需要实现跨平台，需实现自定义Json MessageConverter
                     Object body = rabbitTemplate.getMessageConverter().fromMessage(message);
                     handle.invoke(clazz, body);
 

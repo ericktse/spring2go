@@ -1,5 +1,6 @@
 package com.spring2go.upms.biz.controller;
 
+import com.spring2go.common.rabbitmq.constant.QueueConstants;
 import com.spring2go.common.rabbitmq.template.MqTemplate;
 import com.spring2go.common.rabbitmq.template.RabbitMqTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,9 +62,9 @@ public class TestController {
     public String queue(@PathVariable String name) {
 
         Map mao = new HashMap(2);
-        mao.put("name",name);
-        mao.put("age",10);
-        mqTemplate.sendMessage("direct-exchange-text", "direct-queue-test", mao);
+        mao.put("name", name);
+        mao.put("age", 10);
+        mqTemplate.sendMessage(QueueConstants.DEFAULT_EXCHANGE, QueueConstants.DEFAULT_QUEUE, mao);
 
         return "Hello queue " + name;
     }

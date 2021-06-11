@@ -11,10 +11,10 @@ public class QueueConstants {
     /**
      * 默认路由
      */
-    public static final String DEFAULT_EXCHANGE = "spirng2go-default-exchange";
+    public static final String DEFAULT_EXCHANGE = "spring2go-default-exchange";
 
     /**
      * 默认队列
      */
-    public static final String DEFAULT_QUEUE = "spirng2go-default-queue";
+    public static final String DEFAULT_QUEUE = "spring2go-default-queue";
 }
