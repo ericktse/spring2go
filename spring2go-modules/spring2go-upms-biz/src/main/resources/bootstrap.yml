@@ -20,7 +20,7 @@ spring:
           url: jdbc:mysql://10.192.180.193:3306/spring2go_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
           username: root
           password: 123456
-          driver-class-name: com.mysql.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+          # driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
         slave:
           url: jdbc:mysql://10.192.180.193:3306/spring2go_upms_2?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
           username: root
@@ -30,7 +30,7 @@ spring:
     active: dev
   redis:
     host: 10.192.180.193
-    port: 6379
+    port: 16379
     password:
   rabbitmq:
     #配置rabbitmq连接信息
@@ -83,7 +83,7 @@ spring2go:
     title: UPMS 系统模块接口文档
   #分布式锁配置
   redisson:
-    address: 10.192.180.193:6379
+    address: 10.192.180.193:16379
     password:
     type: STANDALONE
   shiro:

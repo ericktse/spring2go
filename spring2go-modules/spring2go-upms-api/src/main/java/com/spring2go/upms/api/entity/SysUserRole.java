@@ -1,6 +1,7 @@
 package com.spring2go.upms.api.entity;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * @author: xiaobin
  * @date: 2021-04-08 10:33
  */
+@Data
 public class SysUserRole implements Serializable {
     private static final long serialVersionUID = 1L;
 

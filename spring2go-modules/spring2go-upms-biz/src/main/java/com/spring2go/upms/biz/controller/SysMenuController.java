@@ -2,11 +2,14 @@ package com.spring2go.upms.biz.controller;
 
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.upms.api.entity.SysMenu;
 import com.spring2go.upms.biz.service.SysMenuService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 
 /**
@@ -25,15 +28,12 @@ public class SysMenuController {
     /**
      * 返回当前用户的树形菜单集合
      *
-     * @param parentId 父节点ID
      * @return 当前用户的树形菜单
      */
     @GetMapping
-    public R getUserMenu(Integer parentId) {
-
-        // 获取符合条件的菜单
-//        Set<MenuVO> all = new HashSet<>();
-//        SecurityUtils.getRoles().forEach(roleId -> all.addAll(sysMenuService.findMenuByRoleId(roleId)));
+    public R getUserMenu() {
+        Set<String> roles = SecurityUtils.getRoles();
+        sysMenuService.selectMenuTreeByRoleIds(roles);
         return R.ok();
     }
 

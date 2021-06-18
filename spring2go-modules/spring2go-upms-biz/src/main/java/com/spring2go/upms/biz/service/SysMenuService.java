@@ -5,6 +5,7 @@ import com.spring2go.upms.api.dto.MenuTree;
 import com.spring2go.upms.api.entity.SysMenu;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @description: 系统菜单
@@ -20,4 +21,7 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return 下拉树结构列表
      */
     List<MenuTree> selectMenuTree(Integer parentId);
+
+
+    List<MenuTree> selectMenuTreeByRoleIds(Set<String> roleIds);
 }

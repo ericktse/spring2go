@@ -7,13 +7,15 @@ import com.spring2go.upms.api.dto.DeptTree;
 import com.spring2go.upms.api.dto.MenuTree;
 import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.api.entity.SysMenu;
+import com.spring2go.upms.api.entity.SysUserRole;
 import com.spring2go.upms.biz.mapper.SysMenuMapper;
 import com.spring2go.upms.biz.service.SysMenuService;
+import com.spring2go.upms.biz.service.SysUserRoleService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,7 +24,10 @@ import java.util.stream.Collectors;
  * @date: 2021-04-08 11:01
  */
 @Service
+@RequiredArgsConstructor
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> implements SysMenuService {
+
+    private final SysMenuMapper sysMenuMapper;
 
     /**
      * 查询菜单数据-下拉树结构
@@ -42,6 +47,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                     BeanUtils.copyProperties(item, node);
                     return node;
                 }).collect(Collectors.toList());
+        return TreeUtils.build(treeList);
+    }
+
+    @Override
+    public List<MenuTree> selectMenuTreeByRoleIds(Set<String> roleIds) {
+
+        List<SysMenu> all = new ArrayList<>();
+        roleIds.stream().forEach(roleId -> {
+            all.addAll(sysMenuMapper.listMenusByRoleId(roleId));
+        });
+
+        List<MenuTree> treeList = all.stream().filter(item -> !item.getMenuId().equals(item.getParentId()))
+                .sorted(Comparator.comparingInt(SysMenu::getOrderNum)).map(item -> {
+                    MenuTree node = new MenuTree();
+                    BeanUtils.copyProperties(item, node);
+                    return node;
+                }).collect(Collectors.toList());
+
         return TreeUtils.build(treeList);
     }
 }

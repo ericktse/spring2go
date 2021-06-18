@@ -26,14 +26,29 @@ public interface RemoteUserService {
      * 通过用户名查询用户信息
      *
      * @param username 用户名
+     * @param from     来源
      * @return 结果
      */
     @GetMapping(value = "/sys/user/getInfoByUserName")
     R<SysUser> getInfoByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
+    /**
+     * 通过名称获取角色
+     *
+     * @param username 用户名
+     * @param from     来源
+     * @return com.spring2go.common.core.domain.R<java.util.Set < java.lang.String>>
+     */
     @GetMapping(value = "/sys/role/getRoleByUserName")
     R<Set<String>> getRoleByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
+    /**
+     * 通过名称获取权限
+     *
+     * @param username 用户名
+     * @param from     来源
+     * @return com.spring2go.common.core.domain.R<java.util.Set < java.lang.String>>
+     */
     @GetMapping(value = "/sys/role/getPermsByUserName")
     R<Set<String>> getPermsByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 }

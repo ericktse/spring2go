@@ -6,6 +6,7 @@ import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.redis.util.RedisUtils;
 import com.spring2go.common.security.domain.SimpleAuthorizeUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @author: xiaobin
  * @date: 2021-05-13 14:25
  */
+@Component
 @RequiredArgsConstructor
 public class TokenUtils {
 

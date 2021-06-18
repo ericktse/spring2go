@@ -1,9 +1,15 @@
 package com.spring2go.upms.biz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.spring2go.upms.api.dto.UserDTO;
 import com.spring2go.upms.api.entity.SysUser;
 import com.spring2go.upms.api.dto.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @Description: 系统用户Mapper
@@ -20,4 +26,12 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return userVo
      */
     UserInfo getUserInfoById(Integer id);
+
+    /**
+     * 分页查询用户信息（含角色）
+     * @param page 分页
+     * @param userDTO 查询参数
+     * @return list
+     */
+    IPage<UserInfo> getUserWithRolePage(Page page, @Param("query") UserDTO userDTO);
 }

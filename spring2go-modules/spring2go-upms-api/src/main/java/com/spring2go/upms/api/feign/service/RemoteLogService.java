@@ -22,6 +22,7 @@ public interface RemoteLogService {
      * 保存日志
      *
      * @param sysLog 日志实体
+     * @param from   来源
      * @return success、false
      */
     @PostMapping("/sys/log")

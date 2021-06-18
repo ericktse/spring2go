@@ -2,7 +2,7 @@ package com.spring2go.upms.biz.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spring2go.upms.api.dto.SysLogDTO;
+import com.spring2go.upms.api.dto.LogDTO;
 import com.spring2go.upms.api.entity.SysLog;
 
 /**
@@ -20,5 +20,5 @@ public interface SysLogService extends IService<SysLog> {
      * @param pageSize 分页大小
      * @return
      */
-    Page getLogByPage(SysLogDTO sysLog, Integer pageNo, Integer pageSize);
+    Page getLogByPage(LogDTO sysLog, Integer pageNo, Integer pageSize);
 }

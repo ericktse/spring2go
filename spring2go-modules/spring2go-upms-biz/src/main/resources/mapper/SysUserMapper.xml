@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring2go.upms.biz.mapper.SysUserMapper">
-    <!-- userVo结果集 -->
-    <resultMap id="userVoResultMap" type="com.spring2go.upms.api.dto.UserInfo">
+    <!-- userInfo结果集 -->
+    <resultMap id="userInfo" type="com.spring2go.upms.api.dto.UserInfo">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -17,12 +17,35 @@
         <result column="deptName" property="deptName"/>
     </resultMap>
 
-    <select id="getUserInfoById" resultMap="userVoResultMap">
+    <select id="getUserInfoById" resultMap="userInfo">
         SELECT
         *
         FROM
         sys_user AS `user`
         WHERE
         `user`.user_id = #{id}
+    </select>
+
+    <select id="getUserWithRolePage" resultMap="userInfo">
+        SELECT
+        `user`.user_id,
+        `user`.user_name,
+        `user`.phone,
+        `user`.avatar,
+        `user`.dept_id,
+        `user`.create_time,
+        `user`.update_time,
+        `user`.del_flag,
+        d.dept_name AS deptName
+        FROM
+        sys_user AS `user`
+        LEFT JOIN sys_dept AS d ON d.dept_id = `user`.dept_id
+        <where>
+            `user`.del_flag = '0'
+            <if test="query.username != null and query.username != ''">
+                and `user`.user_name LIKE CONCAT('%',#{query.username},'%')
+            </if>
+        </where>
+        ORDER BY `user`.create_time DESC
     </select>
 </mapper>

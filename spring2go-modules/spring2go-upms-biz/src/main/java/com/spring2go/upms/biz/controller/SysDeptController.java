@@ -5,7 +5,7 @@ import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.annotation.Inner;
-import com.spring2go.upms.api.dto.SysDeptDTO;
+import com.spring2go.upms.api.dto.DeptDTO;
 import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.biz.service.SysDeptService;
 import io.swagger.annotations.Api;
@@ -34,7 +34,7 @@ public class SysDeptController extends BaseController {
      */
     @Inner
     @GetMapping(value = "/{deptId}")
-    public R select(@PathVariable Long deptId) {
+    public R getById(@PathVariable Long deptId) {
         return R.ok(sysDeptService.getById(deptId));
     }
 
@@ -43,7 +43,7 @@ public class SysDeptController extends BaseController {
      */
     @Log("获取部门列表")
     @GetMapping("/list")
-    public R list(SysDeptDTO dept) {
+    public R list(DeptDTO dept) {
         List<SysDept> list = sysDeptService.selectDeptList(dept);
         return R.ok(list);
     }
@@ -53,7 +53,7 @@ public class SysDeptController extends BaseController {
      */
     @GetMapping("/tree")
     @RequiresPermissions({"system:dept:tree"})
-    public R tree(SysDeptDTO dept) {
+    public R tree(DeptDTO dept) {
         return R.ok(sysDeptService.selectDeptTree(dept));
     }
 
@@ -61,7 +61,7 @@ public class SysDeptController extends BaseController {
      * 新增部门
      */
     @PostMapping
-    public R add(@Validated @RequestBody SysDept dept) {
+    public R save(@Validated @RequestBody SysDept dept) {
         if (CommonConstants.NOT_UNIQUE.equals(sysDeptService.checkDeptNameUnique(dept))) {
             return R.failed("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
@@ -73,7 +73,7 @@ public class SysDeptController extends BaseController {
      * 修改部门
      */
     @PutMapping
-    public R edit(@Validated @RequestBody SysDept dept) {
+    public R update(@Validated @RequestBody SysDept dept) {
         if (CommonConstants.NOT_UNIQUE.equals(sysDeptService.checkDeptNameUnique(dept))) {
             return R.failed("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(dept.getDeptId())) {
@@ -89,7 +89,7 @@ public class SysDeptController extends BaseController {
      * 删除部门
      */
     @DeleteMapping("/{deptId}")
-    public R remove(@PathVariable Long deptId) {
+    public R removeById(@PathVariable Long deptId) {
         if (sysDeptService.hasChildByDeptId(deptId)) {
             return R.failed("存在下级部门,不允许删除");
         }

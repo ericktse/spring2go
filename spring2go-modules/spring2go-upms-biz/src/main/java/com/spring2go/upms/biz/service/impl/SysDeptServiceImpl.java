@@ -10,7 +10,7 @@ import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.TreeUtils;
 import com.spring2go.upms.api.dto.DeptTree;
-import com.spring2go.upms.api.dto.SysDeptDTO;
+import com.spring2go.upms.api.dto.DeptDTO;
 import com.spring2go.upms.api.entity.SysDept;
 import com.spring2go.upms.api.entity.SysUser;
 import com.spring2go.upms.biz.mapper.SysDeptMapper;
@@ -42,7 +42,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      */
     @Master
     @Override
-    public List<SysDept> selectDeptList(SysDeptDTO dept) {
+    public List<SysDept> selectDeptList(DeptDTO dept) {
 
         LambdaQueryWrapper<SysDept> queryWrapper = Wrappers.lambdaQuery();
         if (dept.getParentId() != null && dept.getParentId() != 0) {
@@ -67,7 +67,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      */
     @Slave
     @Override
-    public List<DeptTree> selectDeptTree(SysDeptDTO dept) {
+    public List<DeptTree> selectDeptTree(DeptDTO dept) {
         List<SysDept> list = selectDeptList(dept);
 
         List<DeptTree> treeList = list.stream().filter(item -> !item.getDeptId().equals(item.getParentId()))

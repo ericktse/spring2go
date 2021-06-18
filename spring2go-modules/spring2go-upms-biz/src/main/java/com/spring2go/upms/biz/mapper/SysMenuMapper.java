@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.spring2go.upms.api.entity.SysMenu;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @description: 系统菜单
  * @author: xiaobin
@@ -11,4 +13,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
+
+    /**
+     * 通过角色编号查询菜单
+     *
+     * @param roleId 角色ID
+     * @return
+     */
+    List<SysMenu> listMenusByRoleId(String roleId);
 }

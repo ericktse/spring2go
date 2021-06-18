@@ -29,7 +29,7 @@ public class SysPostController extends BaseController {
      * 根据岗位编号获取详细信息
      */
     @GetMapping(value = "/{postId}")
-    public R select(@PathVariable Long postId) {
+    public R select(@PathVariable Integer postId) {
         return R.ok(sysPostService.getById(postId));
     }
 
