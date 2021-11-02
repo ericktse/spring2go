@@ -26,7 +26,7 @@
         </dependency>
         <dependency>
             <groupId>com.spring2go</groupId>
-            <artifactId>spring2go-common-fegin</artifactId>
+            <artifactId>spring2go-common-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- mybatis-->

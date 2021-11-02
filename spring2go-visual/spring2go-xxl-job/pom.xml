@@ -8,7 +8,7 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>spring2go-job</artifactId>
+    <artifactId>spring2go-xxl-job</artifactId>
     <description>定时任务模块</description>
 
     <dependencies>
