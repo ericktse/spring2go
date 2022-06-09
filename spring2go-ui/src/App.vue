@@ -1,26 +1,19 @@
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+  <ConfigProvider :locale="getAntdLocale">
+    <AppProvider>
+      <RouterView />
+    </AppProvider>
+  </ConfigProvider>
 </template>
 
-<script>
-  export default {
-    name: 'app',
-    data() {
-      return {}
-    },
-    watch: {},
-    created() {
-    },
-    methods: {},
-    computed: {}
-  }
+<script lang="ts" setup>
+  import { ConfigProvider } from 'ant-design-vue';
+  import { AppProvider } from '/@/components/Application';
+  import { useTitle } from '/@/hooks/web/useTitle';
+  import { useLocale } from '/@/locales/useLocale';
+
+  // support Multi-language
+  const { getAntdLocale } = useLocale();
+
+  useTitle();
 </script>
-<style lang="scss">
-  #app {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
-</style>

@@ -30,5 +30,40 @@ spring2go
 └── spring2go-visual
      └── spring2go-monitor -- 服务监控 [5001]
      ├── spring2go-codegen -- 图形化代码生成 [5002]
-     └── spring2go-job -- 分布式定时任务管理台 [5003]
+     └── spring2go-xxl-job -- 分布式定时任务管理台 [5003]
 ```
+
+## 微服务技术栈
+SpringCloud Alibaba 技术栈
+
+1. 服务注册发现 Nacos √
+2. 统一配置中心 Nacos √
+3. 路由网关 Gateway √
+4. 分布式 http feign √
+5. 熔断降级、限流 Sentinel √
+6. 分布式任务 xxl-job √
+7. Redisson分布式锁 √
+8. 服务监控 SpringBootAdmin √
+9. 消息中间件 RabbitMQ √
+10. 消息总线 √
+11. 分布式事务 Seata 
+12. 支持 docker-compose、jenkins √
+13. 支持 k8s
+14. 分库分表 shardingsphere 
+15. 分布式文件 Minio、阿里OSS √
+16. 统一权限控制 JWT + Shiro √
+17. CAS 单点登录
+18. 链路跟踪 Skywarking 
+19. 分布式日志 elk + kafaka
+
+
+## 待办事项
+- spring2go-ui
+- spring2go-nacos
+- spring2go-sentinel
+- spring2go-common-seata
+- spring2go-common-shardingsphere
+- spring2go-common-rocketmq
+- spring2go-modules
+  - spring2go-demo-api
+  - spring2go-demo-biz
