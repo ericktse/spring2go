@@ -13,6 +13,10 @@
     <packaging>pom</packaging>
 
     <modules>
+        <!--demo 模块-->
+        <module>spring2go-demo-api</module>
+        <module>spring2go-demo-biz</module>
+        <!--权限管理模块-->
         <module>spring2go-upms-api</module>
         <module>spring2go-upms-biz</module>
     </modules>

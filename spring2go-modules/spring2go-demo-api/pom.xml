@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.spring2go</groupId>
+        <artifactId>spring2go-modules</artifactId>
+        <version>0.0.1</version>
+    </parent>
+
+    <artifactId>spring2go-demo-api</artifactId>
+    <description>module demo 模块</description>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- spring2go 内部依赖-->
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-swagger</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-feign</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- mybatis-->
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-mybatis</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
