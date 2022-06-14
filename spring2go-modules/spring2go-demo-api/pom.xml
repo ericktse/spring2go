@@ -29,7 +29,6 @@
             <artifactId>spring2go-common-feign</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <!-- mybatis-->
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-mybatis</artifactId>

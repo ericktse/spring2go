@@ -25,8 +25,8 @@ import java.util.List;
 @Api(tags = "部门管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sys/dept")
-public class SysDeptController extends BaseController {
+@RequestMapping("/sys/department")
+public class SysDepartmentController extends BaseController {
 
     private final SysDeptService sysDeptService;
 
@@ -35,7 +35,7 @@ public class SysDeptController extends BaseController {
      */
     @ApiOperation("根据部门ID获取详情")
     @Inner
-    @GetMapping(value = "/{deptId}")
+    @GetMapping(value = "/{id}")
     public R getById(@PathVariable Long deptId) {
         return R.ok(sysDeptService.getById(deptId));
     }
@@ -90,7 +90,7 @@ public class SysDeptController extends BaseController {
     /**
      * 删除部门
      */
-    @DeleteMapping("/{deptId}")
+    @DeleteMapping("/{id}")
     public R removeById(@PathVariable Long deptId) {
         if (sysDeptService.hasChildByDeptId(deptId)) {
             return R.failed("存在下级部门,不允许删除");

@@ -20,7 +20,7 @@ import java.util.List;
 @Api("系统岗位管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sys/post")
+@RequestMapping("/sys/position")
 public class SysPositionController extends BaseController {
 
     private final SysPositionService sysPositionService;
@@ -28,7 +28,7 @@ public class SysPositionController extends BaseController {
     /**
      * 根据岗位编号获取详细信息
      */
-    @GetMapping(value = "/{postId}")
+    @GetMapping(value = "/{id}")
     public R select(@PathVariable Integer postId) {
         return R.ok(sysPositionService.getById(postId));
     }
@@ -66,7 +66,7 @@ public class SysPositionController extends BaseController {
     /**
      * 删除岗位
      */
-    @DeleteMapping("/{postId}")
+    @DeleteMapping("/{id}")
     public R remove(@PathVariable Long postId) {
         return R.ok(sysPositionService.removeById(postId));
     }

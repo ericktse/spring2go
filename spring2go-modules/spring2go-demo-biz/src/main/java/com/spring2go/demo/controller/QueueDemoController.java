@@ -2,6 +2,7 @@ package com.spring2go.demo.controller;
 
 import com.spring2go.common.amqp.constant.AmqpConstants;
 import com.spring2go.common.amqp.template.AmqpTemplate;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO
+ * 队列示例
  *
  * @author xiaobin
  */
+@Api(tags = "QUEUE示例")
 @RestController
 public class QueueDemoController {
 

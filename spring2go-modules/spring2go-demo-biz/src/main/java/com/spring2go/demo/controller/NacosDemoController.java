@@ -1,5 +1,6 @@
 package com.spring2go.demo.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
  * @author: xiaobin
  * @date: 2021-04-13 10:00
  */
+@Api(tags = "Nacos示例")
 @RestController
 public class NacosDemoController {
     @Autowired
@@ -28,7 +30,7 @@ public class NacosDemoController {
 
     @GetMapping("/nacos")
     public String hello() {
-        return restTemplate.getForObject("http://spring2go-upms/hello/" + "world", String.class);
+        return restTemplate.getForObject("http://spring2go-system/hello/" + "world", String.class);
     }
 
     @GetMapping(value = "/hello/{name}")

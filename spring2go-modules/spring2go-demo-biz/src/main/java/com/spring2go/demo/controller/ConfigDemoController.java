@@ -1,5 +1,6 @@
 package com.spring2go.demo.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * @Description: Nacos示例代码
+ * @Description: Config示例代码
  * @author: xiaobin
  * @date: 2021-04-13 10:00
  */
+@Api(tags = "Config示例")
 @RestController
 @RefreshScope // 动态刷新nacos配置。RefreshScope与RestTemplate存在嵌套引用
 public class ConfigDemoController {

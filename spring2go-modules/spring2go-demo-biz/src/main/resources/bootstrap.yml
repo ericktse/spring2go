@@ -75,12 +75,12 @@ spring2go:
   amqp:
     enabled: false
   xxljob:
-    enabled: true
+    enabled: false
     adminAddresses: http://127.0.0.1:7100/xxl-job-admin
     accessToken:
     appname: xxl-job-executor-sample
     address:
-    ip:
+    ip: 127.0.0.1
     port: 9999
     logpath: /applogs
     logretentiondays: 30
@@ -100,10 +100,10 @@ spring2go:
       /sys/role/getPermsByUserName: anon
       /sys/log: anon
 
-# swagger 是否启动，这里暂时屏蔽
-springfox:
-  documentation:
-    enabled: true
+## swagger 是否启动，这里暂时屏蔽
+#springfox:
+#  documentation:
+#    enabled: true
 
 # shiro的屏蔽非常反人类，必须设置这么多个false
 # TODO：此处仅为了方便测试，暂时关闭，生产禁止使用
