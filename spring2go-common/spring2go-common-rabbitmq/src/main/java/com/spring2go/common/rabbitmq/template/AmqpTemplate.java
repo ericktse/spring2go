@@ -6,7 +6,7 @@ package com.spring2go.common.rabbitmq.template;
  * @author: xiaobin
  * @date: 2021-06-08 15:27
  */
-public interface MqTemplate {
+public interface AmqpTemplate {
 
     /**
      * 发送消息

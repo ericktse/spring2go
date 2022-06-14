@@ -65,9 +65,17 @@ mybatis-plus:
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+# rabbit健康检查，测试关闭
+management:
+  health:
+    rabbit:
+      enabled: false
+
 spring2go:
+  amqp:
+    enabled: false
   xxljob:
-    enable: true
+    enabled: true
     adminAddresses: http://127.0.0.1:7100/xxl-job-admin
     accessToken:
     appname: xxl-job-executor-sample
@@ -105,5 +113,4 @@ shiro:
   web:
     enabled: false
   enabled: false
-
 

@@ -64,5 +64,5 @@ public class XxlJobProperties {
     /**
      * 是否开启xxljob
      */
-    private Boolean enable = true;
+    private Boolean enabled = true;
 }

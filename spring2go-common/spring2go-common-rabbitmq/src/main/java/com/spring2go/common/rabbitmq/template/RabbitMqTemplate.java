@@ -1,8 +1,8 @@
 package com.spring2go.common.rabbitmq.template;
 
 import com.rabbitmq.client.Channel;
-import com.spring2go.common.rabbitmq.annotation.MqComponent;
-import com.spring2go.common.rabbitmq.annotation.MqListener;
+import com.spring2go.common.rabbitmq.annotation.AmqpComponent;
+import com.spring2go.common.rabbitmq.annotation.AmqpListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Slf4j
 @RequiredArgsConstructor
-public class RabbitMqTemplate implements MqTemplate, InitializingBean, DisposableBean {
+public class RabbitMqTemplate implements AmqpTemplate, InitializingBean, DisposableBean {
 
     private final AmqpAdmin rabbitAdmin;
     private final RabbitTemplate rabbitTemplate;
@@ -58,36 +58,36 @@ public class RabbitMqTemplate implements MqTemplate, InitializingBean, Disposabl
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        Map<String, Object> beansWithMqComponentMap = applicationContext.getBeansWithAnnotation(MqComponent.class);
+        Map<String, Object> beansWithMqComponentMap = applicationContext.getBeansWithAnnotation(AmqpComponent.class);
         Class<? extends Object> clazz = null;
         for (Map.Entry<String, Object> entry : beansWithMqComponentMap.entrySet()) {
             log.info("初始化时队列............");
             //获取到实例对象的class信息
             clazz = entry.getValue().getClass();
             Method[] methods = clazz.getMethods();
-            MqComponent mqComponent = clazz.getAnnotation(MqComponent.class);
-            if (null != mqComponent) {
+            AmqpComponent amqpComponent = clazz.getAnnotation(AmqpComponent.class);
+            if (null != amqpComponent) {
                 //#1 使用自定义MqListener
-                MqListener mqListener = clazz.getAnnotation(MqListener.class);
-                if (null != mqListener) {
-                    createQueue(mqListener.queues(), mqComponent);
+                AmqpListener amqpListener = clazz.getAnnotation(AmqpListener.class);
+                if (null != amqpListener) {
+                    createQueue(amqpListener.queues(), amqpComponent);
                 } else {
                     //#2 使用RabbitListener
                     RabbitListener rabbitListener = clazz.getAnnotation(RabbitListener.class);
                     if (null != rabbitListener) {
-                        createQueue(rabbitListener.queues(), mqComponent);
+                        createQueue(rabbitListener.queues(), amqpComponent);
                     }
                 }
 
                 for (Method method : methods) {
-                    MqListener methodMqListener = method.getAnnotation(MqListener.class);
-                    if (null != methodMqListener) {
-                        Queue[] queues = createQueue(methodMqListener.queues(), mqComponent);
+                    AmqpListener methodAmqpListener = method.getAnnotation(AmqpListener.class);
+                    if (null != methodAmqpListener) {
+                        Queue[] queues = createQueue(methodAmqpListener.queues(), amqpComponent);
                         createMessageListenerContainer(queues, method, entry.getValue());
                     } else {
                         RabbitListener methodRabbitListener = method.getAnnotation(RabbitListener.class);
                         if (null != methodRabbitListener) {
-                            createQueue(methodRabbitListener.queues(), mqComponent);
+                            createQueue(methodRabbitListener.queues(), amqpComponent);
                         }
                     }
                 }
@@ -110,8 +110,8 @@ public class RabbitMqTemplate implements MqTemplate, InitializingBean, Disposabl
      *
      * @param queues
      */
-    private Queue[] createQueue(String[] queues, MqComponent mqComponent) {
-        Exchange exchange = createExchange(mqComponent.exchangeType(), mqComponent.value(), mqComponent.durable(), mqComponent.autoDelete());
+    private Queue[] createQueue(String[] queues, AmqpComponent amqpComponent) {
+        Exchange exchange = createExchange(amqpComponent.exchangeType(), amqpComponent.value(), amqpComponent.durable(), amqpComponent.autoDelete());
         //创建交换机
         rabbitAdmin.declareExchange(exchange);
 

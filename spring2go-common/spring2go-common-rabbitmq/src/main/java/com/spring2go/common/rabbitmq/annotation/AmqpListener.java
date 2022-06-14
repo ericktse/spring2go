@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @MessageMapping
 @Documented
-public @interface MqListener {
+public @interface AmqpListener {
     /**
      * The unique identifier of the container managing for this endpoint.
      * <p>If none is specified an auto-generated one is provided.

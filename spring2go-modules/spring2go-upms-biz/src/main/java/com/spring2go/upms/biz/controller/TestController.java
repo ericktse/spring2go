@@ -1,12 +1,10 @@
 package com.spring2go.upms.biz.controller;
 
-import com.spring2go.common.rabbitmq.constant.QueueConstants;
-import com.spring2go.common.rabbitmq.template.MqTemplate;
-import com.spring2go.common.rabbitmq.template.RabbitMqTemplate;
+import com.spring2go.common.rabbitmq.constant.AmqpConstants;
+import com.spring2go.common.rabbitmq.template.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +27,7 @@ public class TestController {
     private RestTemplate restTemplate;
 
     @Autowired
-    private MqTemplate mqTemplate;
+    private AmqpTemplate amqpTemplate;
 
     // 新增restTemplate对象注入方法，注意，此处LoadBalanced注解一定要加上，否则无法远程调用
     @Bean
@@ -64,7 +62,7 @@ public class TestController {
         Map mao = new HashMap(2);
         mao.put("name", name);
         mao.put("age", 10);
-        mqTemplate.sendMessage(QueueConstants.DEFAULT_EXCHANGE, QueueConstants.DEFAULT_QUEUE, mao);
+        amqpTemplate.sendMessage(AmqpConstants.DEFAULT_EXCHANGE, AmqpConstants.DEFAULT_QUEUE, mao);
 
         return "Hello queue " + name;
     }
@@ -72,7 +70,7 @@ public class TestController {
     @GetMapping(value = "/queue2/{name}")
     public String queue2(@PathVariable String name) {
 
-        mqTemplate.sendMessage("direct-text2", "direct-test2", name);
+        amqpTemplate.sendMessage("direct-text2", "direct-test2", name);
 
         return "Hello queue " + name;
     }

@@ -6,7 +6,7 @@ package com.spring2go.common.rabbitmq.constant;
  * @author: xiaobin
  * @date: 2021-06-09 16:12
  */
-public class QueueConstants {
+public class AmqpConstants {
 
     /**
      * 默认路由

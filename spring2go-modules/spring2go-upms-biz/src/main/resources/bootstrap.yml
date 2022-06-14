@@ -69,7 +69,7 @@ logging:
 
 spring2go:
   xxljob:
-    enable: true
+    enabled: true
     adminAddresses: http://10.192.180.170:7100/xxl-job-admin
     accessToken:
     appname: xxl-job-executor-sample

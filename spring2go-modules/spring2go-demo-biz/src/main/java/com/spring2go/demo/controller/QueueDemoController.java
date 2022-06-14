@@ -1,7 +1,7 @@
 package com.spring2go.demo.controller;
 
-import com.spring2go.common.rabbitmq.constant.QueueConstants;
-import com.spring2go.common.rabbitmq.template.MqTemplate;
+import com.spring2go.common.rabbitmq.constant.AmqpConstants;
+import com.spring2go.common.rabbitmq.template.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class QueueDemoController {
 
     @Lazy
     @Autowired
-    private MqTemplate mqTemplate;
+    private AmqpTemplate amqpTemplate;
 
     @GetMapping(value = "/queue/{name}")
     public String queue(@PathVariable String name) {
@@ -29,7 +29,7 @@ public class QueueDemoController {
         Map mao = new HashMap(2);
         mao.put("name", name);
         mao.put("age", 10);
-        mqTemplate.sendMessage(QueueConstants.DEFAULT_EXCHANGE, QueueConstants.DEFAULT_QUEUE, mao);
+        amqpTemplate.sendMessage(AmqpConstants.DEFAULT_EXCHANGE, AmqpConstants.DEFAULT_QUEUE, mao);
 
         return "Hello queue " + name;
     }
@@ -37,7 +37,7 @@ public class QueueDemoController {
     @GetMapping(value = "/queue2/{name}")
     public String queue2(@PathVariable String name) {
 
-        mqTemplate.sendMessage("direct-text2", "direct-test2", name);
+        amqpTemplate.sendMessage("direct-text2", "direct-test2", name);
 
         return "Hello queue " + name;
     }

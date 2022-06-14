@@ -16,7 +16,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Component
-public @interface MqComponent {
+public @interface AmqpComponent {
 
     /**
      * 等同exchange名称
