@@ -2,7 +2,7 @@ package com.spring2go.system.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring2go.common.core.domain.R;
-import com.spring2go.system.entity.SysDept;
+import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.service.SysDeptService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SysDeptControllerTest {
+class SysDepartmentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -35,7 +35,7 @@ class SysDeptControllerTest {
     @Test
     void getById() throws Exception {
         // given
-        SysDept dept = new SysDept();
+        SysDepartment dept = new SysDepartment();
         dept.setDeptId(1L);
         dept.setDeptName("测试部门");
         given(sysDeptService.getById(1L))

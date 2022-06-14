@@ -1,4 +1,4 @@
-package com.spring2go.system.dto;
+package com.spring2go.system.vo;
 
 import com.spring2go.system.entity.SysUser;
 import lombok.Data;

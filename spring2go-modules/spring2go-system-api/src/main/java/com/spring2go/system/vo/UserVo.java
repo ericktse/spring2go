@@ -1,4 +1,4 @@
-package com.spring2go.system.dto;
+package com.spring2go.system.vo;
 
 import com.spring2go.system.entity.SysUser;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.List;
  * @date: 2021-06-17 18:06
  */
 @Data
-public class UserDTO extends SysUser {
+public class UserVo extends SysUser {
 
     private List<Integer> role;
 

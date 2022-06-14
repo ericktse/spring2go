@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.util.StringUtils;
-import com.spring2go.system.dto.LogDTO;
+import com.spring2go.system.vo.LogVo;
 import com.spring2go.system.entity.SysLog;
 import com.spring2go.system.mapper.SysLogMapper;
 import com.spring2go.system.service.SysLogService;
@@ -28,7 +28,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
      * @return
      */
     @Override
-    public Page getLogByPage(LogDTO sysLog, Integer pageNo, Integer pageSize) {
+    public Page getLogByPage(LogVo sysLog, Integer pageNo, Integer pageSize) {
         LambdaQueryWrapper<SysLog> wrapper = Wrappers.lambdaQuery();
         if (StringUtils.isNotEmpty(sysLog.getType())) {
             wrapper.eq(SysLog::getType, sysLog.getType());

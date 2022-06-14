@@ -3,7 +3,7 @@ package com.spring2go.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spring2go.system.dto.UserDTO;
+import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
 
 /**
@@ -30,9 +30,9 @@ public interface SysUserService extends IService<SysUser> {
     SysUser getUserInfoByName(String username);
 
 
-    Boolean saveUser(UserDTO userDto);
+    Boolean saveUser(UserVo userVo);
 
-    Boolean updateUser(UserDTO userDto);
+    Boolean updateUser(UserVo userVo);
 
-    IPage getUserWithRolePage(Page page, UserDTO userDTO);
+    IPage getUserWithRolePage(Page page, UserVo userVo);
 }

@@ -10,9 +10,9 @@ import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.TreeUtils;
 import com.spring2go.system.mapper.SysDeptMapper;
-import com.spring2go.system.dto.DeptTree;
-import com.spring2go.system.dto.DeptDTO;
-import com.spring2go.system.entity.SysDept;
+import com.spring2go.system.vo.DepartmentTree;
+import com.spring2go.system.vo.DepartmentVo;
+import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.service.SysDeptService;
 import com.spring2go.system.service.SysUserService;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> implements SysDeptService {
+public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment> implements SysDeptService {
 
     private final SysUserService sysUserService;
 
@@ -42,20 +42,20 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      */
     @Master
     @Override
-    public List<SysDept> selectDeptList(DeptDTO dept) {
+    public List<SysDepartment> selectDeptList(DepartmentVo dept) {
 
-        LambdaQueryWrapper<SysDept> queryWrapper = Wrappers.lambdaQuery();
+        LambdaQueryWrapper<SysDepartment> queryWrapper = Wrappers.lambdaQuery();
         if (dept.getParentId() != null && dept.getParentId() != 0) {
-            queryWrapper.eq(SysDept::getParentId, dept.getParentId());
+            queryWrapper.eq(SysDepartment::getParentId, dept.getParentId());
         }
         if (StringUtils.isNotEmpty(dept.getDeptName())) {
-            queryWrapper.like(SysDept::getDeptName, dept.getDeptName());
+            queryWrapper.like(SysDepartment::getDeptName, dept.getDeptName());
         }
-        queryWrapper.eq(SysDept::getStatus, "0");
-        queryWrapper.eq(SysDept::getDelFlag, "0");
-        queryWrapper.orderByAsc(SysDept::getParentId, SysDept::getOrderNum);
+        queryWrapper.eq(SysDepartment::getStatus, "0");
+        queryWrapper.eq(SysDepartment::getDelFlag, "0");
+        queryWrapper.orderByAsc(SysDepartment::getParentId, SysDepartment::getOrderNum);
 
-        List<SysDept> list = this.list(queryWrapper);
+        List<SysDepartment> list = this.list(queryWrapper);
         return list;
     }
 
@@ -67,12 +67,12 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      */
     @Slave
     @Override
-    public List<DeptTree> selectDeptTree(DeptDTO dept) {
-        List<SysDept> list = selectDeptList(dept);
+    public List<DepartmentTree> selectDeptTree(DepartmentVo dept) {
+        List<SysDepartment> list = selectDeptList(dept);
 
-        List<DeptTree> treeList = list.stream().filter(item -> !item.getDeptId().equals(item.getParentId()))
-                .sorted(Comparator.comparingInt(SysDept::getOrderNum)).map(item -> {
-                    DeptTree node = new DeptTree();
+        List<DepartmentTree> treeList = list.stream().filter(item -> !item.getDeptId().equals(item.getParentId()))
+                .sorted(Comparator.comparingInt(SysDepartment::getOrderNum)).map(item -> {
+                    DepartmentTree node = new DepartmentTree();
                     node.setId(item.getDeptId());
                     node.setParentId(item.getParentId());
                     node.setName(item.getDeptName());
@@ -88,14 +88,14 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      * @return 结果
      */
     @Override
-    public String checkDeptNameUnique(SysDept dept) {
+    public String checkDeptNameUnique(SysDepartment dept) {
         Long deptId = StringUtils.isNull(dept.getDeptId()) ? -1L : dept.getDeptId();
-        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<SysDepartment> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .eq("dept_name", dept.getDeptName())
                 .eq("parent_id", dept.getParentId());
 
-        SysDept info = this.getOne(queryWrapper);
+        SysDepartment info = this.getOne(queryWrapper);
 
         if (StringUtils.isNotNull(info) && info.getDeptId().longValue() != deptId.longValue()) {
             return CommonConstants.NOT_UNIQUE;
@@ -111,7 +111,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
      */
     @Override
     public boolean hasChildByDeptId(Long deptId) {
-        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<>();
+        QueryWrapper<SysDepartment> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .eq("del_flag", "0")
                 .eq("parent_id", deptId);

@@ -9,7 +9,7 @@ import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.system.mapper.SysUserMapper;
 import com.spring2go.system.service.SysUserRoleService;
-import com.spring2go.system.dto.UserDTO;
+import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.entity.SysUserRole;
 import com.spring2go.system.service.SysUserService;
@@ -51,18 +51,18 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 保存用户信息
      *
-     * @param userDto DTO 对象
+     * @param userVo DTO 对象
      * @return success/fail
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean saveUser(UserDTO userDto) {
+    public Boolean saveUser(UserVo userVo) {
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userDto, sysUser);
+        BeanUtils.copyProperties(userVo, sysUser);
         sysUser.setDelFlag(CommonConstants.NORMAL);
-        sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
+        sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
         baseMapper.insert(sysUser);
-        List<SysUserRole> userRoleList = userDto.getRole().stream().map(roleId -> {
+        List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
             SysUserRole userRole = new SysUserRole();
             userRole.setUserId(sysUser.getUserId());
             userRole.setRoleId(roleId);
@@ -73,20 +73,20 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
 
     @Override
-    public Boolean updateUser(UserDTO userDto) {
+    public Boolean updateUser(UserVo userVo) {
         SysUser sysUser = new SysUser();
-        BeanUtils.copyProperties(userDto, sysUser);
+        BeanUtils.copyProperties(userVo, sysUser);
         sysUser.setUpdateTime(DateUtils.now());
 
-        if (StringUtils.isNotEmpty(userDto.getPassword())) {
-            sysUser.setPassword(ENCODER.encode(userDto.getPassword()));
+        if (StringUtils.isNotEmpty(userVo.getPassword())) {
+            sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
         }
         this.updateById(sysUser);
 
         sysUserRoleService
-                .remove(Wrappers.<SysUserRole>update().lambda().eq(SysUserRole::getUserId, userDto.getUserId()));
+                .remove(Wrappers.<SysUserRole>update().lambda().eq(SysUserRole::getUserId, userVo.getUserId()));
 
-        List<SysUserRole> userRoleList = userDto.getRole().stream().map(roleId -> {
+        List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
             SysUserRole userRole = new SysUserRole();
             userRole.setUserId(sysUser.getUserId());
             userRole.setRoleId(roleId);
@@ -98,11 +98,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 分页查询用户信息（含有角色信息）
      * @param page 分页对象
-     * @param userDTO 参数列表
+     * @param userVo 参数列表
      * @return
      */
     @Override
-    public IPage getUserWithRolePage(Page page, UserDTO userDTO) {
-        return baseMapper.getUserWithRolePage(page, userDTO);
+    public IPage getUserWithRolePage(Page page, UserVo userVo) {
+        return baseMapper.getUserWithRolePage(page, userVo);
     }
 }

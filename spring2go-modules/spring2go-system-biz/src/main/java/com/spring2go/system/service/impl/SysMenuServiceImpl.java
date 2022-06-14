@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.util.TreeUtils;
 import com.spring2go.system.mapper.SysMenuMapper;
-import com.spring2go.system.dto.MenuTree;
+import com.spring2go.system.vo.MenuTree;
 import com.spring2go.system.entity.SysMenu;
 import com.spring2go.system.service.SysMenuService;
 import lombok.RequiredArgsConstructor;

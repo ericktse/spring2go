@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.security.annotation.Inner;
-import com.spring2go.system.dto.RoleDTO;
+import com.spring2go.system.vo.RoleVo;
 import com.spring2go.system.entity.SysRole;
 import com.spring2go.system.service.SysRoleMenuService;
 import com.spring2go.system.service.SysRoleService;
@@ -117,11 +117,11 @@ public class SysRoleController extends BaseController {
     /**
      * 更新角色菜单
      *
-     * @param roleDto 角色对象
+     * @param roleVo 角色对象
      * @return success、false
      */
     @PutMapping("/menu")
-    public R saveRoleMenus(@RequestBody RoleDTO roleDto) {
-        return R.ok(sysRoleMenuService.saveRoleMenus(roleDto.getRoleId(), roleDto.getMenuIds()));
+    public R saveRoleMenus(@RequestBody RoleVo roleVo) {
+        return R.ok(sysRoleMenuService.saveRoleMenus(roleVo.getRoleId(), roleVo.getMenuIds()));
     }
 }

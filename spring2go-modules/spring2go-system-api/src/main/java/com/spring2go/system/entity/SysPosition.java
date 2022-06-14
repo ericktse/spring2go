@@ -10,7 +10,7 @@ import lombok.Data;
  * @date: 2021-04-08 10:22
  */
 @Data
-public class SysPost extends BaseEntity {
+public class SysPosition extends BaseEntity {
 
     /**
      * 岗位序号

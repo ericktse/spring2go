@@ -1,4 +1,4 @@
-package com.spring2go.system.dto;
+package com.spring2go.system.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel(value = "部门查询对象")
-public class DeptDTO {
+public class DepartmentVo {
 
     /**
      * 父部门ID

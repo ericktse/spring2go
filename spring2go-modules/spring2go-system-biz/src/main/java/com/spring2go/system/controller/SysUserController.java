@@ -5,7 +5,7 @@ import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
-import com.spring2go.system.dto.UserDTO;
+import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.service.SysUserService;
 import io.swagger.annotations.Api;
@@ -90,34 +90,34 @@ public class SysUserController {
     /**
      * 添加用户
      *
-     * @param userDto 用户信息
+     * @param userVo 用户信息
      * @return success/false
      */
     @PostMapping
-    public R user(@RequestBody UserDTO userDto) {
-        return R.ok(userService.saveUser(userDto));
+    public R user(@RequestBody UserVo userVo) {
+        return R.ok(userService.saveUser(userVo));
     }
 
     /**
      * 更新用户信息
      *
-     * @param userDto 用户信息
+     * @param userVo 用户信息
      * @return R
      */
     @PutMapping("/edit")
-    public R updateUser(@Valid @RequestBody UserDTO userDto) {
-        return R.ok(userService.updateUser(userDto));
+    public R updateUser(@Valid @RequestBody UserVo userVo) {
+        return R.ok(userService.updateUser(userVo));
     }
 
     /**
      * 分页查询用户
      *
      * @param page    参数集
-     * @param userDTO 查询参数列表
+     * @param userVo 查询参数列表
      * @return 用户集合
      */
     @GetMapping("/page")
-    public R getUserPage(Page page, UserDTO userDTO) {
-        return R.ok(userService.getUserWithRolePage(page, userDTO));
+    public R getUserPage(Page page, UserVo userVo) {
+        return R.ok(userService.getUserWithRolePage(page, userVo));
     }
 }

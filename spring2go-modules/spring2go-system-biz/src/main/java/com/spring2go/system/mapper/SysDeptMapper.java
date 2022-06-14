@@ -1,7 +1,7 @@
 package com.spring2go.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spring2go.system.entity.SysDept;
+import com.spring2go.system.entity.SysDepartment;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2021-03-31 17:10
  */
 @Mapper
-public interface SysDeptMapper extends BaseMapper<SysDept> {
+public interface SysDeptMapper extends BaseMapper<SysDepartment> {
 }

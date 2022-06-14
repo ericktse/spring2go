@@ -1,9 +1,10 @@
 package com.spring2go.system.controller;
 
 import com.spring2go.common.core.constant.PageConstants;
+import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.security.annotation.Inner;
-import com.spring2go.system.dto.LogDTO;
+import com.spring2go.system.vo.LogVo;
 import com.spring2go.system.entity.SysLog;
 import com.spring2go.system.service.SysLogService;
 import io.swagger.annotations.Api;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys/log")
-public class SysLogController {
+public class SysLogController extends BaseController {
 
     private final SysLogService sysLogService;
 
@@ -32,7 +33,7 @@ public class SysLogController {
      * @return
      */
     @GetMapping("/page")
-    public R getLogPage(LogDTO sysLog,
+    public R getLogPage(LogVo sysLog,
                         @RequestParam(name = "pageNo", defaultValue = PageConstants.DEFAULT_PAGE_NO) Integer pageNo,
                         @RequestParam(name = "pageSize", defaultValue = PageConstants.DEFAULT_PAGE_SIZE) Integer pageSize) {
         return R.ok(sysLogService.getLogByPage(sysLog, pageNo, pageSize));

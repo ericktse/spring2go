@@ -1,4 +1,4 @@
-package com.spring2go.system.dto;
+package com.spring2go.system.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value = "日志查询对象")
-public class LogDTO {
+public class LogVo {
     /**
      * 查询日志类型
      */

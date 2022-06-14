@@ -1,4 +1,4 @@
-package com.spring2go.system.dto;
+package com.spring2go.system.vo;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date: 2021-06-18 15:00
  */
 @Data
-public class RoleDTO {
+public class RoleVo {
     /**
      * 角色id
      */

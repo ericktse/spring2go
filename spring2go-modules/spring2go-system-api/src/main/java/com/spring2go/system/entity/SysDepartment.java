@@ -13,7 +13,7 @@ import lombok.Data;
  * @date: 2021-03-31 17:07
  */
 @Data
-public class SysDept extends BaseEntity {
+public class SysDepartment extends BaseEntity {
 
     /**
      * 部门ID

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 日志存放路径 -->
-    <property name="log.path" value="logs/spring2go-upms" />
+    <property name="log.path" value="logs/spring2go-system" />
     <!-- 日志输出格式 -->
     <property name="log.pattern" value="%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %cyan(%logger{20}) - [%method,%line] - %msg%n" />
 

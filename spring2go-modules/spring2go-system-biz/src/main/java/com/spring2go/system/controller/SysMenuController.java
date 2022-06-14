@@ -1,5 +1,6 @@
 package com.spring2go.system.controller;
 
+import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.util.SecurityUtils;
@@ -21,7 +22,7 @@ import java.util.Set;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys/menu")
-public class SysMenuController {
+public class SysMenuController extends BaseController {
 
     private final SysMenuService sysMenuService;
 

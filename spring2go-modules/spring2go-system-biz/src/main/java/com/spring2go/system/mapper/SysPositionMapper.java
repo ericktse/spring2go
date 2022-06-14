@@ -1,7 +1,7 @@
 package com.spring2go.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.spring2go.system.entity.SysPost;
+import com.spring2go.system.entity.SysPosition;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2021/4/8 10:51
  */
 @Mapper
-public interface SysPostMapper extends BaseMapper<SysPost> {
+public interface SysPositionMapper extends BaseMapper<SysPosition> {
 }

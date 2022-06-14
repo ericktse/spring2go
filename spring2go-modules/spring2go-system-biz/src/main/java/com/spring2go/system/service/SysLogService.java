@@ -2,7 +2,7 @@ package com.spring2go.system.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spring2go.system.dto.LogDTO;
+import com.spring2go.system.vo.LogVo;
 import com.spring2go.system.entity.SysLog;
 
 /**
@@ -20,5 +20,5 @@ public interface SysLogService extends IService<SysLog> {
      * @param pageSize 分页大小
      * @return
      */
-    Page getLogByPage(LogDTO sysLog, Integer pageNo, Integer pageSize);
+    Page getLogByPage(LogVo sysLog, Integer pageNo, Integer pageSize);
 }
