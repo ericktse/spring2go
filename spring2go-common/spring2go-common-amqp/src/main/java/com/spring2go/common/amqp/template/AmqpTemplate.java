@@ -1,4 +1,4 @@
-package com.spring2go.common.rabbitmq.template;
+package com.spring2go.common.amqp.template;
 
 /**
  * 消息队列Template

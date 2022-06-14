@@ -1,8 +1,8 @@
 package com.spring2go.demo.queue;
 
-import com.spring2go.common.rabbitmq.annotation.AmqpComponent;
-import com.spring2go.common.rabbitmq.annotation.AmqpListener;
-import com.spring2go.common.rabbitmq.constant.AmqpConstants;
+import com.spring2go.common.amqp.annotation.AmqpComponent;
+import com.spring2go.common.amqp.annotation.AmqpListener;
+import com.spring2go.common.amqp.constant.AmqpConstants;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.Payload;
 

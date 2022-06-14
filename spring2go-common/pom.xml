@@ -23,7 +23,7 @@
         <module>spring2go-common-lock</module>
         <module>spring2go-common-job</module>
         <module>spring2go-common-datasource</module>
-        <module>spring2go-common-rabbitmq</module>
+        <module>spring2go-common-amqp</module>
         <module>spring2go-common-rule-engine</module>
         <module>spring2go-common-state-machine</module>
         <module>spring2go-common-state-engine</module>

@@ -1,4 +1,4 @@
-package com.spring2go.common.rabbitmq.constant;
+package com.spring2go.common.amqp.constant;
 
 /**
  * 队列常量

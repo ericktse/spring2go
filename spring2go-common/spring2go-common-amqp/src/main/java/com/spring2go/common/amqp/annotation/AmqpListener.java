@@ -1,4 +1,4 @@
-package com.spring2go.common.rabbitmq.annotation;
+package com.spring2go.common.amqp.annotation;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.messaging.handler.annotation.MessageMapping;

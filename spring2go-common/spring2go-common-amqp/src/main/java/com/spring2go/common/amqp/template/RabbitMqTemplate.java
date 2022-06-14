@@ -1,8 +1,8 @@
-package com.spring2go.common.rabbitmq.template;
+package com.spring2go.common.amqp.template;
 
 import com.rabbitmq.client.Channel;
-import com.spring2go.common.rabbitmq.annotation.AmqpComponent;
-import com.spring2go.common.rabbitmq.annotation.AmqpListener;
+import com.spring2go.common.amqp.annotation.AmqpComponent;
+import com.spring2go.common.amqp.annotation.AmqpListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;

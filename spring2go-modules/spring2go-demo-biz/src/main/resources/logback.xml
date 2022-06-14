@@ -2,8 +2,8 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 日志存放路径 -->
 	<property name="log.path" value="logs/spring2go-demo" />
-   <!-- 日志输出格式 -->
-	<property name="log.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n" />
+    <!-- 日志输出格式 -->
+	<property name="log.pattern" value="%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %cyan(%logger{20}) - [%method,%line] - %msg%n" />
 
     <!-- 控制台输出 -->
 	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -60,14 +60,14 @@
     <!-- 系统模块日志级别控制  -->
 	<logger name="com.spring2go" level="debug" />
 	<!-- Spring日志级别控制  -->
-	<logger name="org.springframework" level="debug" />
+	<logger name="org.springframework" level="info" />
 
 	<root level="debug">
 		<appender-ref ref="console" />
 	</root>
 	
 	<!--系统操作日志-->
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="file_info" />
         <appender-ref ref="file_error" />
     </root>

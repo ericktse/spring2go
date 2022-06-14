@@ -1,4 +1,4 @@
-package com.spring2go.common.rabbitmq.annotation;
+package com.spring2go.common.amqp.annotation;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

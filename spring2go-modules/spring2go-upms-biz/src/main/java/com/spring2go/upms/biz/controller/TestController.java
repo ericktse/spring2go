@@ -1,7 +1,7 @@
 package com.spring2go.upms.biz.controller;
 
-import com.spring2go.common.rabbitmq.constant.AmqpConstants;
-import com.spring2go.common.rabbitmq.template.AmqpTemplate;
+import com.spring2go.common.amqp.constant.AmqpConstants;
+import com.spring2go.common.amqp.template.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;

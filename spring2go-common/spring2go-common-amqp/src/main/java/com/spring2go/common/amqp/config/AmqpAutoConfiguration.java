@@ -1,7 +1,7 @@
-package com.spring2go.common.rabbitmq.config;
+package com.spring2go.common.amqp.config;
 
-import com.spring2go.common.rabbitmq.template.AmqpTemplate;
-import com.spring2go.common.rabbitmq.template.RabbitMqTemplate;
+import com.spring2go.common.amqp.template.AmqpTemplate;
+import com.spring2go.common.amqp.template.RabbitMqTemplate;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

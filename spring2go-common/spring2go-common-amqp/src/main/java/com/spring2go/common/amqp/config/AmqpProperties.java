@@ -1,4 +1,4 @@
-package com.spring2go.common.rabbitmq.config;
+package com.spring2go.common.amqp.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

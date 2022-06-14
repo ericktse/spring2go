@@ -1,7 +1,7 @@
 package com.spring2go.upms.biz.queue;
 
-import com.spring2go.common.rabbitmq.annotation.AmqpComponent;
-import com.spring2go.common.rabbitmq.annotation.AmqpListener;
+import com.spring2go.common.amqp.annotation.AmqpComponent;
+import com.spring2go.common.amqp.annotation.AmqpListener;
 
 /**
  * 消息队列Demo2
