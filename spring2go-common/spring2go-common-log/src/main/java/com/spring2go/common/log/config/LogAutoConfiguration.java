@@ -2,7 +2,7 @@ package com.spring2go.common.log.config;
 
 import com.spring2go.common.log.aspect.SysLogAspect;
 import com.spring2go.common.log.event.SysLogListener;
-import com.spring2go.upms.api.feign.service.RemoteLogService;
+import com.spring2go.system.feign.service.RemoteLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.aop.interceptor.SimpleAsyncUncaughtExceptionHandler;

@@ -4,56 +4,75 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.spring2go</groupId>
-        <artifactId>spring2go</artifactId>
+        <artifactId>spring2go-modules</artifactId>
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>spring2go-auth</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1</version>
-    <description>认证授权中心</description>
-
+    <artifactId>spring2go-system-biz</artifactId>
+    <description>通用用户权限管理系统业务处理模块</description>
 
     <dependencies>
-        <!--系统鉴权依赖-->
+        <!--upms api、model 模块-->
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-system-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!--内部基础依赖-->
+        <!--spring2go 公共模块-->
         <dependency>
             <groupId>com.spring2go</groupId>
-            <artifactId>spring2go-common-core</artifactId>
+            <artifactId>spring2go-common-log</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-mybatis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-security</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.spring2go</groupId>
-            <artifactId>spring2go-common-swagger</artifactId>
+            <artifactId>spring2go-common-lock</artifactId>
             <version>${project.version}</version>
         </dependency>
 
-        <!--Spring boot依赖-->
+
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- spring boot 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- TODO:
-    因为Spring boot 2.4调整了配置处理方式，不再支持bootstrap.properties/yml的方式
-    由于采用Nacos作为配置中心，当前nacos2.0版本不支持spring boot 的spring.config.import的配置模式，
-    所以采用老的配置模式，主动引入bootstrap依赖 -->
+        <!-- SpringBoot Actuator -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Mysql Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
 
         <!-- SpringCloud Ailibaba Nacos -->
         <dependency>
@@ -73,10 +92,13 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
 
-        <!-- SpringBoot Actuator -->
+        <!-- TODO:
+            因为Spring boot 2.4调整了配置处理方式，不再支持bootstrap.properties/yml的方式
+            由于采用Nacos作为配置中心，当前nacos2.0版本不支持spring boot 的spring.config.import的配置模式，
+            所以采用老的配置模式，主动引入bootstrap依赖 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
     </dependencies>

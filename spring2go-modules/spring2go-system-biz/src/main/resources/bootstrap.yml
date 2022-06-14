@@ -1,0 +1,98 @@
+# 端口
+server:
+  port: 4000
+
+spring:
+  application:
+    # 应用名称
+    name: spring2go-system
+  # mysql
+  datasource:
+#    url: jdbc:mysql://10.192.180.170:3306/spring2go_upms?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: 123456
+    dynamic:
+      enabled: true
+      primary: master #设置默认的数据源或者数据源组,默认值即为master
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:3306/spring2go_system?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: 123456
+          # driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+        slave:
+          url: jdbc:mysql://127.0.0.1:3306/spring2go_system?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          username: root
+          password: 123456
+  profiles:
+    # 环境配置
+    active: dev
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  cloud:
+    #nacos
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+      config:
+        # 配置中心地址
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - spring2go-application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+# mybatis配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  configuration:
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring2go:
+  xxljob:
+    enabled: true
+    adminAddresses: http://10.192.180.170:7100/xxl-job-admin
+    accessToken:
+    appname: xxl-job-executor-sample
+    address:
+    ip:
+    port: 9999
+    logpath: /applogs
+    logretentiondays: 30
+  # swagger配置
+  swagger:
+    title: SYSTEM系统模块接口文档
+  #分布式锁配置
+  redisson:
+    address: 127.0.0.1:6379
+    password:
+    type: STANDALONE
+  shiro:
+    # TODO:登录相关内部接口，登录时调用，这里不做校验，后续需加内部调用限制
+    pathDefinitions: |
+      /sys/user/getInfoByUserName: anon
+      /sys/role/getRoleByUserName: anon
+      /sys/role/getPermsByUserName: anon
+      /sys/log: anon
+
+# swagger 是否启动，这里暂时屏蔽
+springfox:
+  documentation:
+    enabled: true
+
+# shiro的屏蔽非常反人类，必须设置这么多个false
+# TODO：此处仅为了方便测试，暂时关闭，生产禁止使用
+shiro:
+  annotations:
+    enabled: false
+  web:
+    enabled: false
+  enabled: false
+
+

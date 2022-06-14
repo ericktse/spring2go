@@ -4,7 +4,7 @@ import com.spring2go.common.core.util.*;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.log.event.SysLogEvent;
 import com.spring2go.common.log.util.LogType;
-import com.spring2go.upms.api.entity.SysLog;
+import com.spring2go.system.entity.SysLog;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

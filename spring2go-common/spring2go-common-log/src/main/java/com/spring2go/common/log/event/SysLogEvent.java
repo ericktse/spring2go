@@ -1,6 +1,6 @@
 package com.spring2go.common.log.event;
 
-import com.spring2go.upms.api.entity.SysLog;
+import com.spring2go.system.entity.SysLog;
 import org.springframework.context.ApplicationEvent;
 
 /**

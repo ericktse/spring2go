@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.spring2go.system.feign.factory.RemoteLogServiceFallbackFactory,\
+  com.spring2go.system.feign.factory.RemoteUserServiceFallbackFactory

@@ -16,9 +16,9 @@
         <!--demo 模块-->
         <module>spring2go-demo-api</module>
         <module>spring2go-demo-biz</module>
-        <!--权限管理模块-->
-        <module>spring2go-upms-api</module>
-        <module>spring2go-upms-biz</module>
+        <!--系统管理模块-->
+        <module>spring2go-system-api</module>
+        <module>spring2go-system-biz</module>
     </modules>
 
 </project>

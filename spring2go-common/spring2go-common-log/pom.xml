@@ -15,7 +15,7 @@
         <!--api 依赖-->
         <dependency>
             <groupId>com.spring2go</groupId>
-            <artifactId>spring2go-upms-api</artifactId>
+            <artifactId>spring2go-system-api</artifactId>
             <version>${project.version}</version>
         </dependency>
 

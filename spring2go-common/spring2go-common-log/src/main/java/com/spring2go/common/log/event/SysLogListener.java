@@ -1,8 +1,8 @@
 package com.spring2go.common.log.event;
 
 import com.spring2go.common.core.constant.SecurityConstants;
-import com.spring2go.upms.api.entity.SysLog;
-import com.spring2go.upms.api.feign.service.RemoteLogService;
+import com.spring2go.system.entity.SysLog;
+import com.spring2go.system.feign.service.RemoteLogService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
