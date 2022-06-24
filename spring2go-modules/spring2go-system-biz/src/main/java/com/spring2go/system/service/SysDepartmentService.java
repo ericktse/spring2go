@@ -12,7 +12,7 @@ import java.util.List;
  * @author: xiaobin
  * @date: 2021/3/31 17:09
  */
-public interface SysDeptService extends IService<SysDepartment> {
+public interface SysDepartmentService extends IService<SysDepartment> {
 
     /**
      * 查询部门数据

@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @date: 2021-03-31 17:10
  */
 @Mapper
-public interface SysDeptMapper extends BaseMapper<SysDepartment> {
+public interface SysDepartmentMapper extends BaseMapper<SysDepartment> {
 }

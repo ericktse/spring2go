@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @author: xiaobin
  * @date: 2021-03-30 10:25
  */
-@Api("系统用户管理")
+@Api(tags="用户管理")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/sys/user")

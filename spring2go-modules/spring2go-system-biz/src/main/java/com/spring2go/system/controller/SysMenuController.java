@@ -18,7 +18,7 @@ import java.util.Set;
  * @author: xiaobin
  * @date: 2021-04-08 11:15
  */
-@Api("菜单管理模块")
+@Api(tags="菜单管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys/menu")

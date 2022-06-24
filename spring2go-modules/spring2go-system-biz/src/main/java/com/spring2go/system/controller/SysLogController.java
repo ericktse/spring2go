@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * @author: xiaobin
  * @date: 2021-04-06 15:09
  */
-@Api("日志管理模块")
+@Api(tags = "日志管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys/log")

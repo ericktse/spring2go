@@ -17,7 +17,7 @@ import java.util.List;
  * @author: xiaobin
  * @date: 2021-03-31 16:58
  */
-@Api("系统岗位管理")
+@Api(tags="岗位管理")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/sys/position")

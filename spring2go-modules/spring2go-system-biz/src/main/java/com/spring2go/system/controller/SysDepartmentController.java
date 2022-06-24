@@ -7,7 +7,7 @@ import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.system.vo.DepartmentVo;
 import com.spring2go.system.entity.SysDepartment;
-import com.spring2go.system.service.SysDeptService;
+import com.spring2go.system.service.SysDepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ import java.util.List;
 @RequestMapping("/sys/department")
 public class SysDepartmentController extends BaseController {
 
-    private final SysDeptService sysDeptService;
+    private final SysDepartmentService sysDepartmentService;
 
     /**
      * 根据部门ID获取详情
@@ -37,7 +37,7 @@ public class SysDepartmentController extends BaseController {
     @Inner
     @GetMapping(value = "/{id}")
     public R getById(@PathVariable Long deptId) {
-        return R.ok(sysDeptService.getById(deptId));
+        return R.ok(sysDepartmentService.getById(deptId));
     }
 
     /**
@@ -46,7 +46,7 @@ public class SysDepartmentController extends BaseController {
     @Log("获取部门列表")
     @GetMapping("/list")
     public R list(DepartmentVo dept) {
-        List<SysDepartment> list = sysDeptService.selectDeptList(dept);
+        List<SysDepartment> list = sysDepartmentService.selectDeptList(dept);
         return R.ok(list);
     }
 
@@ -56,7 +56,7 @@ public class SysDepartmentController extends BaseController {
     @GetMapping("/tree")
     @RequiresPermissions({"system:dept:tree"})
     public R tree(DepartmentVo dept) {
-        return R.ok(sysDeptService.selectDeptTree(dept));
+        return R.ok(sysDepartmentService.selectDeptTree(dept));
     }
 
     /**
@@ -64,11 +64,11 @@ public class SysDepartmentController extends BaseController {
      */
     @PostMapping
     public R save(@Validated @RequestBody SysDepartment dept) {
-        if (CommonConstants.NOT_UNIQUE.equals(sysDeptService.checkDeptNameUnique(dept))) {
+        if (CommonConstants.NOT_UNIQUE.equals(sysDepartmentService.checkDeptNameUnique(dept))) {
             return R.failed("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
         //dept.setCreateBy(SecurityUtils.getUsername());
-        return R.ok(sysDeptService.save(dept));
+        return R.ok(sysDepartmentService.save(dept));
     }
 
     /**
@@ -76,7 +76,7 @@ public class SysDepartmentController extends BaseController {
      */
     @PutMapping
     public R update(@Validated @RequestBody SysDepartment dept) {
-        if (CommonConstants.NOT_UNIQUE.equals(sysDeptService.checkDeptNameUnique(dept))) {
+        if (CommonConstants.NOT_UNIQUE.equals(sysDepartmentService.checkDeptNameUnique(dept))) {
             return R.failed("修改部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         } else if (dept.getParentId().equals(dept.getDeptId())) {
             return R.failed("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
@@ -84,7 +84,7 @@ public class SysDepartmentController extends BaseController {
 
         //dept.setUpdateBy(SecurityUtils.getUsername());
 
-        return R.ok(sysDeptService.updateById(dept));
+        return R.ok(sysDepartmentService.updateById(dept));
     }
 
     /**
@@ -92,12 +92,12 @@ public class SysDepartmentController extends BaseController {
      */
     @DeleteMapping("/{id}")
     public R removeById(@PathVariable Long deptId) {
-        if (sysDeptService.hasChildByDeptId(deptId)) {
+        if (sysDepartmentService.hasChildByDeptId(deptId)) {
             return R.failed("存在下级部门,不允许删除");
         }
-        if (sysDeptService.checkDeptExistUser(deptId)) {
+        if (sysDepartmentService.checkDeptExistUser(deptId)) {
             return R.failed("部门存在用户,不允许删除");
         }
-        return R.ok(sysDeptService.removeById(deptId));
+        return R.ok(sysDepartmentService.removeById(deptId));
     }
 }

@@ -22,4 +22,11 @@ public class AuthConstants {
      * 授权信息字段
      */
     public static final String AUTHORIZATION_HEADER = "authorization";
+
+
+
+    /**
+     * 验证码 key 前缀
+     */
+    public static final String CAPTCHA_CODE_KEY = "captcha_codes:";
 }

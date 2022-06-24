@@ -15,7 +15,7 @@ services:
     container_name: spring2go-gateway
     image: spring2go-gateway
     ports:
-      - 9000:9000
+      - "9000:9000"
     environment:
       - "SPRING_PROFILES_ACTIVE=dev"
 
@@ -47,7 +47,7 @@ services:
     container_name: spring2go-monitor
     image: spring2go-monitor
     ports:
-      - 9100:9100
+      - "9100:9100"
 
   spring2go-xxl-job:
     build:
@@ -56,4 +56,4 @@ services:
     container_name: spring2go-xxl-job
     image: spring2go-xxl-job
     ports:
-      - 7100:7100
+      - "7100:7100"

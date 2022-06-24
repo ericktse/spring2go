@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author: xiaobin
  * @date: 2021-04-08 11:15
  */
-@Api("菜单角色模块")
+@Api(tags="角色管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/sys/role")

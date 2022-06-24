@@ -9,12 +9,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.TreeUtils;
-import com.spring2go.system.mapper.SysDeptMapper;
+import com.spring2go.system.mapper.SysDepartmentMapper;
 import com.spring2go.system.vo.DepartmentTree;
 import com.spring2go.system.vo.DepartmentVo;
 import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.entity.SysUser;
-import com.spring2go.system.service.SysDeptService;
+import com.spring2go.system.service.SysDepartmentService;
 import com.spring2go.system.service.SysUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @RequiredArgsConstructor
-public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment> implements SysDeptService {
+public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, SysDepartment> implements SysDepartmentService {
 
     private final SysUserService sysUserService;
 

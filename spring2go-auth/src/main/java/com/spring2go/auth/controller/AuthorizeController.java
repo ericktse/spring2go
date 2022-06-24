@@ -1,17 +1,19 @@
 package com.spring2go.auth.controller;
 
+import cn.hutool.core.util.RandomUtil;
+import com.spring2go.auth.domain.CaptchaModel;
 import com.spring2go.auth.domain.LoginModel;
+import com.spring2go.auth.service.CaptchaService;
 import com.spring2go.auth.service.InnerAuthorizeService;
 import com.spring2go.common.core.domain.R;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @description: 认证校验Controller
@@ -25,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthorizeController {
 
     private final InnerAuthorizeService innerAuthorizeService;
+    private final CaptchaService captchaService;
 
     @PostMapping("login")
     public R<?> login(@RequestBody LoginModel model) {
@@ -37,5 +40,19 @@ public class AuthorizeController {
     public R<?> logout(HttpServletRequest request) {
         innerAuthorizeService.logout();
         return R.ok();
+    }
+
+    @ApiOperation("获取验证码")
+    @GetMapping(value = "/captcha")
+    public R randomImage() {
+        try {
+            //生成验证码
+            CaptchaModel captcha = captchaService.createCaptcha();
+            return R.ok(captcha);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return R.failed("获取验证码出错" + e.getMessage());
+        }
     }
 }

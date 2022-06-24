@@ -3,7 +3,7 @@ package com.spring2go.system.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.system.entity.SysDepartment;
-import com.spring2go.system.service.SysDeptService;
+import com.spring2go.system.service.SysDepartmentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,7 +30,7 @@ class SysDepartmentControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private SysDeptService sysDeptService;
+    private SysDepartmentService sysDepartmentService;
 
     @Test
     void getById() throws Exception {
@@ -38,7 +38,7 @@ class SysDepartmentControllerTest {
         SysDepartment dept = new SysDepartment();
         dept.setDeptId(1L);
         dept.setDeptName("测试部门");
-        given(sysDeptService.getById(1L))
+        given(sysDepartmentService.getById(1L))
                 .willReturn(dept);
 
         // when
