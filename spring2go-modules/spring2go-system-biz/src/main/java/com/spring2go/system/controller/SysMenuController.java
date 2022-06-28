@@ -6,10 +6,12 @@ import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysMenu;
 import com.spring2go.system.service.SysMenuService;
+import com.spring2go.system.vo.MenuTree;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -18,10 +20,10 @@ import java.util.Set;
  * @author: xiaobin
  * @date: 2021-04-08 11:15
  */
-@Api(tags="菜单管理")
+@Api(tags = "菜单管理")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sys/menu")
+@RequestMapping("/menu")
 public class SysMenuController extends BaseController {
 
     private final SysMenuService sysMenuService;
@@ -34,8 +36,8 @@ public class SysMenuController extends BaseController {
     @GetMapping
     public R getUserMenu() {
         Set<String> roles = SecurityUtils.getRoles();
-        sysMenuService.selectMenuTreeByRoleIds(roles);
-        return R.ok();
+        List<MenuTree> menuTree = sysMenuService.selectMenuTreeByRoleNames(roles);
+        return R.ok(menuTree);
     }
 
     /**
@@ -96,6 +98,19 @@ public class SysMenuController extends BaseController {
     @PutMapping
     public R update(@RequestBody SysMenu sysMenu) {
         return R.ok(sysMenuService.updateById(sysMenu));
+    }
+
+    /**
+     * 获取路由信息
+     *
+     * @return 路由信息
+     */
+    @GetMapping("getRouters")
+    public R getRouters()
+    {
+        Set<String> roles = SecurityUtils.getRoles();
+        List<MenuTree> menuTree = sysMenuService.selectMenuTreeByRoleNames(roles);
+        return R.ok(sysMenuService.buildMenus(menuTree));
     }
 
 }

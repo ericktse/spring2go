@@ -63,7 +63,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         }
 
         Object checkCode = redisUtils.getCacheObject(key);
-        if (checkCode == null || !checkCode.toString().equals(captcha)) {
+        if (checkCode == null || !checkCode.toString().toLowerCase().equals(captcha.toLowerCase())) {
             log.warn("验证码错误，key= {} , Ui checkCode= {}, Redis checkCode = {}", key, captcha, checkCode);
             return false;
 

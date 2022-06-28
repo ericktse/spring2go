@@ -30,10 +30,10 @@ public class SysUser extends BaseEntity {
      */
     private Integer deptId;
 
-    /**
-     * 岗位ID
-     */
-    private Integer postId;
+//    /**
+//     * 岗位ID
+//     */
+//    private Integer postId;
 
     /**
      * 用户名

@@ -1,5 +1,6 @@
 package com.spring2go.common.core.util;
 
+import com.spring2go.common.core.constant.CommonConstants;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.Collection;
@@ -22,6 +23,7 @@ public class StringUtils {
      * 下划线
      */
     private static final char SEPARATOR = '_';
+
 
     /**
      * 获取参数不为空值
@@ -384,4 +386,23 @@ public class StringUtils {
     public static <T> T cast(Object obj) {
         return (T) obj;
     }
+
+
+    /**
+     * 是否为http(s)://开头
+     *
+     * @param link 链接
+     * @return 结果
+     */
+    public static boolean ishttp(String link) {
+        if (StringUtils.isEmpty(link)) {
+            return false;
+        }
+
+        if (link.startsWith(CommonConstants.HTTP) || link.startsWith(CommonConstants.HTTPS)) {
+            return true;
+        }
+        return false;
+    }
+
 }

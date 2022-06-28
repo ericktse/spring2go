@@ -56,6 +56,7 @@ public class ShiroAuthorizeFilter extends AuthenticatingFilter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Origin", "true");
+        httpResponse.setHeader("Content-Type", "text/html;charset=UTF-8");
         httpResponse.setCharacterEncoding("UTF-8");
         String json = JSON.toJSONString(R.unauthorized("token非法无效，请重新登录"));
         httpResponse.getWriter().print(json);

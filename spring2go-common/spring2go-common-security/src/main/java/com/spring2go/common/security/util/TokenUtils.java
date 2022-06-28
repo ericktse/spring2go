@@ -1,5 +1,6 @@
 package com.spring2go.common.security.util;
 
+import cn.hutool.core.util.IdUtil;
 import com.spring2go.common.core.constant.AuthConstants;
 import com.spring2go.common.core.util.ServletUtils;
 import com.spring2go.common.core.util.StringUtils;
@@ -30,13 +31,13 @@ public class TokenUtils {
     private final static long TOKEN_EXPIRE_TIME = 3600;
     private final static String ACCESS_TOKEN_KEY = "access_token_";
 
-    public String createToken(String username, Object originalUser, Set<String> roles, Set<String> permissions) {
+    public String createToken(Integer userId, String username, Object originalUser, Set<String> roles, Set<String> permissions) {
         //TODO：实现JWT Token实现
 
         // 生成token
-        String token = UUID.randomUUID().toString();
+        String token = IdUtil.simpleUUID();
 
-        SimpleAuthorizeUser authorizationUser = new SimpleAuthorizeUser(username, originalUser, roles, permissions);
+        SimpleAuthorizeUser authorizationUser = new SimpleAuthorizeUser(userId, username, originalUser, roles, permissions);
 
         redisUtils.setCacheObject(ACCESS_TOKEN_KEY + token, authorizationUser, TOKEN_EXPIRE_TIME, TimeUnit.SECONDS);
         return token;
@@ -66,7 +67,9 @@ public class TokenUtils {
         if (StringUtils.isEmpty(token)) {
             token = httpServletRequest.getParameter(AuthConstants.HEADER);
         }
-
+        if (StringUtils.isNotEmpty(token)) {
+            token = token.substring("Bearer".length() + 1).trim();
+        }
         return token;
     }
 

@@ -1,4 +1,4 @@
-package com.spring2go.system.vo;
+package com.spring2go.auth.domain;
 
 import com.spring2go.system.entity.SysUser;
 import lombok.Data;
@@ -7,43 +7,28 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
+ * login user information
+ *
+ * @author xiaobin
+ */
+
+/**
  * @description: 登录用户信息
  * @author: xiaobin
  * @date: 2021-05-12 14:47
  */
 @Data
-public class LoginUser implements Serializable {
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * 用户唯一标识
-     */
-    private String token;
+public class LoginUser {
 
     /**
      * 用户名id
      */
-    private Long userId;
+    private Integer userId;
 
     /**
      * 用户名
      */
     private String username;
-
-    /**
-     * 登录时间
-     */
-    private Long loginTime;
-
-    /**
-     * 过期时间
-     */
-    private Long expireTime;
-
-    /**
-     * 登录IP地址
-     */
-    private String ipAddr;
 
     /**
      * 权限列表

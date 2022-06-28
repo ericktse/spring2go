@@ -19,4 +19,14 @@ public class LoginModel {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 验证码KEY
+     */
+    private String key;
+
+    /**
+     * 验证码
+     */
+    private String code;
 }

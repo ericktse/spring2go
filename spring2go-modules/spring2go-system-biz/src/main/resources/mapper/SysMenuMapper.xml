@@ -20,16 +20,17 @@
     </resultMap>
 
     <!--通过角色查询菜单信息-->
-    <select id="listMenusByRoleId" resultMap="BaseResultMap">
+    <select id="listMenusByRoleName" resultMap="BaseResultMap">
 		SELECT
-			sys_menu.*
+			m.*
 		FROM
-			sys_menu
-		LEFT JOIN sys_role_menu ON sys_menu.menu_id = sys_role_menu.menu_id
+			sys_menu m
+		LEFT JOIN sys_role_menu rm ON m.menu_id = rm.menu_id
+        LEFT JOIN sys_role r ON r.role_id = rm.role_id
 		WHERE
-			sys_menu.del_flag = 0
-		AND sys_role_menu.role_id = #{roleId}
+            m.del_flag = 0 AND r.del_flag = 0
+		AND r.role_name = #{roleName}
 		ORDER BY
-			sys_menu.order_num DESC
+			m.order_num DESC
     </select>
 </mapper> 

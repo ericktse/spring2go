@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Api(tags="角色管理")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sys/role")
+@RequestMapping("/role")
 public class SysRoleController extends BaseController {
 
     private final SysRoleService sysRoleService;

@@ -25,7 +25,7 @@ import java.util.List;
 @Api(tags = "部门管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sys/department")
+@RequestMapping("/department")
 public class SysDepartmentController extends BaseController {
 
     private final SysDepartmentService sysDepartmentService;

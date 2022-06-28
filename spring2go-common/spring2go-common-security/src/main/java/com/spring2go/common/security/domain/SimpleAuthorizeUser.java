@@ -14,12 +14,14 @@ import java.util.Set;
 public class SimpleAuthorizeUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    private Integer userId;
     private String username;
     private Object originalUser;
     private Set<String> roles;
     private Set<String> permissions;
 
-    public SimpleAuthorizeUser(String username, Object originalUser, Set<String> roles, Set<String> permissions) {
+    public SimpleAuthorizeUser(Integer userId, String username, Object originalUser, Set<String> roles, Set<String> permissions) {
+        this.userId = userId;
         this.username = username;
         this.originalUser = originalUser;
         this.roles = roles;

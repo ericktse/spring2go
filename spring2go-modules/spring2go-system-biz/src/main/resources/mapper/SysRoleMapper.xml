@@ -21,6 +21,6 @@
         join sys_user_role ur on ur.user_id = u.user_id
         left join sys_role r on r.role_id = ur.role_id
         WHERE
-        `user`.user_name = #{username}
+        `u`.user_name = #{username}
     </select>
 </mapper> 

@@ -49,6 +49,7 @@ const usePermissionStore = defineStore(
             this.setDefaultRoutes(sidebarRoutes)
             this.setTopbarRoutes(defaultRoutes)
             resolve(rewriteRoutes)
+            console.log(sidebarRoutes)
           })
         })
       }

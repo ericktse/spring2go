@@ -17,7 +17,7 @@ spring:
     nacos:
       discovery:
         # 服务注册地址
-        server-addr: 10.192.180.193:18848
+        server-addr: 127.0.0.1:8848
       config:
         # 配置中心地址
         server-addr: ${spring.cloud.nacos.discovery.server-addr}
@@ -48,10 +48,10 @@ spring:
           filters:
             - StripPrefix=1
         # 系统模块
-        - id: spring2go-upms
-          uri: lb://spring2go-upms
+        - id: spring2go-system
+          uri: lb://spring2go-system
           predicates:
-            - Path=/upms/**
+            - Path=/sys/**
           filters:
             - StripPrefix=1
         # 文件服务
@@ -66,6 +66,7 @@ spring:
 spring2go:
   gateway:
     white-list:
-      - /auth/login
-      - /auth/logout
+      - /*/login
+      - /*/logout
+      - /*/captcha
       - /*/v2/api-docs

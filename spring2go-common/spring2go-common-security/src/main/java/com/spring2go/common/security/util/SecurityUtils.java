@@ -40,6 +40,17 @@ public class SecurityUtils {
     /**
      * 获取用户名
      */
+    public static Integer getUserId() {
+        SimpleAuthorizeUser user = getAuthentication();
+        if (null != user) {
+            return user.getUserId();
+        }
+        return null;
+    }
+
+    /**
+     * 获取用户名
+     */
     public static String getUsername() {
         SimpleAuthorizeUser user = getAuthentication();
         if (null != user) {
@@ -85,5 +96,15 @@ public class SecurityUtils {
         }
 
         return null;
+    }
+
+    /**
+     * 是否为管理员
+     *
+     * @param roleName 用户名称
+     * @return 结果
+     */
+    public static boolean isAdmin(String roleName) {
+        return roleName != null && "超级管理员".equals(roleName);
     }
 }

@@ -22,7 +22,7 @@ import javax.validation.Valid;
 @Api(tags="用户管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/user")
 public class SysUserController {
     private final SysUserService userService;
 

@@ -17,7 +17,7 @@ import java.util.Set;
  * @author: xiaobin
  * @date: 2021-05-12 14:44
  */
-@FeignClient(contextId = "RemoteUserService", name = ServiceNameConstants.UPMS_SERVICE, fallbackFactory = RemoteUserServiceFallbackFactory.class)
+@FeignClient(contextId = "RemoteUserService", name = ServiceNameConstants.SYSTEM_SERVICE, fallbackFactory = RemoteUserServiceFallbackFactory.class)
 public interface RemoteUserService {
 
     /**
@@ -27,7 +27,7 @@ public interface RemoteUserService {
      * @param from     来源
      * @return 结果
      */
-    @GetMapping(value = "/sys/user/getInfoByUserName")
+    @GetMapping(value = "/user/info/{username}")
     R<SysUser> getInfoByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
     /**
@@ -37,7 +37,7 @@ public interface RemoteUserService {
      * @param from     来源
      * @return com.spring2go.common.core.domain.R<java.util.Set < java.lang.String>>
      */
-    @GetMapping(value = "/sys/role/getRoleByUserName")
+    @GetMapping(value = "/role/getRoleByUserName")
     R<Set<String>> getRoleByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 
     /**
@@ -47,6 +47,6 @@ public interface RemoteUserService {
      * @param from     来源
      * @return com.spring2go.common.core.domain.R<java.util.Set < java.lang.String>>
      */
-    @GetMapping(value = "/sys/role/getPermsByUserName")
+    @GetMapping(value = "/role/getPermsByUserName")
     R<Set<String>> getPermsByUserName(@RequestParam("username") String username, @RequestHeader(SecurityConstants.FROM) String from);
 }

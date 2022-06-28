@@ -9,5 +9,5 @@ public class ServiceNameConstants {
     /**
      * 系统模块的servicename
      */
-    public static final String UPMS_SERVICE = "spring2go-upms";
+    public static final String SYSTEM_SERVICE = "spring2go-system";
 }
