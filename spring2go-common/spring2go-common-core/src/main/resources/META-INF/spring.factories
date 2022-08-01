@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.spring2go.common.core.util.SpringContextHolder
+  com.spring2go.common.core.util.SpringContextHolder,\
+  com.spring2go.common.core.exception.GlobalExceptionHandler

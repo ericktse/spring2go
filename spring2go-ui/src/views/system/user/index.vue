@@ -15,7 +15,7 @@
             <div class="head-container">
                <el-tree
                   :data="deptOptions"
-                  :props="{ label: 'label', children: 'children' }"
+                  :props="{ label: 'name', children: 'children' }"
                   :expand-on-click-node="false"
                   :filter-node-method="filterNode"
                   ref="deptTreeRef"
@@ -133,8 +133,8 @@
                <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
                <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
                <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-               <el-table-column label="部门" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
-               <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
+               <el-table-column label="部门" align="center" key="deptName" prop="deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
+               <el-table-column label="手机号码" align="center" key="phonenumber" prop="phone" v-if="columns[4].visible" width="120" />
                <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
                   <template #default="scope">
                      <el-switch
@@ -354,8 +354,10 @@ import { treeselect } from "@/api/system/dept";
 import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser } from "@/api/system/user";
 
 const router = useRouter();
+//获取挂载在全局的属性和获取上下文
 const { proxy } = getCurrentInstance();
-const { sys_normal_disable, sys_user_sex } = proxy.useDict("sys_normal_disable", "sys_user_sex");
+//TODO:暂时注销字典逻辑
+//const { sys_normal_disable, sys_user_sex } = proxy.useDict("sys_normal_disable", "sys_user_sex");
 
 const userList = ref([]);
 const open = ref(false);
@@ -439,8 +441,8 @@ function getList() {
   loading.value = true;
   listUser(proxy.addDateRange(queryParams.value, dateRange.value)).then(res => {
     loading.value = false;
-    userList.value = res.rows;
-    total.value = res.total;
+    userList.value = res.data.records;
+    total.value = res.data.total;
   });
 };
 /** 节点单击事件 */
@@ -586,13 +588,19 @@ function cancel() {
 function handleAdd() {
   reset();
   initTreeData();
-  getUser().then(response => {
-    postOptions.value = response.posts;
-    roleOptions.value = response.roles;
-    open.value = true;
-    title.value = "添加用户";
-    form.value.password = initPassword.value;
-  });
+
+  open.value = true;
+  title.value = "添加用户";
+  form.value.password = initPassword.value;
+
+//TODO:新增移除请求用户信息
+//   getUser().then(response => {
+//     postOptions.value = response.posts;
+//     roleOptions.value = response.roles;
+//     open.value = true;
+//     title.value = "添加用户";
+//     form.value.password = initPassword.value;
+//   });
 };
 /** 修改按钮操作 */
 function handleUpdate(row) {

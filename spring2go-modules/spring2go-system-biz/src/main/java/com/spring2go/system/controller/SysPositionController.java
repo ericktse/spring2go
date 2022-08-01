@@ -20,7 +20,7 @@ import java.util.List;
 @Api(tags="岗位管理")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/position")
+@RequestMapping("/post")
 public class SysPositionController extends BaseController {
 
     private final SysPositionService sysPositionService;

@@ -4,14 +4,15 @@
     <!-- userInfo结果集 -->
     <resultMap id="userInfo" type="com.spring2go.system.vo.UserInfo">
         <id column="user_id" property="userId"/>
-        <result column="username" property="username"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
         <result column="password" property="password"/>
         <result column="salt" property="salt"/>
         <result column="phone" property="phone"/>
         <result column="avatar" property="avatar"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
-        <result column="lock_flag" property="lockFlag"/>
+        <result column="status" property="status"/>
         <result column="del_flag" property="delFlag"/>
         <result column="deptId" property="deptId"/>
         <result column="deptName" property="deptName"/>
@@ -30,12 +31,14 @@
         SELECT
         `user`.user_id,
         `user`.user_name,
+        `user`.nick_name,
         `user`.phone,
         `user`.avatar,
         `user`.dept_id,
         `user`.create_time,
         `user`.update_time,
         `user`.del_flag,
+        `user`.status,
         d.dept_name AS deptName
         FROM
         sys_user AS `user`

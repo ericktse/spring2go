@@ -3,6 +3,7 @@ package com.spring2go.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,6 +14,7 @@ import lombok.Data;
  * @date: 2021-03-31 17:07
  */
 @Data
+@TableName("sys_dept")
 public class SysDepartment extends BaseEntity {
 
     /**

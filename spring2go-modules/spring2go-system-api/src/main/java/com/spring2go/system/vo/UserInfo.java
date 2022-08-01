@@ -23,7 +23,12 @@ public class UserInfo implements Serializable {
     /**
      * 用户名
      */
-    private String username;
+    private String userName;
+
+    /**
+     * 别名
+     */
+    private String nickName;
 
     /**
      * 密码
@@ -53,7 +58,7 @@ public class UserInfo implements Serializable {
     /**
      * 锁定标记
      */
-    private String lockFlag;
+    private String status;
 
     /**
      * 简介

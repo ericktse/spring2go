@@ -33,12 +33,13 @@ const useUserStore = defineStore(
       getInfo() {
         return new Promise((resolve, reject) => {
           getInfo().then(res => {
-            const user = res.data.sysUser
+            const data =res.data;
+            const user = data.sysUser
             const avatar = (user.avatar == "" || user.avatar == null) ? defAva : import.meta.env.VITE_APP_BASE_API + user.avatar;
 
-            if (res.roles && res.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-              this.roles = res.roles
-              this.permissions = res.permissions
+            if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
+              this.roles = data.roles
+              this.permissions = data.permissions
             } else {
               this.roles = ['ROLE_DEFAULT']
             }
