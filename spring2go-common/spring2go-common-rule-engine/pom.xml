@@ -12,7 +12,11 @@
     <description>rule engine</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

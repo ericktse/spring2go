@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules>
+    <description>
+        Configuration for the rule list which stores the rule information in-memory and executed by rule engine service.
+    </description>
+
+    <rule id="studentAge" description="学生年龄规则">
+
+        <property name="whenRuleExpression" value="(tooOldClass &amp;&amp; tooSmallClass)"/>
+
+        <property name="loop" value="true"/>
+        <property name="priority" value="1"/>
+        <property name="enabled" value="true"/>
+
+        <property name="result" value="RESULT.REJECTED" desc="拒绝"/>
+    </rule>
+
+    <rule id="tooOldClass" parent="studentAge" description="学生年龄太大">
+
+        <property name="whenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleCheckCommand"/>
+
+        <property name="thenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleExecuteCommand"/>
+
+        <property name="loop" value="false"/>
+        <property name="priority" value="10"/>
+        <property name="enabled" value="true"/>
+    </rule>
+
+    <rule id="tooSmallClass" parent="studentAge" description="学生年龄太小">
+
+        <property name="whenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleCheckCommand"/>
+
+        <property name="thenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleExecuteCommand"/>
+
+        <property name="loop" value="false"/>
+        <property name="priority" value="10"/>
+        <property name="enabled" value="true"/>
+    </rule>
+
+    <rule id="tooOld" parent="studentAge" description="学生年龄太大">
+
+        <property name="whenSql" value="select count(1) from TL_STUDENT  where age &gt;=7 and id = ?"/>
+        <property name="whenSqlParam" value="id" type="java.lang.Integer" desc="学生ID"/>
+        <property name="whenSqlCompare" value="0" operate="&gt;" desc="学生年龄大于7的记录大于0"/>
+
+        <property name="whenClass" value="com.spring2go.common.rule.engine.command.ClassRuleCheckCommand"/>
+        <property name="whenExpression" value="(age &gt; 7)"/>
+
+        <property name="thenSql" value="select count(1) from TL_STUDENT  where age &gt;=7 and id = ?"/>
+        <property name="thenSqlParam" value="id" type="java.lang.Integer" desc="学生ID"/>
+        <property name="thenClass" value="com.spring2go.common.rule.engine.command.ClassRuleExecuteCommand"/>
+        <property name="thenExpression" value="(tooOld || tooSmall)"/>
+
+        <property name="loop" value="false"/>
+        <property name="priority" value="10"/>
+        <property name="enabled" value="true"/>
+    </rule>
+
+    <rule id="tooSmall" parent="studentAge" description="学生年龄太小">
+
+        <property name="whenSql" value="select count(1) from TL_STUDENT  where age &lt;3 and id = ?"/>
+        <property name="whenSqlParam" value="id" type="java.lang.Integer" desc="学生ID"/>
+        <property name="whenSqlCompare" value="0" operate="&gt;" desc="学生年龄大于7的记录大于0"/>
+
+        <property name="whenClass" value="com.spring2go.common.rule.engine.command.ClassRuleCheckCommand"/>
+        <property name="whenExpression" value="(age &lt; 3)"/>
+
+        <property name="thenSql" value="select count(1) from TL_STUDENT  where age &gt;=7 and id = ?"/>
+        <property name="thenSqlParam" value="id" type="java.lang.Integer" desc="学生ID"/>
+        <property name="thenClass" value="com.spring2go.common.rule.engine.command.ClassRuleExecuteCommand"/>
+        <property name="thenExpression" value="(tooOld || tooSmall)"/>
+
+        <property name="loop" value="false"/>
+        <property name="priority" value="11"/>
+        <property name="enabled" value="true"/>
+    </rule>
+
+
+</rules>
+
