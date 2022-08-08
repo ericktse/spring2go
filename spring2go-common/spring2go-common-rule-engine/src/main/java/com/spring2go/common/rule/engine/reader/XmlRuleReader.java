@@ -1,10 +1,9 @@
 package com.spring2go.common.rule.engine.reader;
 
+import com.spring2go.common.rule.engine.config.RuleEngineProperties;
 import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import com.spring2go.common.rule.engine.util.RuleCacheUtils;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -25,6 +24,12 @@ import java.util.List;
 @Slf4j
 public class XmlRuleReader extends AbstractRuleReader {
 
+    private final RuleEngineProperties ruleEngineProperties;
+
+    public XmlRuleReader(RuleEngineProperties ruleEngineProperties) {
+        this.ruleEngineProperties = ruleEngineProperties;
+    }
+
     @Override
     public List<Rule> loadRules() throws RuleEngineException {
         //缓存加载
@@ -39,8 +44,8 @@ public class XmlRuleReader extends AbstractRuleReader {
             DocumentBuilder builder = dFactory.newDocumentBuilder();
             Document doc;
 
-            //String configFile =PropertyUtil.getProperty("xml.rule.filename");
-            String configFile = "D:\\workspace\\spring2go\\spring2go-common\\spring2go-common-rule-engine\\src\\main\\resources\\samplerule.xml";
+            String configFile = ruleEngineProperties.getXmlFile();
+            configFile = "D:\\workspace\\spring2go\\spring2go-common\\spring2go-common-rule-engine\\src\\main\\resources\\samplerule.xml";
 //            if (!configFile.startsWith(File.separator)) {
 //                File dir = new File(XmlRuleReader.class.getClassLoader().getResource("").getPath());
 //                configFile = dir + File.separator + configFile;
@@ -78,22 +83,49 @@ public class XmlRuleReader extends AbstractRuleReader {
                             if (valueNode == null || nameNode == null) {
                                 throw new RuleEngineException("rule format error, attribute value or name must existed.");
                             }
-
-                            if ("whenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
-                                Node typeNode = childAttrs.getNamedItem("type");
-                                item.setWhenSqlParamValue(valueNode.getNodeValue());
-                                item.setWhenSqlParamType(typeNode.getNodeValue());
-                            } else if ("whenSqlCompare".equalsIgnoreCase(nameNode.getNodeValue())) {
-                                Node operateNode = childAttrs.getNamedItem("operate");
-                                item.setWhenSqlCompareOperate(operateNode.getNodeValue());
-                                item.setWhenSqlCompareValue(valueNode.getNodeValue());
-                            } else if ("thenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
-                                Node typeNode = childAttrs.getNamedItem("type");
-                                item.setThenSqlParamValue(valueNode.getNodeValue());
-                                item.setThenSqlParamType(typeNode.getNodeValue());
-                            } else {
-                                item.set(nameNode.getNodeValue(), valueNode.getNodeValue());
+                            switch (nameNode.getNodeValue()) {
+                                case "whenSqlParam":
+                                    Node typeNode = childAttrs.getNamedItem("type");
+                                    item.setWhenSqlParamValue(valueNode.getNodeValue());
+                                    item.setWhenSqlParamType(typeNode.getNodeValue());
+                                    break;
+                                case "whenSqlCompare":
+                                    Node operateNode = childAttrs.getNamedItem("operate");
+                                    item.setWhenSqlCompareOperate(operateNode.getNodeValue());
+                                    item.setWhenSqlCompareValue(valueNode.getNodeValue());
+                                    break;
+                                case "thenSqlParam":
+                                    Node n = childAttrs.getNamedItem("type");
+                                    item.setThenSqlParamValue(valueNode.getNodeValue());
+                                    item.setThenSqlParamType(n.getNodeValue());
+                                    break;
+                                case "thenExpression":
+                                    Node paramNode = childAttrs.getNamedItem("param");
+                                    item.setThenExpressionValue(valueNode.getNodeValue());
+                                    if (null != paramNode) {
+                                        item.setThenExpressionParam(paramNode.getNodeValue());
+                                    }
+                                    break;
+                                default:
+                                    item.set(nameNode.getNodeValue(), valueNode.getNodeValue());
+                                    break;
                             }
+
+//                            if ("whenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
+//                                Node typeNode = childAttrs.getNamedItem("type");
+//                                item.setWhenSqlParamValue(valueNode.getNodeValue());
+//                                item.setWhenSqlParamType(typeNode.getNodeValue());
+//                            } else if ("whenSqlCompare".equalsIgnoreCase(nameNode.getNodeValue())) {
+//                                Node operateNode = childAttrs.getNamedItem("operate");
+//                                item.setWhenSqlCompareOperate(operateNode.getNodeValue());
+//                                item.setWhenSqlCompareValue(valueNode.getNodeValue());
+//                            } else if ("thenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
+//                                Node typeNode = childAttrs.getNamedItem("type");
+//                                item.setThenSqlParamValue(valueNode.getNodeValue());
+//                                item.setThenSqlParamType(typeNode.getNodeValue());
+//                            } else {
+//                                item.set(nameNode.getNodeValue(), valueNode.getNodeValue());
+//                            }
                         }
                         child = child.getNextSibling();
                     }

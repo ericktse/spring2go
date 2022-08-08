@@ -11,11 +11,21 @@
     <artifactId>spring2go-common-rule-engine</artifactId>
     <description>rule engine</description>
 
+    <properties>
+        <aviator.version>5.2.2</aviator.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-core</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.aviator</groupId>
+            <artifactId>aviator</artifactId>
+            <version>${aviator.version}</version>
         </dependency>
     </dependencies>
 

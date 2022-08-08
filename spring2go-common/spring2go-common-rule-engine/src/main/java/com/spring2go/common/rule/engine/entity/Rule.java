@@ -35,9 +35,8 @@ public class Rule {
     private String thenSqlParamValue;
     private String thenSqlParamType;
     private String thenClass;
-    private String thenExpression;
-
-    private String result;
+    private String thenExpressionValue;
+    private String thenExpressionParam;
 
 
     public Boolean set(String name, Object value) {
@@ -45,10 +44,12 @@ public class Rule {
         try {
             Field field = clazz.getDeclaredField(name);
             field.setAccessible(true);
-            if ("enabled".equals(name) || "loop".equals(name)) {
-                field.setBoolean(this, Boolean.parseBoolean(value.toString()));
-            } else if ("priority".equals(name)) {
-                field.setInt(this, Integer.parseInt(value.toString()));
+            if (field.getType() == int.class || field.getType() == Integer.class) {
+                field.set(this, Integer.parseInt(value.toString()));
+            } else if (field.getType() == boolean.class || field.getType() == Boolean.class) {
+                field.set(this, Boolean.parseBoolean(value.toString()));
+            } else if (field.getType() == double.class || field.getType() == Double.class) {
+                field.set(this, Double.parseDouble(value.toString()));
             } else {
                 field.set(this, value);
             }

@@ -6,7 +6,7 @@ import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.entity.RuleResult;
 import com.spring2go.common.rule.engine.entity.RuleResultStatus;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
-import com.spring2go.common.rule.engine.expression.OperationType;
+import com.spring2go.common.rule.engine.entity.OperationType;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
@@ -22,9 +22,9 @@ import java.util.*;
  * @author xiaobin
  */
 @Slf4j
-public class SqlRuleExecutor extends AbstractRuleExecutor {
+public class SqlRuleExecutor implements RuleExecutor {
     @Override
-    public Boolean check(Rule rule, Object object) throws RuleEngineException {
+    public Boolean check(Rule rule, Object fact) throws RuleEngineException {
 
         String sqlStr = rule.getWhenSql();
 
@@ -72,7 +72,7 @@ public class SqlRuleExecutor extends AbstractRuleExecutor {
     }
 
     @Override
-    public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
+    public RuleResult execute(Rule rule, Object fact) throws RuleEngineException {
 
         String sqlStr = rule.getThenSql();
 

@@ -7,7 +7,7 @@ public class StudentAgeRuleExecuteCommand implements RuleThenCommand {
 
     @Override
     public RuleResult execute(Rule rule, Object fact) {
-        System.out.println("command execute,rule id" + rule.getId());
+        System.out.println("command execute,rule id:" + rule.getId());
 
         RuleResult result = new RuleResult(rule);
         return result;

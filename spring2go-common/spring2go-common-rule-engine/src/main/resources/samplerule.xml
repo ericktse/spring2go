@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rules>
-    <description>
-        Configuration for the rule list which stores the rule information in-memory and executed by rule engine service.
-    </description>
 
     <rule id="studentAge" description="学生年龄规则">
 
-        <property name="whenRuleExpression" value="(tooOldClass &amp;&amp; tooSmallClass)"/>
+        <property name="whenRuleExpression" value="(tooOldClass &amp;&amp; tooOldExpression)"/>
+        <property name="thenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleExecuteCommand"/>
+
+        <property name="thenExpression" value="age +1" param="age"/>
 
         <property name="loop" value="true"/>
         <property name="priority" value="1"/>
         <property name="enabled" value="true"/>
-
-        <property name="result" value="RESULT.REJECTED" desc="拒绝"/>
     </rule>
 
     <rule id="tooOldClass" parent="studentAge" description="学生年龄太大">
 
         <property name="whenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleCheckCommand"/>
-
         <property name="thenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleExecuteCommand"/>
+
+        <property name="loop" value="false"/>
+        <property name="priority" value="10"/>
+        <property name="enabled" value="true"/>
+    </rule>
+
+    <rule id="tooOldExpression" parent="studentAge" description="学生年龄太大">
+
+        <property name="whenExpression" value="(age &gt; 8)"/>
 
         <property name="loop" value="false"/>
         <property name="priority" value="10"/>
@@ -29,7 +35,6 @@
     <rule id="tooSmallClass" parent="studentAge" description="学生年龄太小">
 
         <property name="whenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleCheckCommand"/>
-
         <property name="thenClass" value="com.spring2go.common.rule.engine.command.StudentAgeRuleExecuteCommand"/>
 
         <property name="loop" value="false"/>

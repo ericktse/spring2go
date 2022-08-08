@@ -1,4 +1,4 @@
-package com.spring2go.common.rule.engine.expression;
+package com.spring2go.common.rule.engine.entity;
 
 import lombok.Data;
 

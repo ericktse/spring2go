@@ -1,6 +1,8 @@
 package com.spring2go.common.rule.engine;
 
+import com.spring2go.common.rule.engine.config.RuleEngineProperties;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
+import com.spring2go.common.rule.engine.reader.XmlRuleReader;
 import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +19,12 @@ class RuleEngineServiceTest {
         student.setName("张三");
         student.setAge(18);
 
-        RuleEngineService service = new RuleEngineService();
+        RuleEngineProperties ruleEngineProperties = new RuleEngineProperties();
+        XmlRuleReader reader = new XmlRuleReader(ruleEngineProperties);
+        RuleEngineService service = new RuleEngineService(reader);
         service.run(student);
+
+        System.out.println(student);
 
     }
 
@@ -26,5 +32,6 @@ class RuleEngineServiceTest {
     class Student {
         String name;
         Integer age;
+        String result;
     }
 }

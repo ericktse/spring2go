@@ -14,23 +14,23 @@ import lombok.extern.slf4j.Slf4j;
  * @author xiaobin
  */
 @Slf4j
-public class ClassRuleExecutor extends AbstractRuleExecutor {
+public class ClassRuleExecutor implements RuleExecutor {
     @Override
-    public Boolean check(Rule rule, Object object) throws RuleEngineException {
+    public Boolean check(Rule rule, Object fact) throws RuleEngineException {
 
         RuleWhenCommand command = getRuleCommand(rule.getWhenClass());
         if (null != command) {
-            return command.check(rule, object);
+            return command.check(rule, fact);
         }
         return false;
     }
 
     @Override
-    public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
+    public RuleResult execute(Rule rule, Object fact) throws RuleEngineException {
 
         RuleThenCommand command = getRuleCommand(rule.getThenClass());
         if (null != command) {
-            return command.execute(rule, object);
+            return command.execute(rule, fact);
         }
         return null;
     }

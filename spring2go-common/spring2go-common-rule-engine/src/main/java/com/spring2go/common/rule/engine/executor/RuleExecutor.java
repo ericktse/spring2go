@@ -10,10 +10,10 @@ import com.spring2go.common.rule.engine.exception.RuleEngineException;
  *
  * @author xiaobin
  */
-public abstract class AbstractRuleExecutor {
+public interface RuleExecutor {
 
-    public abstract Boolean check(Rule rule, Object object) throws RuleEngineException;
+    Boolean check(Rule rule, Object fact) throws RuleEngineException;
 
-    public abstract RuleResult execute(Rule rule, Object object) throws RuleEngineException;
+    RuleResult execute(Rule rule, Object fact) throws RuleEngineException;
 
 }

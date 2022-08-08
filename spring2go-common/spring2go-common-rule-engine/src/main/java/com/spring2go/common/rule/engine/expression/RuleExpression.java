@@ -1,7 +1,9 @@
 package com.spring2go.common.rule.engine.expression;
 
-import com.spring2go.common.rule.engine.entity.RuleResult;
+import com.spring2go.common.rule.engine.entity.*;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
+import com.spring2go.common.rule.engine.executor.ComplexRuleExecutor;
+import com.spring2go.common.rule.engine.util.RuleCacheUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,7 @@ import java.util.List;
  *
  * @author xiaobin
  */
-public class RuleExpression {
-
-    private ExpressionUnit expressionUnit;
+public class RuleExpression extends AbstractExpression {
 
     /**
      * 解析
@@ -21,23 +21,47 @@ public class RuleExpression {
      * @param express
      * @return
      */
+    @Override
     public ExpressionUnit compile(String express) {
         List<OperationUnit> stack = formatExpress(express);
         expressionUnit = breakExpress(stack, null);
         return expressionUnit;
     }
 
-    public Boolean check(Object fact) throws RuleEngineException {
-        Boolean result = expressionUnit.check(fact);
+    @Override
+    public Object execute(Object fact) throws RuleEngineException {
+        Boolean result = checkExpress(expressionUnit, fact);
         return result;
     }
 
-    public List<RuleResult> execute(Object fact) throws RuleEngineException {
-        List<RuleResult> results = new ArrayList<RuleResult>();
-        expressionUnit.execute(fact, results);
-        return results;
+    private boolean checkExpress(ExpressionUnit unit, Object fact) throws RuleEngineException {
+        if (unit.getType() == OperationType.NOT) {
+            unit.setValue(!checkExpress(unit.getRight(), fact));
+        } else if (unit.getType() == OperationType.AND) {
+            boolean temp = checkExpress(unit.getLeft(), fact);
+            if (!temp) {
+                unit.setValue(false);
+            } else {
+                unit.setValue(temp && checkExpress(unit.getRight(), fact));
+            }
+        } else if (unit.getType() == OperationType.OR) {
+            boolean temp = checkExpress(unit.getLeft(), fact);
+            if (temp) {
+                unit.setValue(true);
+            } else {
+                unit.setValue(temp || checkExpress(unit.getRight(), fact));
+            }
+        } else if (unit.getType() == OperationType.VARIABLE) {
+            //如果是规则变量，则执行规则计算
+            Rule rule = RuleCacheUtils.getRule(unit.getOperator());
+            if (null != rule) {
+                ComplexRuleExecutor ruleExecutor = new ComplexRuleExecutor();
+                unit.setValue(ruleExecutor.check(rule, fact));
+            }
+        }
+        return unit.getValue();
     }
-    
+
     /**
      * 解析出各个独立的单元。
      *
@@ -141,7 +165,6 @@ public class RuleExpression {
 
         return theStack;
     }
-
 
     /**
      * 去除前后端无用的括号。

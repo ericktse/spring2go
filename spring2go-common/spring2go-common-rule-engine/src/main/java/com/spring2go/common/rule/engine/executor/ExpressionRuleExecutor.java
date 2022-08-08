@@ -6,7 +6,8 @@ import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import com.spring2go.common.rule.engine.expression.RuleExpression;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class规则执行器
@@ -14,34 +15,19 @@ import java.util.List;
  * @author xiaobin
  */
 @Slf4j
-public class ExpressionRuleExecutor extends AbstractRuleExecutor {
-    private RuleExpression ruleExpression;
-
+public class ExpressionRuleExecutor implements RuleExecutor {
     @Override
-    public Boolean check(Rule rule, Object object) throws RuleEngineException {
-
-        if (null == ruleExpression) {
-            ruleExpression = new RuleExpression();
-            ruleExpression.compile(rule.getWhenRuleExpression());
-        }
-
-        Boolean exeRet = ruleExpression.check(object);
-
-        //TODO：如果是重复执行.
-
-        return exeRet;
+    public Boolean check(Rule rule, Object fact) throws RuleEngineException {
+        RuleExpression ruleExpression = new RuleExpression();
+        ruleExpression.compile(rule.getWhenRuleExpression());
+        Object eRet = ruleExpression.execute(fact);
+        boolean ret = Boolean.parseBoolean(eRet.toString());
+        return ret;
     }
 
     @Override
-    public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
-
-        if (null == ruleExpression) {
-            ruleExpression = new RuleExpression();
-            ruleExpression.compile(rule.getWhenRuleExpression());
-        }
-        List<RuleResult> results = ruleExpression.execute(object);
-        RuleResult result = new RuleResult(rule);
-        result.setItemResults(results);
-        return result;
+    public RuleResult execute(Rule rule, Object fact) throws RuleEngineException {
+        //TODO: rule expression 暂不实现execute
+        return null;
     }
 }
