@@ -46,11 +46,12 @@ public class XmlRuleReader extends AbstractRuleReader {
             Document doc;
 
             String configFile = ruleEngineProperties.getXmlFile();
-            configFile = "D:\\workspace\\spring2go\\spring2go-common\\spring2go-common-rule-engine\\src\\main\\resources\\samplerule.xml";
-//            if (!configFile.startsWith(File.separator)) {
-//                File dir = new File(XmlRuleReader.class.getClassLoader().getResource("").getPath());
-//                configFile = dir + File.separator + configFile;
-//            }
+            //TODO 修改为配置
+            configFile = "\\workspace\\spring2go\\spring2go-common\\spring2go-common-rule-engine\\src\\main\\resources\\samplerule.xml";
+            if (!configFile.startsWith(File.separator)) {
+                File dir = new File(this.getClass().getClassLoader().getResource("").getPath());
+                configFile = dir + File.separator + configFile;
+            }
 
             doc = builder.parse(new File(configFile));
 

@@ -46,15 +46,11 @@ public class ExpressionRuleExecutor implements RuleExecutor {
             ruleExpressions.put(rule.getId(), ruleExpression);
         }
 
-        if (true) {
-            List<RuleResult> results = new ArrayList<>();
-            ruleExpression.executeSub(null, fact, results);
+        List<RuleResult> results = new ArrayList<>();
+        ruleExpression.executeSub(null, fact, results);
 
-            RuleResult result = new RuleResult(rule);
-            result.setItemResults(results);
-            return result;
-        }
-
-        return null;
+        RuleResult result = new RuleResult(rule);
+        result.setItemResults(results);
+        return result;
     }
 }
