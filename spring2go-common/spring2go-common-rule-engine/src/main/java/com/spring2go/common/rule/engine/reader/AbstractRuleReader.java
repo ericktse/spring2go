@@ -17,18 +17,18 @@ public abstract class AbstractRuleReader {
 
     public abstract List<Rule> loadRules() throws RuleEngineException;
 
-    public List<Rule> filterRules(List<Rule> rules, String parentId) {
+    public List<Rule> filterRules(List<Rule> rules, String ruleId) {
 
         List<Rule> newItemList = new ArrayList<Rule>();
 
         for (int i = 0; i < rules.size(); i++) {
             Rule item = rules.get(i);
-            if (StringUtils.isEmpty(parentId)) {
-                if (!item.isSubRule()) {
+            if (StringUtils.isEmpty(ruleId)) {
+                if (!item.isSubRule() && item.getEnabled()) {
                     newItemList.add(item);
                 }
             } else {
-                if (parentId.equalsIgnoreCase(item.getParent())) {
+                if (ruleId.equalsIgnoreCase(item.getId()) && item.getEnabled()) {
                     newItemList.add(item);
                 }
             }

@@ -21,16 +21,15 @@ public class RuleEngineService {
 
     private final AbstractRuleReader ruleReader;
 
-    public RuleResult run(Object object) throws RuleEngineException {
-
+    public RuleResult run(Object fact, String ruleId) throws RuleEngineException {
         List<Rule> itemList = ruleReader.loadRules();
-        itemList = ruleReader.filterRules(itemList, null);
+        itemList = ruleReader.filterRules(itemList, ruleId);
 
         RuleExecutor ruleExecutor = new ComplexRuleExecutor();
         RuleResult result = new RuleResult(null);
         for (Rule item : itemList) {
-            if (ruleExecutor.check(item, object)) {
-                RuleResult itemResult = ruleExecutor.execute(item, object);
+            if (ruleExecutor.check(item, fact)) {
+                RuleResult itemResult = ruleExecutor.execute(item, fact);
                 if (null != itemResult) {
                     result.addItemResult(itemResult);
                 }
@@ -38,5 +37,9 @@ public class RuleEngineService {
         }
 
         return result;
+    }
+
+    public RuleResult run(Object fact) throws RuleEngineException {
+        return run(fact, null);
     }
 }

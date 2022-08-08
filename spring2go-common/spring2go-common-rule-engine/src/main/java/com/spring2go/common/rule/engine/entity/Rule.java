@@ -27,9 +27,9 @@ public class Rule {
     private String whenRuleExpression;
 
     private String parent;
-    private int priority = 0;
-    private boolean loop = false;
-    private boolean enabled = true;
+    private Integer priority = 0;
+    private Boolean loop = false;
+    private Boolean enabled = true;
 
     private String thenSql;
     private String thenSqlParamValue;
