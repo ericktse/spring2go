@@ -11,12 +11,12 @@ import java.util.List;
  * @author xiaobin
  */
 public class RuleCacheUtils {
-    public static volatile List<Rule> RULECACHE = new ArrayList<Rule>();
+    public static volatile List<Rule> RULE_CACHE = new ArrayList<Rule>();
 
 
     public static Rule getRule(String id) {
 
-        for (Rule rule : RULECACHE) {
+        for (Rule rule : RULE_CACHE) {
             if (rule.getId().equalsIgnoreCase(id)) {
                 return rule;
             }

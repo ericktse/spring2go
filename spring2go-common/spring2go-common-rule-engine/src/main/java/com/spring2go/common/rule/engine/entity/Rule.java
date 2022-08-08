@@ -45,9 +45,9 @@ public class Rule {
         try {
             Field field = clazz.getDeclaredField(name);
             field.setAccessible(true);
-            if (name.equals("enabled") || name.equals("loop")) {
+            if ("enabled".equals(name) || "loop".equals(name)) {
                 field.setBoolean(this, Boolean.parseBoolean(value.toString()));
-            } else if (name.equals("priority")) {
+            } else if ("priority".equals(name)) {
                 field.setInt(this, Integer.parseInt(value.toString()));
             } else {
                 field.set(this, value);

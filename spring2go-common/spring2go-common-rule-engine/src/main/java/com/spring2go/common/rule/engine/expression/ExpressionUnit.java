@@ -3,7 +3,8 @@ package com.spring2go.common.rule.engine.expression;
 import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.entity.RuleResult;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
-import com.spring2go.common.rule.engine.executor.SimpleRuleExecutor;
+import com.spring2go.common.rule.engine.executor.ClassRuleExecutor;
+import com.spring2go.common.rule.engine.executor.ComplexRuleExecutor;
 import com.spring2go.common.rule.engine.util.RuleCacheUtils;
 import lombok.Data;
 
@@ -46,7 +47,7 @@ public class ExpressionUnit {
             //如果是规则变量，则执行规则计算
             Rule rule = RuleCacheUtils.getRule(operator);
             if (null != rule) {
-                SimpleRuleExecutor ruleExecutor = new SimpleRuleExecutor();
+                ComplexRuleExecutor ruleExecutor = new ComplexRuleExecutor();
                 value = ruleExecutor.check(rule, fact);
             }
         }
@@ -55,11 +56,11 @@ public class ExpressionUnit {
 
     public void execute(Object fact, List<RuleResult> results) throws RuleEngineException {
         //如果是规则变量，则执行规则计算
-        if (this.type == OperationType.VARIABLE) {
+        if (OperationType.VARIABLE.equals(this.type)) {
             if (value) {
                 Rule rule = RuleCacheUtils.getRule(operator);
                 if (null != rule) {
-                    SimpleRuleExecutor ruleExecutor = new SimpleRuleExecutor();
+                    ComplexRuleExecutor ruleExecutor = new ComplexRuleExecutor();
                     RuleResult ret = ruleExecutor.execute(rule, fact);
                     if (null != ret) {
                         results.add(ret);

@@ -5,7 +5,7 @@ package com.spring2go.common.rule.engine.entity;
  *
  * @author xiaobin
  */
-public enum ResultStatus {
+public enum RuleResultStatus {
     /**
      * 默认
      */
@@ -23,7 +23,7 @@ public enum ResultStatus {
     private Integer key;
     private String value;
 
-    ResultStatus(Integer key, String value) {
+    RuleResultStatus(Integer key, String value) {
         this.key = key;
         this.value = value;
     }

@@ -3,53 +3,35 @@ package com.spring2go.common.rule.engine.executor;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.rule.engine.command.RuleWhenCommand;
 import com.spring2go.common.rule.engine.command.RuleThenCommand;
-import com.spring2go.common.rule.engine.command.SqlRuleWhenCommand;
 import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.entity.RuleResult;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 复杂规则执行器
+ * Class规则执行器
  *
  * @author xiaobin
  */
 @Slf4j
-public class SimpleRuleExecutor extends AbstractRuleExecutor {
+public class ClassRuleExecutor extends AbstractRuleExecutor {
     @Override
     public Boolean check(Rule rule, Object object) throws RuleEngineException {
 
-        if (StringUtils.isNotEmpty(rule.getWhenSql())) {
-            SqlRuleWhenCommand command = new SqlRuleWhenCommand();
+        RuleWhenCommand command = getRuleCommand(rule.getWhenClass());
+        if (null != command) {
             return command.check(rule, object);
         }
-
-        if (StringUtils.isNotEmpty(rule.getWhenClass())) {
-            RuleWhenCommand command = getRuleCommand(rule.getWhenClass());
-            if (null != command) {
-                return command.check(rule, object);
-            }
-            return false;
-        }
-
         return false;
     }
 
     @Override
     public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
 
-        if (StringUtils.isNotEmpty(rule.getThenSql())) {
-
+        RuleThenCommand command = getRuleCommand(rule.getThenClass());
+        if (null != command) {
+            return command.execute(rule, object);
         }
-
-        if (StringUtils.isNotEmpty(rule.getThenClass())) {
-            RuleThenCommand command = getRuleCommand(rule.getThenClass());
-            if (null != command) {
-                return command.execute(rule, object);
-            }
-            return null;
-        }
-
         return null;
     }
 

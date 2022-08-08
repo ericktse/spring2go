@@ -1,8 +1,10 @@
-package com.spring2go.common.rule.engine.command;
+package com.spring2go.common.rule.engine.executor;
 
 import com.spring2go.common.core.util.SpringContextHolder;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.rule.engine.entity.Rule;
+import com.spring2go.common.rule.engine.entity.RuleResult;
+import com.spring2go.common.rule.engine.entity.RuleResultStatus;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import com.spring2go.common.rule.engine.expression.OperationType;
 import lombok.extern.slf4j.Slf4j;
@@ -10,25 +12,23 @@ import lombok.extern.slf4j.Slf4j;
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Date;
 
 /**
- * SQL检查命令
+ * SQL规则执行器
  *
  * @author xiaobin
  */
 @Slf4j
-public class SqlRuleWhenCommand implements RuleWhenCommand {
-
+public class SqlRuleExecutor extends AbstractRuleExecutor {
     @Override
-    public Boolean check(Rule rule, Object fact) throws RuleEngineException {
+    public Boolean check(Rule rule, Object object) throws RuleEngineException {
 
         String sqlStr = rule.getWhenSql();
 
         if (StringUtils.isEmpty(sqlStr)) {
-            log.error("This function must be called when the sql statement is not empty.");
             throw new RuleEngineException("This function must be called when the sql statement is not empty.");
         }
 
@@ -38,6 +38,7 @@ public class SqlRuleWhenCommand implements RuleWhenCommand {
         }
 
         String paramName = rule.getWhenSqlParamValue();
+        String paramType = rule.getWhenSqlParamType();
         List<Object> paramList = null;
         if (!StringUtils.isEmpty(paramName)) {
 
@@ -45,19 +46,16 @@ public class SqlRuleWhenCommand implements RuleWhenCommand {
             String[] sqlSection = sqlStr.split("\\?");
 
             if (sqlSection.length != params.length + 1) {
-                log.debug("the parameters count must be equal to the count of the question mark.item_no = {},  item.desc = {}", rule.getId(), rule.getDescription());
-                throw new RuleEngineException("the parameters count must be equal to the count of the question mark.");
+                throw new RuleEngineException(String.format("the parameters count must be equal to the count of the question mark.rule:{}", rule.getId()));
             }
 
-            if (StringUtils.isEmpty(rule.getWhenSqlParamType())) {
-                log.debug("the cannot be empty if param is assigned. item_no = {},  item.desc = {}", rule.getId(), rule.getDescription());
-                throw new RuleEngineException("the cannot be empty if param is assigned.");
+            if (StringUtils.isEmpty(paramType)) {
+                throw new RuleEngineException(String.format("the cannot be empty if param is assigned.rule:{}", rule.getId()));
             }
 
-            String[] paramTypes = rule.getWhenSqlParamType().split(",");
+            String[] paramTypes = paramType.split(",");
             if (params.length != paramTypes.length) {
-                log.debug("the parameters count must be equal to the count of the question mark. item_no = {},  item.desc = {}", rule.getId(), rule.getDescription());
-                throw new RuleEngineException("the parameters count must be equal to the count of the question mark.");
+                throw new RuleEngineException(String.format("the parameters count must be equal to the count of the question mark.rule:{}", rule.getId()));
             }
 
             paramList = new ArrayList<Object>();
@@ -65,17 +63,61 @@ public class SqlRuleWhenCommand implements RuleWhenCommand {
                 String type = paramTypes[i];
                 paramList.add(getParamValue(params[i], type));
             }
-
         }
 
         Map<String, Object> resultSet = executeSQL(sqlStr, paramList);
-
-        boolean bRet = false;
-
-        //TODO:比较数据库的结果是不是符合预期
-        //bRet=compare(resultSet,rule);
+        Boolean bRet = compare(resultSet, rule);
 
         return bRet;
+    }
+
+    @Override
+    public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
+
+        String sqlStr = rule.getThenSql();
+
+        if (StringUtils.isEmpty(sqlStr)) {
+            throw new RuleEngineException("This function must be called when the sql statement is not empty.");
+        }
+
+        // add tailed space.
+        if (sqlStr.endsWith("?")) {
+            sqlStr = sqlStr + " ";
+        }
+
+        String paramName = rule.getThenSqlParamValue();
+        String paramType = rule.getThenSqlParamType();
+        List<Object> paramList = null;
+        if (!StringUtils.isEmpty(paramName)) {
+
+            String[] params = paramName.split(",");
+            String[] sqlSection = sqlStr.split("\\?");
+
+            if (sqlSection.length != params.length + 1) {
+                throw new RuleEngineException(String.format("the parameters count must be equal to the count of the question mark.rule:{}", rule.getId()));
+            }
+
+            if (StringUtils.isEmpty(paramType)) {
+                throw new RuleEngineException(String.format("the cannot be empty if param is assigned.rule:{}", rule.getId()));
+            }
+
+            String[] paramTypes = paramType.split(",");
+            if (params.length != paramTypes.length) {
+                throw new RuleEngineException(String.format("the parameters count must be equal to the count of the question mark.rule:{}", rule.getId()));
+            }
+
+            paramList = new ArrayList<Object>();
+            for (int i = 0; i < paramTypes.length; i++) {
+                String type = paramTypes[i];
+                paramList.add(getParamValue(params[i], type));
+            }
+        }
+
+        Map<String, Object> resultSet = executeSQL(sqlStr, paramList);
+        RuleResult result = new RuleResult(rule);
+        result.setStatus(RuleResultStatus.PASSED);
+
+        return result;
     }
 
     /**
@@ -137,13 +179,6 @@ public class SqlRuleWhenCommand implements RuleWhenCommand {
         return value;
     }
 
-    /**
-     * @param sqlStr
-     * @return
-     * @throws SQLException
-     * @throws ReflectiveOperationException
-     * @throws RuleEngineException
-     */
     private Map<String, Object> executeSQL(String sqlStr, List<Object> paramList) throws RuleEngineException {
         PreparedStatement stmt = null;
         ResultSet res = null;
@@ -239,7 +274,6 @@ public class SqlRuleWhenCommand implements RuleWhenCommand {
         } else {
             throw new RuleEngineException("sql result is empty.");
         }
-
 
         String cValue = rule.getWhenSqlCompareValue();
         String cOperate = rule.getWhenSqlCompareOperate();

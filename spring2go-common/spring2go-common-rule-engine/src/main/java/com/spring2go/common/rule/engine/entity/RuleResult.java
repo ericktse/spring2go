@@ -13,13 +13,12 @@ import java.util.List;
 @Data
 public class RuleResult {
     private List<RuleResult> itemResults;
-
     private Rule rule;
-    private ResultStatus status;
+    private RuleResultStatus status;
 
     public RuleResult(Rule rule) {
         this.itemResults = new ArrayList<>();
-        this.status = ResultStatus.DEFAULT;
+        this.status = RuleResultStatus.DEFAULT;
         this.rule = rule;
     }
 

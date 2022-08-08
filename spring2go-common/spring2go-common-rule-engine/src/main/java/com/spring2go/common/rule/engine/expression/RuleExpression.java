@@ -37,8 +37,7 @@ public class RuleExpression {
         expressionUnit.execute(fact, results);
         return results;
     }
-
-
+    
     /**
      * 解析出各个独立的单元。
      *

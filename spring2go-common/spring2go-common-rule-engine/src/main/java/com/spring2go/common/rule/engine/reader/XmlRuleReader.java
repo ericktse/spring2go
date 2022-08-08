@@ -5,6 +5,7 @@ import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import com.spring2go.common.rule.engine.util.RuleCacheUtils;
 import com.sun.org.slf4j.internal.Logger;
 import com.sun.org.slf4j.internal.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -21,19 +22,16 @@ import java.util.List;
  *
  * @author xiaobin
  */
+@Slf4j
 public class XmlRuleReader extends AbstractRuleReader {
-
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    private List<Rule> itemList = null;
 
     @Override
     public List<Rule> loadRules() throws RuleEngineException {
         //缓存加载
-        if (!RuleCacheUtils.RULECACHE.isEmpty()) {
-            RuleCacheUtils.RULECACHE.clear();
+        if (!RuleCacheUtils.RULE_CACHE.isEmpty()) {
+            RuleCacheUtils.RULE_CACHE.clear();
         }
-        itemList = new ArrayList<Rule>();
+        List<Rule> itemList = new ArrayList<Rule>();
 
         try {
             // 创建DOM文档对象
@@ -57,7 +55,7 @@ public class XmlRuleReader extends AbstractRuleReader {
                 Node node = nodeList.item(i);
                 NamedNodeMap attributes = node.getAttributes();
                 if (null == attributes || attributes.getNamedItem("id") == null) {
-                    logger.error("rule id must not be null. rule.context = {}", node.getTextContent());
+                    log.error("rule id must not be null. rule.context = {}", node.getTextContent());
                     return null;
                 }
 
@@ -105,16 +103,16 @@ public class XmlRuleReader extends AbstractRuleReader {
                 itemList.add(item);
             }
         } catch (Exception e) {
-            logger.error("xml rule load error :", e);
+            log.error("xml rule load error :", e);
             throw new RuleEngineException(e.getCause());
         }
 
         //缓存
-        synchronized (RuleCacheUtils.RULECACHE) {
-            RuleCacheUtils.RULECACHE.addAll(itemList);
+        synchronized (RuleCacheUtils.RULE_CACHE) {
+            RuleCacheUtils.RULE_CACHE.addAll(itemList);
         }
 
-        return RuleCacheUtils.RULECACHE;
+        return RuleCacheUtils.RULE_CACHE;
 
     }
 

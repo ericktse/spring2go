@@ -4,9 +4,7 @@ import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.entity.RuleResult;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
-import com.spring2go.common.rule.engine.expression.RuleExpression;
 
-import java.util.List;
 
 /**
  * 复杂规则执行器
@@ -14,48 +12,51 @@ import java.util.List;
  * @author xiaobin
  */
 public class ComplexRuleExecutor extends AbstractRuleExecutor {
-    private RuleExpression ruleExpression;
+    private ExpressionRuleExecutor expressionRuleExecutor = null;
 
     @Override
     public Boolean check(Rule rule, Object object) throws RuleEngineException {
 
-        //子规则嵌套表达式
         if (StringUtils.isNotEmpty(rule.getWhenRuleExpression())) {
-
-            if (null == ruleExpression) {
-                ruleExpression = new RuleExpression();
-                ruleExpression.compile(rule.getWhenRuleExpression());
+            if (null == expressionRuleExecutor) {
+                expressionRuleExecutor = new ExpressionRuleExecutor();
             }
-
-            Boolean exeRet = ruleExpression.check(object);
-
-            //TODO：如果是重复执行.
-
-            return exeRet;
-
-        } else {
-            SimpleRuleExecutor executor = new SimpleRuleExecutor();
-            return executor.check(rule, object);
+            return expressionRuleExecutor.check(rule, object);
         }
+
+        if (StringUtils.isNotEmpty(rule.getWhenClass())) {
+            AbstractRuleExecutor ruleExecutor = new ClassRuleExecutor();
+            return ruleExecutor.check(rule, object);
+        }
+
+        if (StringUtils.isNotEmpty(rule.getWhenSql())) {
+            AbstractRuleExecutor ruleExecutor = new SqlRuleExecutor();
+            return ruleExecutor.check(rule, object);
+        }
+
+        return false;
     }
 
     @Override
     public RuleResult execute(Rule rule, Object object) throws RuleEngineException {
 
         if (StringUtils.isNotEmpty(rule.getWhenRuleExpression())) {
-
-            if (null == ruleExpression) {
-                ruleExpression = new RuleExpression();
-                ruleExpression.compile(rule.getWhenRuleExpression());
+            if (null == expressionRuleExecutor) {
+                expressionRuleExecutor = new ExpressionRuleExecutor();
             }
-            List<RuleResult> results = ruleExpression.execute(object);
-            RuleResult result = new RuleResult(rule);
-            result.setItemResults(results);
-            return result;
-
-        } else {
-            SimpleRuleExecutor executor = new SimpleRuleExecutor();
-            return executor.execute(rule, object);
+            return expressionRuleExecutor.execute(rule, object);
         }
+
+        if (StringUtils.isNotEmpty(rule.getWhenClass())) {
+            AbstractRuleExecutor ruleExecutor = new ClassRuleExecutor();
+            return ruleExecutor.execute(rule, object);
+        }
+
+        if (StringUtils.isNotEmpty(rule.getWhenSql())) {
+            AbstractRuleExecutor ruleExecutor = new SqlRuleExecutor();
+            return ruleExecutor.execute(rule, object);
+        }
+
+        return null;
     }
 }
