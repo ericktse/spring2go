@@ -13,7 +13,6 @@ import com.spring2go.common.rule.engine.exception.RuleEngineException;
  */
 public class ComplexRuleExecutor implements RuleExecutor {
     private ExpressionRuleExecutor expressionRuleExecutor = null;
-    private AviatorRuleExecutor aviatorRuleExecutor = null;
 
     @Override
     public Boolean check(Rule rule, Object fact) throws RuleEngineException {
@@ -26,10 +25,8 @@ public class ComplexRuleExecutor implements RuleExecutor {
         }
 
         if (StringUtils.isNotEmpty(rule.getWhenExpression())) {
-            if (null == aviatorRuleExecutor) {
-                aviatorRuleExecutor = new AviatorRuleExecutor();
-            }
-            return aviatorRuleExecutor.check(rule, fact);
+            RuleExecutor ruleExecutor = new AviatorRuleExecutor();
+            return ruleExecutor.check(rule, fact);
         }
 
         if (StringUtils.isNotEmpty(rule.getWhenClass())) {
@@ -50,11 +47,18 @@ public class ComplexRuleExecutor implements RuleExecutor {
 
         RuleResult ruleResult = new RuleResult(rule);
 
-        if (StringUtils.isNotEmpty(rule.getThenExpressionValue())) {
-            if (null == aviatorRuleExecutor) {
-                aviatorRuleExecutor = new AviatorRuleExecutor();
+        //是否允许规则嵌套执行
+        if (StringUtils.isNotEmpty(rule.getWhenRuleExpression())
+                && rule.getWhenRuleExpressionLoop()) {
+            if (null == expressionRuleExecutor) {
+                expressionRuleExecutor = new ExpressionRuleExecutor();
             }
-            ruleResult.addItemResult(aviatorRuleExecutor.execute(rule, fact));
+            ruleResult.addItemResult(expressionRuleExecutor.execute(rule, fact));
+        }
+
+        if (StringUtils.isNotEmpty(rule.getThenExpressionValue())) {
+            RuleExecutor ruleExecutor = new AviatorRuleExecutor();
+            ruleResult.addItemResult(ruleExecutor.execute(rule, fact));
         }
 
         if (StringUtils.isNotEmpty(rule.getThenClass())) {

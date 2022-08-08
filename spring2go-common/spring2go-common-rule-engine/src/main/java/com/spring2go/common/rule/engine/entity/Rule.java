@@ -25,6 +25,7 @@ public class Rule {
     private String whenClass;
     private String whenExpression;
     private String whenRuleExpression;
+    private Boolean whenRuleExpressionLoop = false;
 
     private String parent;
     private Integer priority = 0;

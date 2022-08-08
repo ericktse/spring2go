@@ -1,5 +1,6 @@
 package com.spring2go.common.rule.engine.reader;
 
+import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.rule.engine.config.RuleEngineProperties;
 import com.spring2go.common.rule.engine.entity.Rule;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
@@ -94,6 +95,13 @@ public class XmlRuleReader extends AbstractRuleReader {
                                     item.setWhenSqlCompareOperate(operateNode.getNodeValue());
                                     item.setWhenSqlCompareValue(valueNode.getNodeValue());
                                     break;
+                                case "whenRuleExpression":
+                                    Node loopNode = childAttrs.getNamedItem("loop");
+                                    item.setWhenRuleExpression(valueNode.getNodeValue());
+                                    if (null != loopNode && StringUtils.isNotEmpty(loopNode.getNodeValue())) {
+                                        item.setWhenRuleExpressionLoop(Boolean.parseBoolean(loopNode.getNodeValue()));
+                                    }
+                                    break;
                                 case "thenSqlParam":
                                     Node n = childAttrs.getNamedItem("type");
                                     item.setThenSqlParamValue(valueNode.getNodeValue());
@@ -110,22 +118,6 @@ public class XmlRuleReader extends AbstractRuleReader {
                                     item.set(nameNode.getNodeValue(), valueNode.getNodeValue());
                                     break;
                             }
-
-//                            if ("whenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
-//                                Node typeNode = childAttrs.getNamedItem("type");
-//                                item.setWhenSqlParamValue(valueNode.getNodeValue());
-//                                item.setWhenSqlParamType(typeNode.getNodeValue());
-//                            } else if ("whenSqlCompare".equalsIgnoreCase(nameNode.getNodeValue())) {
-//                                Node operateNode = childAttrs.getNamedItem("operate");
-//                                item.setWhenSqlCompareOperate(operateNode.getNodeValue());
-//                                item.setWhenSqlCompareValue(valueNode.getNodeValue());
-//                            } else if ("thenSqlParam".equalsIgnoreCase(nameNode.getNodeValue())) {
-//                                Node typeNode = childAttrs.getNamedItem("type");
-//                                item.setThenSqlParamValue(valueNode.getNodeValue());
-//                                item.setThenSqlParamType(typeNode.getNodeValue());
-//                            } else {
-//                                item.set(nameNode.getNodeValue(), valueNode.getNodeValue());
-//                            }
                         }
                         child = child.getNextSibling();
                     }

@@ -34,6 +34,28 @@ public class RuleExpression extends AbstractExpression {
         return result;
     }
 
+    public void executeSub(ExpressionUnit unit, Object fact, List<RuleResult> results) throws RuleEngineException {
+        if (null == unit) {
+            unit = expressionUnit;
+        }
+        //如果是规则变量，则执行规则计算
+        if (OperationType.VARIABLE.equals(unit.getType())) {
+            if (unit.getValue()) {
+                Rule rule = RuleCacheUtils.getRule(unit.getOperator());
+                if (null != rule) {
+                    ComplexRuleExecutor ruleExecutor = new ComplexRuleExecutor();
+                    RuleResult ret = ruleExecutor.execute(rule, fact);
+                    if (null != ret) {
+                        results.add(ret);
+                    }
+                }
+            }
+        } else {
+            executeSub(unit.getLeft(), fact, results);
+            executeSub(unit.getRight(), fact, results);
+        }
+    }
+
     private boolean checkExpress(ExpressionUnit unit, Object fact) throws RuleEngineException {
         if (unit.getType() == OperationType.NOT) {
             unit.setValue(!checkExpress(unit.getRight(), fact));

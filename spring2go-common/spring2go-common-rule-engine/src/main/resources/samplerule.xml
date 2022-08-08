@@ -13,7 +13,6 @@
     <rule id="demo_expression" description="表达式规则">
         <property name="whenExpression" value="(age &gt; 8)"/>
         <property name="thenExpression" value="age +1" param="age"/>
-        <!--<property name="thenExpression" value="'李四'" param="name"/>-->
 
         <property name="loop" value="true"/>
         <property name="priority" value="1"/>
@@ -21,7 +20,8 @@
     </rule>
 
     <rule id="demo_rule_expression" description="规则表达式规则">
-        <property name="whenRuleExpression" value="(demo_rule_expression_sub1 &amp;&amp; demo_rule_expression_sub2)"/>
+        <property name="whenRuleExpression" value="(demo_rule_expression_sub1 &amp;&amp; demo_rule_expression_sub2)"
+                  loop="true"/>
         <property name="thenClass"
                   value="com.spring2go.common.rule.engine.command.DemoRuleExpressionSubstitutionsRuleExecuteCommand"/>
 
@@ -32,6 +32,8 @@
     <rule id="demo_rule_expression_sub1" parent="demo_rule_expression">
         <property name="whenClass"
                   value="com.spring2go.common.rule.engine.command.DemoRuleExpressionSubRuleCheckCommand"/>
+        <property name="thenClass"
+                  value="com.spring2go.common.rule.engine.command.DemoRuleExpressionSubstitutionsRuleExecuteCommand"/>
 
         <property name="loop" value="false"/>
         <property name="priority" value="10"/>
@@ -39,6 +41,7 @@
     </rule>
     <rule id="demo_rule_expression_sub2" parent="demo_rule_expression">
         <property name="whenExpression" value="(age &gt; 8)"/>
+        <property name="thenExpression" value="'李四'" param="name"/>
 
         <property name="loop" value="false"/>
         <property name="priority" value="10"/>

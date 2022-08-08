@@ -4,7 +4,6 @@ import com.spring2go.common.rule.engine.config.RuleEngineProperties;
 import com.spring2go.common.rule.engine.entity.Student;
 import com.spring2go.common.rule.engine.exception.RuleEngineException;
 import com.spring2go.common.rule.engine.reader.XmlRuleReader;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.Assert;
