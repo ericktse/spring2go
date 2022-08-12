@@ -8,7 +8,7 @@ import com.spring2go.system.entity.SysDepartment;
 import java.util.List;
 
 /**
- * @description: 信息部门信息
+ * @description: 部门信息
  * @author: xiaobin
  * @date: 2021/3/31 17:09
  */

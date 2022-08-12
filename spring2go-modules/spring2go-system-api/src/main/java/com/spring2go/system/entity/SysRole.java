@@ -22,7 +22,7 @@ public class SysRole extends BaseEntity {
     private String roleName;
 
     @ApiModelProperty(value = "角色标识")
-    private String roleCode;
+    private String roleKey;
 
     @ApiModelProperty(value = "角色排序")
     private Integer roleSort;

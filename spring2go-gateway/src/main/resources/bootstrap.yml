@@ -51,7 +51,7 @@ spring:
         - id: spring2go-system
           uri: lb://spring2go-system
           predicates:
-            - Path=/sys/**
+            - Path=/system/**
           filters:
             - StripPrefix=1
         # 文件服务

@@ -41,13 +41,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public List<MenuTree> selectMenuTree(Integer parentId) {
         Integer parent = parentId == null ? 0 : parentId;
-        List<SysMenu> list = baseMapper.selectList(
-                Wrappers.<SysMenu>lambdaQuery().eq(SysMenu::getParentId, parent).orderByAsc(SysMenu::getOrderNum));
+//        List<SysMenu> list = baseMapper.selectList(
+//                Wrappers.<SysMenu>lambdaQuery().eq(SysMenu::getParentId, parent).orderByAsc(SysMenu::getOrderNum));
+
+        LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.eq(SysMenu::getDelFlag, "0");
+        queryWrapper.orderByAsc(SysMenu::getOrderNum);
+        List<SysMenu> list = baseMapper.selectList(queryWrapper);
 
         List<MenuTree> treeList = list.stream().filter(item -> !item.getMenuId().equals(item.getParentId()))
                 .sorted(Comparator.comparingInt(SysMenu::getOrderNum)).map(item -> {
                     MenuTree node = new MenuTree();
                     BeanUtils.copyProperties(item, node);
+                    node.setId(item.getMenuId());
                     return node;
                 }).collect(Collectors.toList());
         return TreeUtils.build(treeList);

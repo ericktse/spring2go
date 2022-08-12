@@ -1,6 +1,8 @@
 package com.spring2go.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -10,11 +12,13 @@ import lombok.Data;
  * @date: 2021-04-08 10:22
  */
 @Data
+@TableName("sys_post")
 public class SysPosition extends BaseEntity {
 
     /**
      * 岗位序号
      */
+    @TableId
     private Long postId;
 
     /**

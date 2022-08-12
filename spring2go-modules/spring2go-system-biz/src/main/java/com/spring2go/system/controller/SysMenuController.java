@@ -41,6 +41,18 @@ public class SysMenuController extends BaseController {
     }
 
     /**
+     * 返回菜单集合
+     *
+     * @param menu 父节点ID
+     * @return 树形菜单
+     */
+    @GetMapping(value = "/list")
+    public R list(SysMenu menu) {
+
+        return R.ok(sysMenuService.list());
+    }
+
+    /**
      * 返回树形菜单集合
      *
      * @param parentId 父节点ID

@@ -28,7 +28,7 @@ export function getDept(deptId) {
 // 查询部门下拉树结构
 export function treeselect() {
   return request({
-    url: '/sys/dept/tree',
+    url: '/system/dept/tree',
     method: 'get'
   })
 }

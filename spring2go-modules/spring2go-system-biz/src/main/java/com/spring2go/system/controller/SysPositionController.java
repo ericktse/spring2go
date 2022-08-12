@@ -1,5 +1,7 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.log.annotation.Log;
@@ -17,7 +19,7 @@ import java.util.List;
  * @author: xiaobin
  * @date: 2021-03-31 16:58
  */
-@Api(tags="岗位管理")
+@Api(tags = "岗位管理")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/post")
@@ -42,6 +44,18 @@ public class SysPositionController extends BaseController {
         List<SysPosition> list = sysPositionService.list();
         return R.ok(list);
     }
+
+    /**
+     * 分页查询角色信息
+     *
+     * @param page 分页对象
+     * @return 分页对象
+     */
+    @GetMapping("/page")
+    public R getPage(Page page) {
+        return R.ok(sysPositionService.page(page, Wrappers.emptyWrapper()));
+    }
+
 
     /**
      * 新增岗位

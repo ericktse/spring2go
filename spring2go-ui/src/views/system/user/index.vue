@@ -356,8 +356,7 @@ import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser,
 const router = useRouter();
 //获取挂载在全局的属性和获取上下文
 const { proxy } = getCurrentInstance();
-//TODO:暂时注销字典逻辑
-//const { sys_normal_disable, sys_user_sex } = proxy.useDict("sys_normal_disable", "sys_user_sex");
+const { sys_normal_disable, sys_user_sex } = proxy.useDict("sys_normal_disable", "sys_user_sex");
 
 const userList = ref([]);
 const open = ref(false);
