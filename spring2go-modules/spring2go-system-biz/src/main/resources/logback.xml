@@ -3,7 +3,7 @@
     <!-- 日志存放路径 -->
     <property name="log.path" value="logs/spring2go-system" />
     <!-- 日志输出格式 -->
-    <property name="log.pattern" value="%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread] %highlight(%-5level) %cyan(%logger{20}) - [%method,%line] - %msg%n" />
+    <property name="log.pattern" value="%highlight(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%thread,%X{traceId},%X{spanId}] %highlight(%-5level) %cyan(%logger{20}) - [%method,%line] - %msg%n" />
 
     <!-- 控制台输出 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
