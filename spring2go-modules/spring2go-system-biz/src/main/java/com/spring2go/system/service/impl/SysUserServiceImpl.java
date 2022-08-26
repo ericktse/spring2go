@@ -61,17 +61,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtils.copyProperties(userVo, sysUser);
         sysUser.setDelFlag(CommonConstants.NORMAL);
         sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
-        baseMapper.insert(sysUser);
-        List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
-            SysUserRole userRole = new SysUserRole();
-            userRole.setUserId(sysUser.getUserId());
-            userRole.setRoleId(roleId);
-            return userRole;
-        }).collect(Collectors.toList());
-        return sysUserRoleService.saveBatch(userRoleList);
+        sysUser.setCreateTime(DateUtils.now());
+        int result = baseMapper.insert(sysUser);
+        if (StringUtils.isNotEmpty(userVo.getRole())) {
+            List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
+                SysUserRole userRole = new SysUserRole();
+                userRole.setUserId(sysUser.getUserId());
+                userRole.setRoleId(roleId);
+                return userRole;
+            }).collect(Collectors.toList());
+            return sysUserRoleService.saveBatch(userRoleList);
+        }
+
+        return result == 1;
     }
 
 
+    @Transactional
     @Override
     public Boolean updateUser(UserVo userVo) {
         SysUser sysUser = new SysUser();
@@ -81,23 +87,39 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         if (StringUtils.isNotEmpty(userVo.getPassword())) {
             sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
         }
-        this.updateById(sysUser);
+        boolean result = this.updateById(sysUser);
 
         sysUserRoleService
                 .remove(Wrappers.<SysUserRole>update().lambda().eq(SysUserRole::getUserId, userVo.getUserId()));
 
-        List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
-            SysUserRole userRole = new SysUserRole();
-            userRole.setUserId(sysUser.getUserId());
-            userRole.setRoleId(roleId);
-            return userRole;
-        }).collect(Collectors.toList());
-        return sysUserRoleService.saveBatch(userRoleList);
+        if (StringUtils.isNotEmpty(userVo.getRole())) {
+            List<SysUserRole> userRoleList = userVo.getRole().stream().map(roleId -> {
+                SysUserRole userRole = new SysUserRole();
+                userRole.setUserId(sysUser.getUserId());
+                userRole.setRoleId(roleId);
+                return userRole;
+            }).collect(Collectors.toList());
+            result = sysUserRoleService.saveBatch(userRoleList);
+        }
+        return result;
+    }
+
+    @Override
+    public Boolean resetPwd(UserVo userVo) {
+        SysUser sysUser = new SysUser();
+        BeanUtils.copyProperties(userVo, sysUser);
+        sysUser.setUpdateTime(DateUtils.now());
+
+        if (StringUtils.isNotEmpty(userVo.getPassword())) {
+            sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
+        }
+        return this.updateById(sysUser);
     }
 
     /**
      * 分页查询用户信息（含有角色信息）
-     * @param page 分页对象
+     *
+     * @param page   分页对象
      * @param userVo 参数列表
      * @return
      */

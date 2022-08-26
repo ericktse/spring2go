@@ -21,7 +21,7 @@ export function getUser(userId) {
 // 新增用户
 export function addUser(data) {
   return request({
-    url: '/system/user',
+    url: '/system/user/add',
     method: 'post',
     data: data
   })
@@ -30,7 +30,7 @@ export function addUser(data) {
 // 修改用户
 export function updateUser(data) {
   return request({
-    url: '/system/user',
+    url: '/system/user/edit',
     method: 'put',
     data: data
   })
@@ -64,7 +64,7 @@ export function changeUserStatus(userId, status) {
     status
   }
   return request({
-    url: '/system/user/changeStatus',
+    url: '/system/user/edit',
     method: 'put',
     data: data
   })

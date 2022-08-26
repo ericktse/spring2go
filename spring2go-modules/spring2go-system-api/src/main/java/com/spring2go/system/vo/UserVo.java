@@ -3,6 +3,7 @@ package com.spring2go.system.vo;
 import com.spring2go.system.entity.SysUser;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +18,8 @@ public class UserVo extends SysUser {
     private List<Integer> role;
 
     private Integer deptId;
+
+    private String beginTime;
+
+    private String endTime;
 }

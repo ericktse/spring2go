@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @author: xiaobin
  * @date: 2021-03-30 10:25
  */
-@Api(tags="用户管理")
+@Api(tags = "用户管理")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
@@ -93,7 +93,7 @@ public class SysUserController {
      * @param userVo 用户信息
      * @return success/false
      */
-    @PostMapping
+    @PostMapping("/add")
     public R user(@RequestBody UserVo userVo) {
         return R.ok(userService.saveUser(userVo));
     }
@@ -110,6 +110,14 @@ public class SysUserController {
     }
 
     /**
+     * 重置密码
+     */
+    @PutMapping("/resetPwd")
+    public R resetPwd(@RequestBody UserVo userVo) {
+        return R.ok(userService.resetPwd(userVo));
+    }
+
+    /**
      * 分页查询用户
      *
      * @param page   参数集
@@ -117,7 +125,7 @@ public class SysUserController {
      * @return 用户集合
      */
     @GetMapping("/page")
-    public R getUserPage(Page page, UserVo userVo) {
+    public R getPage(Page page, UserVo userVo) {
         return R.ok(userService.getUserWithRolePage(page, userVo));
     }
 }

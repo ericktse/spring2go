@@ -34,5 +34,7 @@ public interface SysUserService extends IService<SysUser> {
 
     Boolean updateUser(UserVo userVo);
 
+    Boolean resetPwd(UserVo userVo);
+
     IPage getUserWithRolePage(Page page, UserVo userVo);
 }

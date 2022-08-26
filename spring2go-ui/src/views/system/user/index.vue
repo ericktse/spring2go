@@ -37,9 +37,9 @@
                      @keyup.enter="handleQuery"
                   />
                </el-form-item>
-               <el-form-item label="手机号码" prop="phonenumber">
+               <el-form-item label="手机号码" prop="phone">
                   <el-input
-                     v-model="queryParams.phonenumber"
+                     v-model="queryParams.phone"
                      placeholder="请输入手机号码"
                      clearable
                      style="width: 240px"
@@ -202,6 +202,18 @@
          <el-form :model="form" :rules="rules" ref="userRef" label-width="80px">
             <el-row>
                <el-col :span="12">
+                  <el-form-item label="用户名称" prop="userName">
+                     <el-input v-model="form.userName" placeholder="请输入用户名称" maxlength="30" />
+                  </el-form-item>
+               </el-col>
+               <el-col :span="12">
+                  <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
+                     <el-input v-model="form.password" placeholder="请输入用户密码" type="password" maxlength="20" show-password />
+                  </el-form-item>
+               </el-col>
+            </el-row>
+            <el-row>
+               <el-col :span="12">
                   <el-form-item label="用户昵称" prop="nickName">
                      <el-input v-model="form.nickName" placeholder="请输入用户昵称" maxlength="30" />
                   </el-form-item>
@@ -211,7 +223,7 @@
                      <el-tree-select
                         v-model="form.deptId"
                         :data="deptOptions"
-                        :props="{ value: 'id', label: 'label', children: 'children' }"
+                        :props="{ value: 'id', label: 'name', children: 'children' }"
                         value-key="id"
                         placeholder="请选择归属部门"
                         check-strictly
@@ -221,25 +233,13 @@
             </el-row>
             <el-row>
                <el-col :span="12">
-                  <el-form-item label="手机号码" prop="phonenumber">
-                     <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
+                  <el-form-item label="手机号码" prop="phone">
+                     <el-input v-model="form.phone" placeholder="请输入手机号码" maxlength="11" />
                   </el-form-item>
                </el-col>
                <el-col :span="12">
                   <el-form-item label="邮箱" prop="email">
                      <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
-                  </el-form-item>
-               </el-col>
-            </el-row>
-            <el-row>
-               <el-col :span="12">
-                  <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
-                     <el-input v-model="form.userName" placeholder="请输入用户名称" maxlength="30" />
-                  </el-form-item>
-               </el-col>
-               <el-col :span="12">
-                  <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-                     <el-input v-model="form.password" placeholder="请输入用户密码" type="password" maxlength="20" show-password />
                   </el-form-item>
                </el-col>
             </el-row>
@@ -405,16 +405,18 @@ const data = reactive({
     pageNum: 1,
     pageSize: 10,
     userName: undefined,
-    phonenumber: undefined,
+    phone: undefined,
     status: undefined,
-    deptId: undefined
+    deptId: undefined,
+    beginTime:undefined,
+    endTime:undefined
   },
   rules: {
     userName: [{ required: true, message: "用户名称不能为空", trigger: "blur" }, { min: 2, max: 20, message: "用户名称长度必须介于 2 和 20 之间", trigger: "blur" }],
     nickName: [{ required: true, message: "用户昵称不能为空", trigger: "blur" }],
     password: [{ required: true, message: "用户密码不能为空", trigger: "blur" }, { min: 5, max: 20, message: "用户密码长度必须介于 5 和 20 之间", trigger: "blur" }],
     email: [{ type: "email", message: "请输入正确的邮箱地址", trigger: ["blur", "change"] }],
-    phonenumber: [{ pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: "请输入正确的手机号码", trigger: "blur" }]
+    phone: [{ pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: "请输入正确的手机号码", trigger: "blur" }]
   }
 });
 
@@ -438,11 +440,24 @@ function getTreeselect() {
 /** 查询用户列表 */
 function getList() {
   loading.value = true;
-  listUser(proxy.addDateRange(queryParams.value, dateRange.value)).then(res => {
+
+   dateRange.value = Array.isArray(dateRange.value) ? dateRange.value : [];
+   if(dateRange.value[0] !== 'undefined' && dateRange.value[1] !== 'undefined'){
+      queryParams.value.beginTime = dateRange.value[0];
+      queryParams.value.endTime = dateRange.value[1];
+   }
+
+  listUser(queryParams.value).then(res => {
     loading.value = false;
     userList.value = res.data.records;
     total.value = res.data.total;
   });
+
+//   listUser(proxy.addDateRange(queryParams.value, dateRange.value)).then(res => {
+//     loading.value = false;
+//     userList.value = res.data.records;
+//     total.value = res.data.total;
+//   });
 };
 /** 节点单击事件 */
 function handleNodeClick(data) {
@@ -554,11 +569,11 @@ function submitFileForm() {
 /** 初始化部门数据 */
 function initTreeData() {
   // 判断部门的数据是否存在，存在不获取，不存在则获取
-  if (deptOptions.value === undefined) {
+  //if (deptOptions.value === undefined) {
     treeselect().then(response => {
       deptOptions.value = response.data;
     });
-  }
+  //}
 };
 /** 重置操作表单 */
 function reset() {
