@@ -21,4 +21,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @return
      */
     List<SysMenu> listMenusByRoleName(String roleName);
+
+
+    List<Long> selectMenuListByRoleId(Integer roleId);
 }

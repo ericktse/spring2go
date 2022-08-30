@@ -1,7 +1,11 @@
 package com.spring2go.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.spring2go.system.entity.SysRole;
+import com.spring2go.system.vo.RoleVo;
+import com.spring2go.system.vo.UserVo;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +17,9 @@ import java.util.Set;
  */
 public interface SysRoleService extends IService<SysRole> {
 
-   List<SysRole> getRoleByUserName(String username);
+    List<SysRole> getRoleByUserName(String username);
 
-   Set<String> getPermsByUserName(String username);
+    Set<String> getPermsByUserName(String username);
+
+    IPage getPage(Page page, RoleVo roleVo);
 }

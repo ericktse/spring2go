@@ -18,7 +18,7 @@ public class MenuTree extends TreeNode {
     /**
      * 显示顺序
      */
-    private String orderNum;
+    private Integer orderNum;
 
     /**
      * 路由地址

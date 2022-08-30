@@ -18,10 +18,9 @@ public interface SysMenuService extends IService<SysMenu> {
     /**
      * 查询菜单数据-下拉树结构
      *
-     * @param parentId 父节点
      * @return 下拉树结构列表
      */
-    List<MenuTree> selectMenuTree(Integer parentId);
+    List<MenuTree> selectMenuTree();
 
 
     /**
@@ -31,6 +30,14 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return 下拉树结构列表
      */
     List<MenuTree> selectMenuTreeByRoleNames(Set<String> roleNames);
+
+    /**
+     * 根据角色ID查询菜单IDs
+     *
+     * @param roleId 角色ID
+     * @return 菜单列表
+     */
+    List<Long> selectMenuListByRoleId(Integer roleId);
 
     /**
      * 构建前端路由所需要的菜单

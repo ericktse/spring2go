@@ -35,15 +35,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 查询菜单数据-下拉树结构
      *
-     * @param parentId 父节点
      * @return 下拉树结构列表
      */
     @Override
-    public List<MenuTree> selectMenuTree(Integer parentId) {
-        Integer parent = parentId == null ? 0 : parentId;
-//        List<SysMenu> list = baseMapper.selectList(
-//                Wrappers.<SysMenu>lambdaQuery().eq(SysMenu::getParentId, parent).orderByAsc(SysMenu::getOrderNum));
-
+    public List<MenuTree> selectMenuTree() {
         LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
         queryWrapper.eq(SysMenu::getDelFlag, "0");
         queryWrapper.orderByAsc(SysMenu::getOrderNum);
@@ -82,6 +77,17 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 }).collect(Collectors.toList());
 
         return TreeUtils.build(treeList);
+    }
+
+    @Override
+    public List<Long> selectMenuListByRoleId(Integer roleId) {
+        if (SecurityUtils.isAdmin(roleId)) {
+            LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
+            queryWrapper.eq(SysMenu::getDelFlag, "0");
+            return sysMenuMapper.selectList(queryWrapper).stream().map(SysMenu::getMenuId).collect(Collectors.toList());
+        } else {
+            return sysMenuMapper.selectMenuListByRoleId(roleId);
+        }
     }
 
     @Override

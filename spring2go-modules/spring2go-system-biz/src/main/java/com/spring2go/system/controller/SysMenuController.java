@@ -2,6 +2,7 @@ package com.spring2go.system.controller;
 
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysMenu;
@@ -11,7 +12,9 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -48,20 +51,29 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping(value = "/list")
     public R list(SysMenu menu) {
-
         return R.ok(sysMenuService.list());
     }
 
     /**
      * 返回树形菜单集合
      *
-     * @param parentId 父节点ID
+     * @param roleId 角色ID
      * @return 树形菜单
      */
     @GetMapping(value = "/tree")
-    public R getTree(Integer parentId) {
+    public R getTree(Integer roleId) {
+        return R.ok(sysMenuService.selectMenuTree());
+    }
 
-        return R.ok(sysMenuService.selectMenuTree(parentId));
+    @GetMapping(value = "/roleTree/{roleId}")
+    public R getRoleTree(@PathVariable("roleId") Integer roleId)
+    {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (null != roleId) {
+            map.put("checkedKeys", sysMenuService.selectMenuListByRoleId(roleId));
+        }
+        map.put("menus", sysMenuService.selectMenuTree());
+        return R.ok(map);
     }
 
     /**
@@ -84,8 +96,8 @@ public class SysMenuController extends BaseController {
     @Log("新增菜单")
     @PostMapping
     public R save(@RequestBody SysMenu sysMenu) {
-        sysMenuService.save(sysMenu);
-        return R.ok(sysMenu);
+        sysMenu.setCreateTime(DateUtils.now());
+        return R.ok(sysMenuService.save(sysMenu));
     }
 
     /**
@@ -118,8 +130,7 @@ public class SysMenuController extends BaseController {
      * @return 路由信息
      */
     @GetMapping("getRouters")
-    public R getRouters()
-    {
+    public R getRouters() {
         Set<String> roles = SecurityUtils.getRoles();
         List<MenuTree> menuTree = sysMenuService.selectMenuTreeByRoleNames(roles);
         return R.ok(sysMenuService.buildMenus(menuTree));

@@ -107,4 +107,14 @@ public class SecurityUtils {
     public static boolean isAdmin(String roleName) {
         return roleName != null && "超级管理员".equals(roleName);
     }
+
+    /**
+     * 是否为管理员
+     *
+     * @param userId 用户ID
+     * @return 结果
+     */
+    public static boolean isAdmin(Integer userId) {
+        return userId != null && 1 == userId;
+    }
 }

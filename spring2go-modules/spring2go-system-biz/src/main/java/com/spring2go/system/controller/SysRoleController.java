@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.system.vo.RoleVo;
 import com.spring2go.system.entity.SysRole;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
  * @author: xiaobin
  * @date: 2021-04-08 11:15
  */
-@Api(tags="角色管理")
+@Api(tags = "角色管理")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/role")
@@ -66,8 +67,9 @@ public class SysRoleController extends BaseController {
      * @param sysRole 角色信息
      * @return success、false
      */
-    @PostMapping
+    @PostMapping("/add")
     public R save(@Valid @RequestBody SysRole sysRole) {
+        sysRole.setCreateTime(DateUtils.now());
         return R.ok(sysRoleService.save(sysRole));
     }
 
@@ -77,7 +79,7 @@ public class SysRoleController extends BaseController {
      * @param sysRole 角色信息
      * @return success/false
      */
-    @PutMapping
+    @PutMapping("/edit")
     public R update(@Valid @RequestBody SysRole sysRole) {
         return R.ok(sysRoleService.updateById(sysRole));
     }
@@ -110,8 +112,8 @@ public class SysRoleController extends BaseController {
      * @return 分页对象
      */
     @GetMapping("/page")
-    public R getRolePage(Page page) {
-        return R.ok(sysRoleService.page(page, Wrappers.emptyWrapper()));
+    public R getRolePage(Page page, RoleVo roleVo) {
+        return R.ok(sysRoleService.getPage(page, roleVo));
     }
 
     /**

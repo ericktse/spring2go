@@ -1,5 +1,6 @@
 package com.spring2go.system.vo;
 
+import com.spring2go.system.entity.SysRole;
 import lombok.Data;
 
 /**
@@ -9,14 +10,14 @@ import lombok.Data;
  * @date: 2021-06-18 15:00
  */
 @Data
-public class RoleVo {
-    /**
-     * 角色id
-     */
-    private Integer roleId;
+public class RoleVo extends SysRole {
 
     /**
      * 菜单列表
      */
     private String menuIds;
+
+    private String beginTime;
+
+    private String endTime;
 }
