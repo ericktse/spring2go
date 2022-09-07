@@ -22,13 +22,13 @@ public class SysUser extends BaseEntity {
     /**
      * 主键ID
      */
-    @TableId(value = "user_id", type = IdType.AUTO)
-    private Integer userId;
+    @TableId(type = IdType.AUTO)
+    private Long userId;
 
     /**
      * 部门ID
      */
-    private Integer deptId;
+    private Long deptId;
 
 //    /**
 //     * 岗位ID
@@ -83,6 +83,7 @@ public class SysUser extends BaseEntity {
     /**
      * 删除标志（0代表存在 1代表删除）
      */
+    @TableLogic
     private String delFlag;
 
     /**

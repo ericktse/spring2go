@@ -1,5 +1,6 @@
 package com.spring2go.system.entity;
 
+import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -11,15 +12,13 @@ import java.io.Serializable;
  * @date: 2021-04-08 10:32
  */
 @Data
-public class SysRoleMenu implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class SysRoleMenu extends BaseEntity {
 
     /**
      * 角色ID
      */
     @ApiModelProperty(value = "角色id")
-    private Integer roleId;
+    private Long roleId;
 
     /**
      * 菜单ID

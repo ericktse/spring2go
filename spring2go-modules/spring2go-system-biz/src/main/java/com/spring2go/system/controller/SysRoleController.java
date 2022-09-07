@@ -91,7 +91,7 @@ public class SysRoleController extends BaseController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public R removeById(@PathVariable Integer id) {
+    public R removeById(@PathVariable Long id) {
         return R.ok(sysRoleService.removeById(id));
     }
 

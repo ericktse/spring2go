@@ -40,7 +40,7 @@ public class SecurityUtils {
     /**
      * 获取用户名
      */
-    public static Integer getUserId() {
+    public static Long getUserId() {
         SimpleAuthorizeUser user = getAuthentication();
         if (null != user) {
             return user.getUserId();

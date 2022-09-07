@@ -1,10 +1,11 @@
 package com.spring2go.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
+
 
 /**
  * @Description: 系统菜单
@@ -16,7 +17,7 @@ public class SysMenu extends BaseEntity {
     /**
      * 菜单ID
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long menuId;
 
     /**

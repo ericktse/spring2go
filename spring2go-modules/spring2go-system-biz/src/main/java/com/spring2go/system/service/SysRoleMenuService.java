@@ -10,5 +10,5 @@ import com.spring2go.system.entity.SysRoleMenu;
  */
 public interface SysRoleMenuService extends IService<SysRoleMenu> {
 
-   Boolean saveRoleMenus(Integer roleId, String menuIds);
+   Boolean saveRoleMenus(Long roleId, String menuIds);
 }

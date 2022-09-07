@@ -33,7 +33,8 @@ public class Spring2goAuthApplication {
             String port = env.getProperty("server.port");
             log.info("\n----------------------------------------------------------\n\t" +
                     "(♥◠‿◠)ﾉﾞ  认证授权中心启动成功   ლ(´ڡ`ლ)ﾞ  \n\t" +
-                    "Swagger文档: \thttp://" + ip + ":" + port + "/doc.html\n" +
+                    "Swagger文档: \thttp://" + ip + ":" + port + "/doc.html\n\t" +
+                    "Swagger文档: \thttp://localhost:"+ port + "/doc.html\n" +
                     "----------------------------------------------------------");
         } catch (Exception e) {
             log.error("启动打印异常：", e);

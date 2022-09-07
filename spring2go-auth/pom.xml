@@ -9,8 +9,6 @@
     </parent>
 
     <artifactId>spring2go-auth</artifactId>
-    <packaging>jar</packaging>
-    <version>0.0.1</version>
     <description>认证授权中心</description>
 
 

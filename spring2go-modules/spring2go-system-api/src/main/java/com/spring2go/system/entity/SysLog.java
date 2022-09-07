@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,14 +17,12 @@ import java.util.Date;
  * @date: 2021-04-02 16:35
  */
 @Data
-public class SysLog implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class SysLog extends BaseEntity {
 
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId
     @ApiModelProperty(value = "日志编号")
     private Long id;
 

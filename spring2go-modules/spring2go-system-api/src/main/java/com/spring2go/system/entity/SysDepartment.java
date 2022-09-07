@@ -20,7 +20,7 @@ public class SysDepartment extends BaseEntity {
     /**
      * 部门ID
      */
-    @TableId(value = "dept_id", type = IdType.AUTO)
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "部门id")
     private Long deptId;
 

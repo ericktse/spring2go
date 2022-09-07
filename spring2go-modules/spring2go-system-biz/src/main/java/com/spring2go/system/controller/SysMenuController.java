@@ -61,7 +61,7 @@ public class SysMenuController extends BaseController {
      * @return 树形菜单
      */
     @GetMapping(value = "/tree")
-    public R getTree(Integer roleId) {
+    public R getTree(Long roleId) {
         return R.ok(sysMenuService.selectMenuTree());
     }
 
@@ -83,7 +83,7 @@ public class SysMenuController extends BaseController {
      * @return 菜单详细信息
      */
     @GetMapping("/{id}")
-    public R getById(@PathVariable Integer id) {
+    public R getById(@PathVariable Long id) {
         return R.ok(sysMenuService.getById(id));
     }
 
@@ -108,7 +108,7 @@ public class SysMenuController extends BaseController {
      */
     @Log("删除菜单")
     @DeleteMapping("/{id}")
-    public R removeById(@PathVariable Integer id) {
+    public R removeById(@PathVariable Long id) {
         return R.ok(sysMenuService.removeById(id));
     }
 

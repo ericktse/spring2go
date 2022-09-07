@@ -1,5 +1,6 @@
 package com.spring2go.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class SysDictType extends BaseEntity {
     /**
      * 字典主键
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long dictId;
 
     /**

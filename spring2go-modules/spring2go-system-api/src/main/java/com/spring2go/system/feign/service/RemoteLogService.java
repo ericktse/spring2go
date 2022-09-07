@@ -25,6 +25,6 @@ public interface RemoteLogService {
      * @param from   来源
      * @return success、false
      */
-    @PostMapping("/system/log")
+    @PostMapping("/log")
     R<Boolean> saveLog(@RequestBody SysLog sysLog, @RequestHeader(SecurityConstants.FROM) String from);
 }

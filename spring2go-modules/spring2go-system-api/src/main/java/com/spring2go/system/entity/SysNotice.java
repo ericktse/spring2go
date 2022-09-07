@@ -1,5 +1,6 @@
 package com.spring2go.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ public class SysNotice extends BaseEntity {
     /**
      * 公告ID
      */
+    @TableId
     private Long noticeId;
 
     /**

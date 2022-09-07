@@ -31,7 +31,7 @@ public class TokenUtils {
     private final static long TOKEN_EXPIRE_TIME = 3600;
     private final static String ACCESS_TOKEN_KEY = "access_token_";
 
-    public String createToken(Integer userId, String username, Object originalUser, Set<String> roles, Set<String> permissions) {
+    public String createToken(Long userId, String username, Object originalUser, Set<String> roles, Set<String> permissions) {
         //TODO：实现JWT Token实现
 
         // 生成token

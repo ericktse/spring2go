@@ -14,9 +14,9 @@ import lombok.Data;
  */
 @Data
 public class SysRole extends BaseEntity {
-    @TableId(value = "role_id", type = IdType.AUTO)
+    @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "角色编号")
-    private Integer roleId;
+    private Long roleId;
 
     @ApiModelProperty(value = "角色名称")
     private String roleName;

@@ -1,5 +1,6 @@
 package com.spring2go.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class SysConfig extends BaseEntity {
     /**
      * 参数主键
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long configId;
 
     /**

@@ -15,9 +15,7 @@ import java.util.List;
 @Data
 public class UserVo extends SysUser {
 
-    private List<Integer> role;
-
-    private Integer deptId;
+    private List<Long> role;
 
     private String beginTime;
 
