@@ -7,6 +7,7 @@ import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.domain.TreeNode;
 import com.spring2go.common.core.util.TreeUtils;
 import com.spring2go.common.security.util.SecurityUtils;
+import com.spring2go.system.entity.SysPosition;
 import com.spring2go.system.mapper.SysMenuMapper;
 import com.spring2go.system.vo.MenuTree;
 import com.spring2go.system.entity.SysMenu;
@@ -139,6 +140,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             routers.add(router);
         }
         return routers;
+    }
+
+    @Override
+    public List<SysMenu> list(SysMenu menu) {
+
+        LambdaQueryWrapper<SysMenu> queryWrapper = Wrappers.lambdaQuery();
+
+        if (null != menu.getMenuName()) {
+            queryWrapper.like(SysMenu::getMenuName, "%" + menu.getMenuName() + "%");
+        }
+        if (null != menu.getStatus()) {
+            queryWrapper.eq(SysMenu::getStatus, menu.getStatus());
+        }
+
+        return this.list(queryWrapper);
     }
 
     /**

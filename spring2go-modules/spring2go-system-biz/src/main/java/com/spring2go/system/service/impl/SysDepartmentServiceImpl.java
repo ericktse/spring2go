@@ -51,7 +51,9 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, S
         if (StringUtils.isNotEmpty(dept.getDeptName())) {
             queryWrapper.like(SysDepartment::getDeptName, dept.getDeptName());
         }
-        queryWrapper.eq(SysDepartment::getStatus, "0");
+        if (StringUtils.isNotEmpty(dept.getStatus())) {
+            queryWrapper.eq(SysDepartment::getStatus, dept.getStatus());
+        }
         queryWrapper.eq(SysDepartment::getDelFlag, "0");
         queryWrapper.orderByAsc(SysDepartment::getParentId, SysDepartment::getOrderNum);
 

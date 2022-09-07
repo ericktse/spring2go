@@ -51,7 +51,7 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping(value = "/list")
     public R list(SysMenu menu) {
-        return R.ok(sysMenuService.list());
+        return R.ok(sysMenuService.list(menu));
     }
 
     /**

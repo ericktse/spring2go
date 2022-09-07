@@ -3,8 +3,10 @@ package com.spring2go.system.controller;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.annotation.Inner;
+import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.vo.DepartmentVo;
 import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.service.SysDepartmentService;
@@ -36,8 +38,8 @@ public class SysDepartmentController extends BaseController {
     @ApiOperation("根据部门ID获取详情")
     @Inner
     @GetMapping(value = "/{id}")
-    public R getById(@PathVariable Long deptId) {
-        return R.ok(sysDepartmentService.getById(deptId));
+    public R getById(@PathVariable Long id) {
+        return R.ok(sysDepartmentService.getById(id));
     }
 
     /**
@@ -67,7 +69,8 @@ public class SysDepartmentController extends BaseController {
         if (CommonConstants.NOT_UNIQUE.equals(sysDepartmentService.checkDeptNameUnique(dept))) {
             return R.failed("新增部门'" + dept.getDeptName() + "'失败，部门名称已存在");
         }
-        //dept.setCreateBy(SecurityUtils.getUsername());
+        dept.setCreateBy(SecurityUtils.getUsername());
+        dept.setCreateTime(DateUtils.now());
         return R.ok(sysDepartmentService.save(dept));
     }
 
@@ -82,7 +85,8 @@ public class SysDepartmentController extends BaseController {
             return R.failed("修改部门'" + dept.getDeptName() + "'失败，上级部门不能是自己");
         }
 
-        //dept.setUpdateBy(SecurityUtils.getUsername());
+        dept.setUpdateBy(SecurityUtils.getUsername());
+        dept.setUpdateTime(DateUtils.now());
 
         return R.ok(sysDepartmentService.updateById(dept));
     }
@@ -91,13 +95,13 @@ public class SysDepartmentController extends BaseController {
      * 删除部门
      */
     @DeleteMapping("/{id}")
-    public R removeById(@PathVariable Long deptId) {
-        if (sysDepartmentService.hasChildByDeptId(deptId)) {
+    public R removeById(@PathVariable Long id) {
+        if (sysDepartmentService.hasChildByDeptId(id)) {
             return R.failed("存在下级部门,不允许删除");
         }
-        if (sysDepartmentService.checkDeptExistUser(deptId)) {
+        if (sysDepartmentService.checkDeptExistUser(id)) {
             return R.failed("部门存在用户,不允许删除");
         }
-        return R.ok(sysDepartmentService.removeById(deptId));
+        return R.ok(sysDepartmentService.removeById(id));
     }
 }

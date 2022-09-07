@@ -60,6 +60,9 @@
             <if test="query.endTime != null and query.endTime != ''"><!-- 结束时间检索 -->
                 AND date_format(`user`.create_time,'%y%m%d') &lt;= date_format(#{query.endTime},'%y%m%d')
             </if>
+            <if test="query.deptId != null and query.deptId != 0">
+                AND (`user`.dept_id = #{query.deptId} OR `user`.dept_id IN ( SELECT t.dept_id FROM sys_dept t WHERE find_in_set(#{query.deptId}, ancestors) ))
+            </if>
         </where>
         ORDER BY `user`.create_time DESC
     </select>

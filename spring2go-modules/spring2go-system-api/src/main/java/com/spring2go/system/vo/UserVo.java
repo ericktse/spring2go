@@ -20,4 +20,6 @@ public class UserVo extends SysUser {
     private String beginTime;
 
     private String endTime;
+
+    private Long deptId;
 }

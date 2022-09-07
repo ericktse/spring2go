@@ -46,4 +46,12 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return 路由列表
      */
     List<RouterVo> buildMenus(List<MenuTree> menus);
+
+    /**
+     * 菜单列表
+     *
+     * @param menu 菜单列表
+     * @return 菜单列表
+     */
+    List<SysMenu> list(SysMenu menu);
 }
