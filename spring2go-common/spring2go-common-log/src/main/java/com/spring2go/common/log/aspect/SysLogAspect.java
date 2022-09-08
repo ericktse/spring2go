@@ -4,6 +4,7 @@ import com.spring2go.common.core.util.*;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.log.event.SysLogEvent;
 import com.spring2go.common.log.util.LogType;
+import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysLog;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -48,7 +50,10 @@ public class SysLogAspect {
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
             if (obj != null) {
-                logVo.setResult(StringUtils.substring(obj.toString(), 0, 2000));
+                logVo.setResult(obj.toString());
+
+                HttpServletResponse response = ServletUtils.getResponse();
+                logVo.setResponseStatus(String.valueOf(response.getStatus()));
             }
             SpringContextHolder.publishEvent(new SysLogEvent(logVo));
         }
@@ -59,7 +64,7 @@ public class SysLogAspect {
     private SysLog getSysLog(Log log) {
         SysLog sysLog = new SysLog();
         sysLog.setTitle(log.value());
-        sysLog.setCreateBy(Objects.requireNonNull("admin"));
+        sysLog.setCreateBy(SecurityUtils.getUsername());
         sysLog.setCreateTime(DateUtils.now());
         sysLog.setType(LogType.NORMAL.getType());
         HttpServletRequest request = ServletUtils.getRequest();
@@ -73,7 +78,7 @@ public class SysLogAspect {
             String[] value = map.get(key);
             params = StringUtils.isNotEmpty(params) ? params + "," + key + "=" + Arrays.toString(value) : key + "=" + Arrays.toString(value);
         }
-        sysLog.setParams(StringUtils.substring(params, 0, 2000));
+        sysLog.setParams(params);
         return sysLog;
     }
 

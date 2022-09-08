@@ -19,7 +19,7 @@ public enum LogType {
     /**
      * 错误日志类型
      */
-    ERROR("9", "错误日志");
+    ERROR("1", "错误日志");
 
     /**
      * 类型

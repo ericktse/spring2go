@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.system.entity.SysConfig;
 import com.spring2go.system.vo.LogVo;
 import com.spring2go.system.entity.SysLog;
 import com.spring2go.system.mapper.SysLogMapper;
@@ -30,11 +31,18 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     @Override
     public Page getLogByPage(LogVo sysLog, Integer pageNo, Integer pageSize) {
         LambdaQueryWrapper<SysLog> wrapper = Wrappers.lambdaQuery();
-        if (StringUtils.isNotEmpty(sysLog.getType())) {
-            wrapper.eq(SysLog::getType, sysLog.getType());
+
+        if (null != sysLog.getTitle()) {
+            wrapper.like(SysLog::getTitle, "%" + sysLog.getTitle() + "%");
         }
-        if (sysLog.getStartTime() != null) {
-            wrapper.ge(SysLog::getCreateTime, sysLog.getStartTime());
+        if (null != sysLog.getCreateBy()) {
+            wrapper.like(SysLog::getCreateBy, "%" + sysLog.getCreateBy() + "%");
+        }
+        if (StringUtils.isNotEmpty(sysLog.getResponseStatus())) {
+            wrapper.eq(SysLog::getResponseStatus, sysLog.getResponseStatus());
+        }
+        if (sysLog.getBeginTime() != null) {
+            wrapper.ge(SysLog::getCreateTime, sysLog.getBeginTime());
         }
         if (sysLog.getEndTime() != null) {
             wrapper.le(SysLog::getCreateTime, sysLog.getEndTime());

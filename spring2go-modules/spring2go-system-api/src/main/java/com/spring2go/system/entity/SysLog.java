@@ -63,18 +63,6 @@ public class SysLog extends BaseEntity {
     private String method;
 
     /**
-     * 创建者
-     */
-    @ApiModelProperty(value = "创建人")
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @ApiModelProperty(value = "创建时间")
-    private Date createTime;
-
-    /**
      * 请求参数
      */
     @ApiModelProperty(value = "请求参数")
@@ -99,9 +87,15 @@ public class SysLog extends BaseEntity {
     private String exception;
 
     /**
-     * 操作状态
+     * 返回状态
      */
-    @ApiModelProperty(value = "操作状态")
-    private String status;
+    @ApiModelProperty(value = "返回状态")
+    private String responseStatus;
+
+//    /**
+//     * 操作状态
+//     */
+//    @ApiModelProperty(value = "操作状态")
+//    private String status;
 
 }

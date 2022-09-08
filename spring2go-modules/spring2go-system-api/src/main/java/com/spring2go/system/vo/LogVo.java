@@ -1,10 +1,8 @@
 package com.spring2go.system.vo;
 
+import com.spring2go.system.entity.SysLog;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * @Description: 日志查询对象
@@ -13,22 +11,9 @@ import java.time.LocalDateTime;
  */
 @Data
 @ApiModel(value = "日志查询对象")
-public class LogVo {
-    /**
-     * 查询日志类型
-     */
-    @ApiModelProperty(value = "日志类型")
-    private String type;
+public class LogVo extends SysLog {
 
-    /**
-     * 开始时间
-     */
-    @ApiModelProperty(value = "开始时间")
-    private LocalDateTime startTime;
+    private String beginTime;
 
-    /**
-     * 结束时间
-     */
-    @ApiModelProperty(value = "结束时间")
-    private LocalDateTime endTime;
+    private String endTime;
 }
