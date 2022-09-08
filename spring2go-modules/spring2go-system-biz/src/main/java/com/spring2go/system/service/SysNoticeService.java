@@ -1,7 +1,8 @@
 package com.spring2go.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.spring2go.system.entity.SysConfig;
 import com.spring2go.system.entity.SysNotice;
 
 /**
@@ -10,4 +11,5 @@ import com.spring2go.system.entity.SysNotice;
  * @author xiaobin
  */
 public interface SysNoticeService extends IService<SysNotice> {
+    IPage getPage(Page page, SysNotice notice);
 }
