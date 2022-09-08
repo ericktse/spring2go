@@ -34,7 +34,7 @@ public class SysDictController extends BaseController {
     private final SysDictTypeService sysDictTypeService;
 
     @GetMapping("/type/list")
-    public R listType( {
+    public R listType() {
         List<SysDictType> list = sysDictTypeService.list();
         return R.ok(list);
     }
