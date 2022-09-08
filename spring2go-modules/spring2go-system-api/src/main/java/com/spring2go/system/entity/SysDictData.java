@@ -47,4 +47,9 @@ public class SysDictData extends BaseEntity {
      * 表格字典样式
      */
     private String listClass;
+
+    /**
+     * 状态（0正常 1停用）
+     */
+    private String status;
 }

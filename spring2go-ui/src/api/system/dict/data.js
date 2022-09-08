@@ -3,7 +3,7 @@ import request from '@/utils/request';
 // 查询字典数据列表
 export function listData(query) {
   return request({
-    url: '/system/dict/data/list',
+    url: '/system/dict/data/page',
     method: 'get',
     params: query,
   });
@@ -28,7 +28,7 @@ export function getDicts(dictType) {
 // 新增字典数据
 export function addData(data) {
   return request({
-    url: '/system/dict/data',
+    url: '/system/dict/data/add',
     method: 'post',
     data: data,
   });
@@ -37,7 +37,7 @@ export function addData(data) {
 // 修改字典数据
 export function updateData(data) {
   return request({
-    url: '/system/dict/data',
+    url: '/system/dict/data/edit',
     method: 'put',
     data: data,
   });
