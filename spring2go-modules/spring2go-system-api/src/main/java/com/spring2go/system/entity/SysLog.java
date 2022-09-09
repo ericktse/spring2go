@@ -1,15 +1,10 @@
 package com.spring2go.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
+
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @Description: 操作日志
@@ -91,11 +86,5 @@ public class SysLog extends BaseEntity {
      */
     @ApiModelProperty(value = "返回状态")
     private String responseStatus;
-
-//    /**
-//     * 操作状态
-//     */
-//    @ApiModelProperty(value = "操作状态")
-//    private String status;
 
 }
