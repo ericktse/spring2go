@@ -15,10 +15,12 @@ import java.util.Map;
  * @author xiaobin
  */
 public interface SimpleInterceptor {
-    void preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, InterceptorChain chain);
+    default void preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, InterceptorChain chain){
+        chain.preHandle(httpServletRequest, httpServletResponse);
+    }
 
     default void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, InterceptorChain chain) {
-        chain.preHandle(httpServletRequest, httpServletResponse);
+        chain.postHandle(httpServletRequest, httpServletResponse);
     }
 
     default void setParams(HttpServletRequest httpServletRequest, Map<String, Object> params) {
