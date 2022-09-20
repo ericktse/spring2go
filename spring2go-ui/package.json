@@ -1,8 +1,8 @@
 {
   "name": "spring2go",
-  "version": "3.8.2",
+  "version": "1.0.0",
   "description": "后台管理系统",
-  "author": "若依",
+  "author": "xiaobin",
   "license": "MIT",
   "scripts": {
     "serve": "npm run dev",

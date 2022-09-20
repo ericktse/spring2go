@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+    com.spring2go.common.interceptor.config.InterceptorAutoConfiguration,\
+    com.spring2go.common.interceptor.config.InterceptorWebMvcConfigurer

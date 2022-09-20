@@ -293,7 +293,6 @@ public class RuleExpression extends AbstractExpression {
 
         if (firstOr > 0) {
             root.setOperator(list.get(firstOr).getElement());
-            //root.setName("OR");
             root.setType(OperationType.OR);
             root.setLeftSubList(this.trimExpress(list.subList(0, firstOr), -1));
             root.setLeft(breakExpress(root.getLeftSubList(), root.getLeft()));
@@ -302,7 +301,6 @@ public class RuleExpression extends AbstractExpression {
 
         } else if (firstAnd > 0) {
             root.setOperator(list.get(firstAnd).getElement());
-            //root.setName("AND");
             root.setType(OperationType.AND);
             root.setLeftSubList(this.trimExpress(list.subList(0, firstAnd), -1));
             root.setLeft(breakExpress(root.getLeftSubList(), root.getLeft()));
@@ -311,7 +309,6 @@ public class RuleExpression extends AbstractExpression {
 
         } else if (firstNot >= 0) {
             root.setOperator(list.get(firstNot).getElement());
-            //root.setName("NOT");
             root.setType(OperationType.NOT);
             root.setLeftSubList(null);
             root.setRightSubList(this.trimExpress(list.subList(firstNot + 1, list.size()), -1));
@@ -320,7 +317,6 @@ public class RuleExpression extends AbstractExpression {
             //不带运算符的情况。
             if (list.get(0).getType() == OperationType.VARIABLE) {
                 root.setOperator(list.get(0).getElement());
-                //root.setName("VARIABLE");
                 root.setType(OperationType.VARIABLE);
             }
         }

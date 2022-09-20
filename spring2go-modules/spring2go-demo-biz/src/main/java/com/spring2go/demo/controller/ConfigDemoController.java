@@ -1,6 +1,7 @@
 package com.spring2go.demo.controller;
 
 import io.swagger.annotations.Api;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -20,12 +21,14 @@ import org.springframework.web.client.RestTemplate;
 @Api(tags = "Config示例")
 @RestController
 @RefreshScope // 动态刷新nacos配置。RefreshScope与RestTemplate存在嵌套引用
+@Slf4j
 public class ConfigDemoController {
     @Value("${spring2go.swagger.title}")
     private String endpoint;
 
     @RequestMapping("/getEndpoint")
     public String getEndpoint() {
+        log.info("exec getEndpoint");
         return endpoint;
     }
 

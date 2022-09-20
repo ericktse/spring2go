@@ -35,7 +35,10 @@ public class AuthorizeGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
+
         String url = exchange.getRequest().getURI().getPath();
+
+        log.info("AuthorizeGlobalFilter+++++++++++++"+url);
         // 跳过不需要验证的路径
         if (StringUtils.matches(url, gatewayConfigProperties.getWhiteList())) {
             return chain.filter(exchange);
@@ -46,7 +49,7 @@ public class AuthorizeGlobalFilter implements GlobalFilter, Ordered {
             return setUnauthorizedResponse(exchange, "令牌不能为空");
         }
 
-        return chain.filter(exchange);
+        return chain.filter(exchange).then(Mono.fromRunnable(()->{log.info("fromRunnable--------------"+url);}));
 
     }
 

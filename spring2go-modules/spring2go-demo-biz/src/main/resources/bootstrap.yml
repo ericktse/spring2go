@@ -99,6 +99,18 @@ spring2go:
       /sys/role/getRoleByUserName: anon
       /sys/role/getPermsByUserName: anon
       /sys/log: anon
+  interceptor:
+    routes:
+      - id: demo1
+        path: /interceptor/**
+        interceptors:
+          - demo3Interceptor
+          - demo4Interceptor
+      - id: demo2
+        path: /getEndpoint
+        interceptors:
+          - demo5Interceptor
+
 
 ## swagger 是否启动，这里暂时屏蔽
 #springfox:
