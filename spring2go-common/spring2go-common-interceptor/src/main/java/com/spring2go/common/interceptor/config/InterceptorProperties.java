@@ -1,6 +1,5 @@
 package com.spring2go.common.interceptor.config;
 
-import com.spring2go.common.interceptor.definition.InterceptorDefinition;
 import com.spring2go.common.interceptor.definition.RouteDefinition;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

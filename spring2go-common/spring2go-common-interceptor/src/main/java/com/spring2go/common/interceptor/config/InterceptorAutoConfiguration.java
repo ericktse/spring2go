@@ -29,6 +29,4 @@ public class InterceptorAutoConfiguration {
     public InterceptingWebHandler interceptingWebHandler(List<GlobalInterceptor> globalInterceptors, PropertiesRouteDefinitionLocator propertiesRouteDefinitionLocator) {
         return new InterceptingWebHandler(globalInterceptors, propertiesRouteDefinitionLocator);
     }
-
-
 }
