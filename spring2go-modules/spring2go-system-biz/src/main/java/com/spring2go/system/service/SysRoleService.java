@@ -22,4 +22,12 @@ public interface SysRoleService extends IService<SysRole> {
     Set<String> getPermsByUserName(String username);
 
     IPage getPage(Page page, RoleVo roleVo);
+
+    /**
+     * 修改数据权限信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    int authDataScope(RoleVo role);
 }

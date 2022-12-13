@@ -7,8 +7,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.mapper.SysUserMapper;
+import com.spring2go.system.service.SysDepartmentService;
 import com.spring2go.system.service.SysUserRoleService;
+import com.spring2go.system.vo.UserInfo;
 import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.entity.SysUserRole;
@@ -38,14 +41,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private final SysUserRoleService sysUserRoleService;
 
     @Override
-    public SysUser getUserInfoById(Integer id) {
-        return baseMapper.selectById(id);
+    public UserInfo getUserInfoById(Long id) {
+        return baseMapper.getUserInfoById(id);
     }
 
 
     @Override
     public SysUser getUserInfoByName(String username) {
-        return baseMapper.selectOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUserName, username));
+        SysUser user = baseMapper.selectOne(Wrappers.<SysUser>query().lambda().eq(SysUser::getUserName, username));
+        return user;
     }
 
     /**
@@ -110,8 +114,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         BeanUtils.copyProperties(userVo, sysUser);
         sysUser.setUpdateTime(DateUtils.now());
 
-        if (StringUtils.isNotEmpty(userVo.getPassword())) {
-            sysUser.setPassword(ENCODER.encode(userVo.getPassword()));
+        if (StringUtils.isNotEmpty(userVo.getNewPassword())) {
+            sysUser.setPassword(ENCODER.encode(userVo.getNewPassword()));
         }
         return this.updateById(sysUser);
     }
@@ -126,5 +130,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public IPage getUserWithRolePage(Page page, UserVo userVo) {
         return baseMapper.getUserWithRolePage(page, userVo);
+    }
+
+    @Override
+    public IPage<SysUser> selectAllocatedList(UserVo userVo) {
+        return null;
+    }
+
+    @Override
+    public IPage<SysUser> selectUnallocatedList(UserVo userVo) {
+        return null;
     }
 }

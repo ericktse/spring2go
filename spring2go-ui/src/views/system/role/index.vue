@@ -57,7 +57,7 @@
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime">
         <template #default="scope">
-          <span>{{  parseTime(scope.row.createTime)  }}</span>
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -109,7 +109,7 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="form.status">
-            <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{  dict.label  }}
+            <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{ dict.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>
@@ -156,7 +156,7 @@
           </el-checkbox>
           <el-tree class="tree-border" :data="deptOptions" show-checkbox default-expand-all ref="deptRef" node-key="id"
             :check-strictly="!form.deptCheckStrictly" empty-text="加载中，请稍候"
-            :props="{ label: 'label', children: 'children' }"></el-tree>
+            :props="{ label: 'name', children: 'children' }"></el-tree>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -387,7 +387,7 @@ function getRoleMenuTreeselect(roleId) {
 /** 根据角色ID查询部门树结构 */
 function getRoleDeptTreeselect(roleId) {
   return roleDeptTreeselect(roleId).then(response => {
-    deptOptions.value = response.depts;
+    deptOptions.value = response.data.depts;
     return response;
   });
 }
@@ -474,7 +474,7 @@ function handleDataScope(row) {
       roleDeptTreeselect.then(res => {
         nextTick(() => {
           if (deptRef.value) {
-            deptRef.value.setCheckedKeys(res.checkedKeys);
+            deptRef.value.setCheckedKeys(res.data.checkedKeys);
           }
         });
       });

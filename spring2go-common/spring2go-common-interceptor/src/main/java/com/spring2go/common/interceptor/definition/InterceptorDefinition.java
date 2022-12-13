@@ -1,8 +1,7 @@
 package com.spring2go.common.interceptor.definition;
 
-import com.sun.istack.internal.NotNull;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
+import lombok.RequiredArgsConstructor;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,11 +11,14 @@ import java.util.Map;
  *
  * @author xiaobin
  */
-@Validated
 @Data
 public class InterceptorDefinition {
-    @NotNull
+
     private String name;
 
     private Map<String, String> args = new LinkedHashMap<>();
+
+    public InterceptorDefinition(String name) {
+        this.name = name;
+    }
 }

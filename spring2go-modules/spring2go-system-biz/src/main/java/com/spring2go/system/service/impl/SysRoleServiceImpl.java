@@ -9,15 +9,18 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysDepartment;
+import com.spring2go.system.entity.SysRoleDept;
 import com.spring2go.system.mapper.SysMenuMapper;
 import com.spring2go.system.entity.SysMenu;
 import com.spring2go.system.entity.SysRole;
+import com.spring2go.system.mapper.SysRoleDeptMapper;
 import com.spring2go.system.mapper.SysRoleMapper;
 import com.spring2go.system.service.SysRoleService;
 import com.spring2go.system.vo.RoleVo;
 import com.spring2go.system.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
 
     private final SysRoleMapper sysRoleMapper;
     private final SysMenuMapper sysMenuMapper;
+    private final SysRoleDeptMapper sysRoleDeptMapper;
 
     @Override
     public List<SysRole> getRoleByUserName(String username) {
@@ -82,5 +86,49 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         }
 
         return this.page(page, queryWrapper);
+    }
+
+    /**
+     * 修改数据权限信息
+     *
+     * @param role 角色信息
+     * @return 结果
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int authDataScope(RoleVo role)
+    {
+        // 修改角色信息
+        sysRoleMapper.updateById(role);
+        // 删除角色与部门关联
+        LambdaQueryWrapper<SysRoleDept> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(SysRoleDept::getRoleId, role.getRoleId());
+        sysRoleDeptMapper.delete(wrapper);
+        // 新增角色和部门信息（数据权限）
+        return insertRoleDept(role);
+    }
+
+    /**
+     * 新增角色部门信息(数据权限)
+     *
+     * @param role 角色对象
+     */
+    public int insertRoleDept(RoleVo role)
+    {
+        int rows = 1;
+        // 新增角色与部门（数据权限）管理
+        List<SysRoleDept> list = new ArrayList<SysRoleDept>();
+        for (Long deptId : role.getDeptIds())
+        {
+            SysRoleDept rd = new SysRoleDept();
+            rd.setRoleId(role.getRoleId());
+            rd.setDeptId(deptId);
+            list.add(rd);
+        }
+        if (list.size() > 0)
+        {
+            rows = sysRoleDeptMapper.batchRoleDept(list);
+        }
+        return rows;
     }
 }

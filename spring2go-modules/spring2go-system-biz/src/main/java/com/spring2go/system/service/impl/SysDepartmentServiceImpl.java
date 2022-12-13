@@ -9,7 +9,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.TreeUtils;
+import com.spring2go.system.entity.SysRole;
 import com.spring2go.system.mapper.SysDepartmentMapper;
+import com.spring2go.system.service.SysRoleService;
 import com.spring2go.system.vo.DepartmentTree;
 import com.spring2go.system.vo.DepartmentVo;
 import com.spring2go.system.entity.SysDepartment;
@@ -33,6 +35,7 @@ import java.util.stream.Collectors;
 public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, SysDepartment> implements SysDepartmentService {
 
     private final SysUserService sysUserService;
+    private final SysRoleService roleService;
 
     /**
      * 查询部门数据
@@ -139,5 +142,11 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, S
         int result = sysUserService.count(queryWrapper);
 
         return result > 0 ? true : false;
+    }
+
+    @Override
+    public List<Long> selectDeptListByRoleId(Long roleId) {
+        SysRole role = roleService.getById(roleId);
+        return baseMapper.selectDeptListByRoleId(roleId, role.getDeptCheckStrictly());
     }
 }

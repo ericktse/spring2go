@@ -20,4 +20,7 @@ public class RoleVo extends SysRole {
     private String beginTime;
 
     private String endTime;
+
+    /** 部门组（数据权限） */
+    private Long[] deptIds;
 }

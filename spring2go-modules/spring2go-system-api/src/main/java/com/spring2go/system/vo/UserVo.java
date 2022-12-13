@@ -22,4 +22,8 @@ public class UserVo extends SysUser {
     private String endTime;
 
     private Long deptId;
+
+    private String oldPassword;
+
+    private String newPassword;
 }

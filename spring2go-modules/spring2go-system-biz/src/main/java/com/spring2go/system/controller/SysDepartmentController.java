@@ -17,7 +17,9 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 系统部门信息
@@ -103,5 +105,16 @@ public class SysDepartmentController extends BaseController {
             return R.failed("部门存在用户,不允许删除");
         }
         return R.ok(sysDepartmentService.removeById(id));
+    }
+
+    /**
+     * 加载对应角色部门列表树
+     */
+    @GetMapping(value = "/roleDeptTreeselect/{roleId}")
+    public R roleDeptTreeselect(@PathVariable("roleId") Long roleId) {
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("checkedKeys", sysDepartmentService.selectDeptListByRoleId(roleId));
+        data.put("depts", sysDepartmentService.selectDeptTree(new DepartmentVo()));
+        return R.ok(data);
     }
 }

@@ -23,7 +23,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @param id 用户ID
      * @return userVo
      */
-    UserInfo getUserInfoById(Integer id);
+    UserInfo getUserInfoById(Long id);
 
     /**
      * 分页查询用户信息（含角色）

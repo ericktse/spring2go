@@ -126,4 +126,13 @@ public class SysRoleController extends BaseController {
     public R saveRoleMenus(@RequestBody RoleVo roleVo) {
         return R.ok(sysRoleMenuService.saveRoleMenus(roleVo.getRoleId(), roleVo.getMenuIds()));
     }
+
+    /**
+     * 修改保存数据权限
+     */
+    @PutMapping("/dataScope")
+    public R dataScope(@RequestBody RoleVo roleVo)
+    {
+        return R.ok(sysRoleService.authDataScope(roleVo));
+    }
 }

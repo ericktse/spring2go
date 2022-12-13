@@ -44,7 +44,7 @@ public interface SysDepartmentService extends IService<SysDepartment> {
      * @param deptId 部门ID
      * @return 结果
      */
-    public boolean hasChildByDeptId(Long deptId);
+    boolean hasChildByDeptId(Long deptId);
 
     /**
      * 查询部门是否存在用户
@@ -52,5 +52,13 @@ public interface SysDepartmentService extends IService<SysDepartment> {
      * @param deptId 部门ID
      * @return 结果 true 存在 false 不存在
      */
-    public boolean checkDeptExistUser(Long deptId);
+    boolean checkDeptExistUser(Long deptId);
+
+    /**
+     * 根据角色ID查询部门树信息
+     *
+     * @param roleId 角色ID
+     * @return 选中部门列表
+     */
+    List<Long> selectDeptListByRoleId(Long roleId);
 }

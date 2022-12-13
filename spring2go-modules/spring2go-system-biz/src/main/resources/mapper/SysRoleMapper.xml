@@ -6,7 +6,6 @@
     <resultMap id="BaseResultMap" type="com.spring2go.system.entity.SysRole">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
-        <result column="role_code" property="roleCode"/>
         <result column="role_sort" property="roleSort"/>
         <result column="data_scope" property="dataScope"/>
         <result column="status" property="status"/>

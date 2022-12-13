@@ -5,6 +5,7 @@ import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
+import com.spring2go.system.vo.UserInfo;
 import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.service.SysUserService;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @Description: 系统用户
@@ -33,8 +35,8 @@ public class SysUserController {
      */
     @GetMapping(value = {"/info"})
     public R info() {
-        String username = SecurityUtils.getUsername();
-        SysUser user = userService.getUserInfoByName(username);
+        Long userId = SecurityUtils.getUserId();
+        UserInfo user = userService.getUserInfoById(userId);
         if (user == null) {
             return R.failed("获取当前用户信息失败");
         }
@@ -67,8 +69,8 @@ public class SysUserController {
      * @return 用户信息
      */
     @GetMapping(value = {"/{id}"})
-    public R detail(@PathVariable Integer id) {
-        SysUser user = userService.getUserInfoById(id);
+    public R detail(@PathVariable Long id) {
+        UserInfo user = userService.getUserInfoById(id);
         if (user == null) {
             return R.failed("获取用户信息失败");
         }
@@ -114,6 +116,10 @@ public class SysUserController {
      */
     @PutMapping("/resetPwd")
     public R resetPwd(@RequestBody UserVo userVo) {
+        if(userVo.getUserId()== null){
+            userVo.setUserId(SecurityUtils.getUserId());
+        }
+
         return R.ok(userService.resetPwd(userVo));
     }
 
@@ -127,5 +133,23 @@ public class SysUserController {
     @GetMapping("/page")
     public R getPage(Page page, UserVo userVo) {
         return R.ok(userService.getUserWithRolePage(page, userVo));
+    }
+
+    /**
+     * 查询已分配用户角色列表
+     */
+    @GetMapping("/authUser/allocatedList")
+    public R allocatedList(UserVo userVo)
+    {
+        return R.ok(userService.selectAllocatedList(userVo));
+    }
+
+    /**
+     * 查询未分配用户角色列表
+     */
+    @GetMapping("/authUser/unallocatedList")
+    public R unallocatedList(UserVo userVo)
+    {
+        return R.ok(userService.selectUnallocatedList(userVo));
     }
 }

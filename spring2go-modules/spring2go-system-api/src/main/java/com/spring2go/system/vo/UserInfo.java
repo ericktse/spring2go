@@ -66,6 +66,16 @@ public class UserInfo implements Serializable {
     private String phone;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
+     * 性别
+     */
+    private String sex;
+
+    /**
      * 头像
      */
     private String avatar;
