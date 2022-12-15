@@ -1,4 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring2go.system.mapper.SysUserRoleMapper">
+    <!-- userInfo结果集 -->
+    <resultMap id="userInfo" type="com.spring2go.system.vo.UserInfo">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="nick_name" property="nickName"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="phone" property="phone"/>
+        <result column="sex" property="sex"/>
+        <result column="avatar" property="avatar"/>
+        <result column="email" property="email"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="deptId" property="deptId"/>
+        <result column="deptName" property="deptName"/>
+    </resultMap>
+
+    <select id="getAllocatedPage" resultMap="userInfo">
+        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phone, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where u.del_flag = '0' and r.role_id = #{query.roleId}
+        <if test="query.userName != null and query.userName != ''">
+            AND u.user_name like concat('%', #{query.userName}, '%')
+        </if>
+        <if test="query.phone != null and query.phone != ''">
+            AND u.phone like concat('%', #{query.phone}, '%')
+        </if>
+    </select>
+
+    <select id="getUnallocatedPage" resultMap="userInfo">
+        select distinct u.user_id, u.dept_id, u.user_name, u.nick_name, u.email, u.phone, u.status, u.create_time
+        from sys_user u
+        left join sys_dept d on u.dept_id = d.dept_id
+        left join sys_user_role ur on u.user_id = ur.user_id
+        left join sys_role r on r.role_id = ur.role_id
+        where u.del_flag = '0' and (r.role_id != #{query.roleId} or r.role_id IS NULL)
+        and u.user_id not in (select u.user_id from sys_user u inner join sys_user_role ur on u.user_id = ur.user_id and ur.role_id = #{query.roleId})
+        <if test="query.userName != null and query.userName != ''">
+            AND u.user_name like concat('%', #{query.userName}, '%')
+        </if>
+        <if test="query.phone != null and query.phone != ''">
+            AND u.phone like concat('%', #{query.phone}, '%')
+        </if>
+    </select>
+
+    <insert id="batchInsert">
+        insert into sys_user_role(user_id, role_id) values
+        <foreach item="item" index="index" collection="list" separator=",">
+            (#{item.userId},#{item.roleId})
+        </foreach>
+    </insert>
 </mapper>

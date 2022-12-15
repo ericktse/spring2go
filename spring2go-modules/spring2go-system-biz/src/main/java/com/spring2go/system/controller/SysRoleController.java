@@ -6,10 +6,13 @@ import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.security.annotation.Inner;
+import com.spring2go.system.service.SysUserRoleService;
+import com.spring2go.system.service.SysUserService;
 import com.spring2go.system.vo.RoleVo;
 import com.spring2go.system.entity.SysRole;
 import com.spring2go.system.service.SysRoleMenuService;
 import com.spring2go.system.service.SysRoleService;
+import com.spring2go.system.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,8 @@ public class SysRoleController extends BaseController {
 
     private final SysRoleService sysRoleService;
     private final SysRoleMenuService sysRoleMenuService;
+    private final SysUserRoleService sysUserRoleService;
+    private final SysUserService userService;
 
     @Inner
     @ApiOperation("通过用户名获取角色信息")
@@ -131,8 +136,48 @@ public class SysRoleController extends BaseController {
      * 修改保存数据权限
      */
     @PutMapping("/dataScope")
-    public R dataScope(@RequestBody RoleVo roleVo)
-    {
+    public R dataScope(@RequestBody RoleVo roleVo) {
         return R.ok(sysRoleService.authDataScope(roleVo));
+    }
+
+
+    /**
+     * 查询已分配用户角色列表
+     */
+    @GetMapping("/authUser/allocatedList")
+    public R allocatedList(Page page, UserVo userVo) {
+        return R.ok(sysUserRoleService.getAllocatedPage(page, userVo));
+    }
+
+    /**
+     * 查询未分配用户角色列表
+     */
+    @GetMapping("/authUser/unallocatedList")
+    public R unallocatedList(Page page, UserVo userVo) {
+        return R.ok(sysUserRoleService.getUnallocatedPage(page, userVo));
+    }
+
+    /**
+     * 取消授权用户
+     */
+    @PutMapping("/authUser/cancel")
+    public R cancelAuthUser(@RequestBody RoleVo roleVo) {
+        return R.ok(sysUserRoleService.deleteAuthUser(roleVo.getRoleId(), roleVo.getUserId()));
+    }
+
+    /**
+     * 批量取消授权用户
+     */
+    @PutMapping("/authUser/cancelAll")
+    public R cancelAuthUserAll(Long roleId, Long[] userIds) {
+        return R.ok(sysUserRoleService.deleteAuthUsers(roleId, userIds));
+    }
+
+    /**
+     * 批量选择用户授权
+     */
+    @PutMapping("/authUser/selectAll")
+    public R selectAuthUserAll(Long roleId, Long[] userIds) {
+        return R.ok(sysUserRoleService.insertAuthUsers(roleId, userIds));
     }
 }

@@ -23,4 +23,8 @@ public class RoleVo extends SysRole {
 
     /** 部门组（数据权限） */
     private Long[] deptIds;
+
+    private Long[] userIds;
+
+    private Long userId;
 }

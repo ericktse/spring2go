@@ -27,9 +27,11 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 分页查询用户信息（含角色）
-     * @param page 分页
+     *
+     * @param page   分页
      * @param userVo 查询参数
      * @return list
      */
     IPage<UserInfo> getUserWithRolePage(Page page, @Param("query") UserVo userVo);
+
 }

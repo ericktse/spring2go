@@ -17,6 +17,8 @@ public class UserVo extends SysUser {
 
     private List<Long> role;
 
+    private Long roleId;
+
     private String beginTime;
 
     private String endTime;

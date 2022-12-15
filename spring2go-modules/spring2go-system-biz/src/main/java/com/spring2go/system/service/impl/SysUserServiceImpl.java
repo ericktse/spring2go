@@ -131,14 +131,4 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public IPage getUserWithRolePage(Page page, UserVo userVo) {
         return baseMapper.getUserWithRolePage(page, userVo);
     }
-
-    @Override
-    public IPage<SysUser> selectAllocatedList(UserVo userVo) {
-        return null;
-    }
-
-    @Override
-    public IPage<SysUser> selectUnallocatedList(UserVo userVo) {
-        return null;
-    }
 }

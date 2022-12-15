@@ -116,7 +116,7 @@ public class SysUserController {
      */
     @PutMapping("/resetPwd")
     public R resetPwd(@RequestBody UserVo userVo) {
-        if(userVo.getUserId()== null){
+        if (userVo.getUserId() == null) {
             userVo.setUserId(SecurityUtils.getUserId());
         }
 
@@ -135,21 +135,5 @@ public class SysUserController {
         return R.ok(userService.getUserWithRolePage(page, userVo));
     }
 
-    /**
-     * 查询已分配用户角色列表
-     */
-    @GetMapping("/authUser/allocatedList")
-    public R allocatedList(UserVo userVo)
-    {
-        return R.ok(userService.selectAllocatedList(userVo));
-    }
 
-    /**
-     * 查询未分配用户角色列表
-     */
-    @GetMapping("/authUser/unallocatedList")
-    public R unallocatedList(UserVo userVo)
-    {
-        return R.ok(userService.selectUnallocatedList(userVo));
-    }
 }

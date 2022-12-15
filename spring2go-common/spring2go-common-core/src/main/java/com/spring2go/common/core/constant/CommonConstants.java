@@ -30,12 +30,12 @@ public class CommonConstants {
     /**
      * 成功标记
      */
-    public static final Integer SUCCESS = 0;
+    public static final Integer SUCCESS = 200;
 
     /**
      * 失败标记
      */
-    public static final Integer FAIL = 1;
+    public static final Integer FAIL = 500;
 
     /**
      * 未校验标记
