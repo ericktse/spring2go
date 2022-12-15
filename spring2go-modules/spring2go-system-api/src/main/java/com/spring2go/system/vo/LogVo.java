@@ -1,5 +1,6 @@
 package com.spring2go.system.vo;
 
+import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.system.entity.SysLog;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -16,4 +17,8 @@ public class LogVo extends SysLog {
     private String beginTime;
 
     private String endTime;
+
+    private Integer pageNum = PageConstants.DEFAULT_PAGE_NO;
+
+    private Integer pageSize = PageConstants.DEFAULT_PAGE_SIZE;
 }

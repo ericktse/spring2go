@@ -1,5 +1,6 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
@@ -33,10 +34,8 @@ public class SysLogController extends BaseController {
      * @return
      */
     @GetMapping("/page")
-    public R getLogPage(LogVo sysLog,
-                        @RequestParam(name = "pageNo", defaultValue = PageConstants.DEFAULT_PAGE_NO) Integer pageNo,
-                        @RequestParam(name = "pageSize", defaultValue = PageConstants.DEFAULT_PAGE_SIZE) Integer pageSize) {
-        return R.ok(sysLogService.getLogByPage(sysLog, pageNo, pageSize));
+    public R getLogPage(LogVo sysLog) {
+        return R.ok(sysLogService.getLogByPage(sysLog));
     }
 
     /**

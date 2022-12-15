@@ -10,10 +10,10 @@ public class PageConstants {
     /**
      * 默认分页起始页
      */
-    public static final String DEFAULT_PAGE_NO = "1";
+    public static final Integer DEFAULT_PAGE_NO = 1;
 
     /**
      * 默认分页大小
      */
-    public static final String DEFAULT_PAGE_SIZE = "10";
+    public static final Integer DEFAULT_PAGE_SIZE = 10;
 }

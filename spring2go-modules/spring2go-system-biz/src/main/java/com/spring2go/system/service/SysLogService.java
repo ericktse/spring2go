@@ -20,5 +20,5 @@ public interface SysLogService extends IService<SysLog> {
      * @param pageSize 分页大小
      * @return
      */
-    Page getLogByPage(LogVo sysLog, Integer pageNo, Integer pageSize);
+    Page getLogByPage(LogVo sysLog);
 }

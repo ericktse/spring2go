@@ -24,12 +24,10 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
      * 分页查询日志
      *
      * @param sysLog
-     * @param pageNo   分页下标
-     * @param pageSize 分页大小
      * @return
      */
     @Override
-    public Page getLogByPage(LogVo sysLog, Integer pageNo, Integer pageSize) {
+    public Page getLogByPage(LogVo sysLog) {
         LambdaQueryWrapper<SysLog> wrapper = Wrappers.lambdaQuery();
 
         if (null != sysLog.getTitle()) {
@@ -47,7 +45,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
         if (sysLog.getEndTime() != null) {
             wrapper.le(SysLog::getCreateTime, sysLog.getEndTime());
         }
-        Page page = new Page(pageNo, pageSize);
+        Page page = new Page(sysLog.getPageNum(), sysLog.getPageSize());
         return this.page(page, wrapper);
     }
 }

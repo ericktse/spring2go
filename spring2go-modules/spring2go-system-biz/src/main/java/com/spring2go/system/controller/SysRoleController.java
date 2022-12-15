@@ -37,7 +37,6 @@ public class SysRoleController extends BaseController {
     private final SysRoleService sysRoleService;
     private final SysRoleMenuService sysRoleMenuService;
     private final SysUserRoleService sysUserRoleService;
-    private final SysUserService userService;
 
     @Inner
     @ApiOperation("通过用户名获取角色信息")

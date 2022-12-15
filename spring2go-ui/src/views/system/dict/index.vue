@@ -52,7 +52,6 @@
       <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
          <el-table-column type="selection" width="55" align="center" />
          <el-table-column label="字典编号" align="center" prop="dictId" />
-         <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
          <el-table-column label="字典类型" align="center" :show-overflow-tooltip="true">
             <template #default="scope">
                <router-link :to="'/system/dict-data/index/' + scope.row.dictId" class="link-type">
@@ -60,6 +59,7 @@
                </router-link>
             </template>
          </el-table-column>
+         <el-table-column label="字典名称" align="center" prop="dictName" :show-overflow-tooltip="true" />
          <el-table-column label="状态" align="center" prop="status">
             <template #default="scope">
                <dict-tag :options="sys_normal_disable" :value="scope.row.status" />

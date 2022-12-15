@@ -5,6 +5,9 @@ import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
+import com.spring2go.system.entity.SysRole;
+import com.spring2go.system.service.SysRoleService;
+import com.spring2go.system.service.SysUserRoleService;
 import com.spring2go.system.vo.UserInfo;
 import com.spring2go.system.vo.UserVo;
 import com.spring2go.system.entity.SysUser;
@@ -14,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Description: 系统用户
@@ -27,6 +32,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class SysUserController {
     private final SysUserService userService;
+    private final SysRoleService sysRoleService;
+    private final SysUserRoleService sysUserRoleService;
 
     /**
      * 获取当前用户全部信息
@@ -135,5 +142,25 @@ public class SysUserController {
         return R.ok(userService.getUserWithRolePage(page, userVo));
     }
 
+    /**
+     * 根据用户编号获取授权角色
+     */
+    @GetMapping("/authRole/{userId}")
+    public R authRole(@PathVariable("userId") Long userId) {
+        SysUser user = userService.getById(userId);
+        List<SysRole> roles = sysRoleService.getRoleByUserName(user.getUserName());
+        Map<String, Object> data = new HashMap<String, Object>();
+        data.put("user", user);
+        data.put("roles", roles);
+        return R.ok(data);
+    }
 
+    /**
+     * 用户授权角色
+     */
+    @PutMapping("/authRole")
+    public R insertAuthRole(Long userId, Long[] roleIds) {
+        sysUserRoleService.insertAuthUsers(userId, roleIds);
+        return R.ok();
+    }
 }
