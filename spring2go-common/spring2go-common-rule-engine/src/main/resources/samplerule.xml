@@ -49,7 +49,7 @@
     </rule>
 
     <rule id="demo_sql" description="SQL规则">
-        <property name="whenSql" value="select count(1) from STUDENT  where age &gt;=7 and id = ?"/>
+        <property name="whenSql" value="select count(1) from STUDENT where age &gt;=7 and id = ?"/>
         <property name="whenSqlParam" value="id" type="java.lang.Integer" desc="学生ID"/>
         <property name="whenSqlCompare" value="0" operate="&gt;" desc="学生年龄大于7的记录大于0"/>
         <property name="thenSql" value="update STUDENT set age = ? where id = ?"/>

@@ -1,8 +1,11 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.common.core.util.excel.ExcelUtils;
+import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysRole;
@@ -15,7 +18,9 @@ import com.spring2go.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -162,5 +167,28 @@ public class SysUserController {
     public R insertAuthRole(Long userId, Long[] roleIds) {
         sysUserRoleService.insertAuthUsers(userId, roleIds);
         return R.ok();
+    }
+
+    @Log("用户数据导出")
+    @PostMapping("/exportExcel")
+    public void export(HttpServletResponse response, SysUser user) {
+        List<SysUser> list = userService.list(Wrappers.emptyWrapper());
+        ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
+        util.exportExcel(response, list);
+    }
+
+    @Log("用户数据导入")
+    @PostMapping("/importExcel")
+    public R importData(MultipartFile file, boolean updateSupport) throws Exception {
+        ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
+        List<SysUser> userList = util.importExcel(file.getInputStream());
+        //String message = userService.importUser(userList, updateSupport, operName);
+        return R.ok("导入成功");
+    }
+
+    @PostMapping("/exportExcelTemplate")
+    public void importTemplate(HttpServletResponse response) throws Exception {
+        ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
+        util.exportExcelTemplate(response, "用户数据");
     }
 }

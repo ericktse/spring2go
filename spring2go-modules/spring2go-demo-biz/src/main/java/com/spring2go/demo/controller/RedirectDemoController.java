@@ -17,14 +17,26 @@ import java.io.IOException;
 @RestController
 public class RedirectDemoController {
 
-    @GetMapping("/redirect")
-    String redirect(HttpServletResponse response) throws IOException {
+    @GetMapping("/redirect1")
+    String redirect1(HttpServletResponse response) throws IOException {
         Cookie tokenCookie = new Cookie("cookie-name", "cookie");
         tokenCookie.setDomain("www.baidu.com");
         response.addCookie(tokenCookie);
         response.setHeader("Location", "www.baidu.com");
         response.setHeader("token", "mytoken");
-        String redirectUrl = "https://www.baidu.com";
+        response.setStatus(HttpServletResponse.SC_FOUND);
+        String redirectUrl = "https://www.baidu.com?token=aaa";
+        //需要根据链接重定向
         return "redirect:" + redirectUrl;
+    }
+
+    @GetMapping("/redirect2")
+    void redirect2(HttpServletResponse response) throws IOException {
+        //重定向不会带上cookies
+        Cookie tokenCookie = new Cookie("cookie-name", "cookie");
+        response.addCookie(tokenCookie);
+        String redirectUrl = "https://www.baidu.com?token=xxx";
+        //浏览器自动重定向
+        response.sendRedirect(redirectUrl);
     }
 }

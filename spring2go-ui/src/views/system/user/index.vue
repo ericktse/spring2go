@@ -8,9 +8,9 @@
                   style="margin-bottom: 20px" />
             </div>
             <div class="head-container">
-               <el-tree :data="deptOptions" :props="{ label: 'name', children: 'children' }"
-                  :expand-on-click-node="false" :filter-node-method="filterNode" ref="deptTreeRef" highlight-current
-                  default-expand-all @node-click="handleNodeClick" />
+               <el-tree :data="deptOptions" :props="{ label: 'name', children: 'children' }" :expand-on-click-node="false"
+                  :filter-node-method="filterNode" ref="deptTreeRef" highlight-current default-expand-all
+                  @node-click="handleNodeClick" />
             </div>
          </el-col>
          <!--用户数据-->
@@ -83,7 +83,7 @@
                </el-table-column>
                <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
                   <template #default="scope">
-                     <span>{{  parseTime(scope.row.createTime)  }}</span>
+                     <span>{{ parseTime(scope.row.createTime) }}</span>
                   </template>
                </el-table-column>
                <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
@@ -137,8 +137,8 @@
                <el-col :span="12">
                   <el-form-item label="归属部门" prop="deptId">
                      <el-tree-select v-model="form.deptId" :data="deptOptions"
-                        :props="{ value: 'id', label: 'name', children: 'children' }" value-key="id"
-                        placeholder="请选择归属部门" check-strictly />
+                        :props="{ value: 'id', label: 'name', children: 'children' }" value-key="id" placeholder="请选择归属部门"
+                        check-strictly />
                   </el-form-item>
                </el-col>
             </el-row>
@@ -166,8 +166,9 @@
                <el-col :span="12">
                   <el-form-item label="状态">
                      <el-radio-group v-model="form.status">
-                        <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{  dict.label 
-                           }}</el-radio>
+                        <el-radio v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.value">{{
+                           dict.label
+                        }}</el-radio>
                      </el-radio-group>
                   </el-form-item>
                </el-col>
@@ -233,10 +234,12 @@
             </div>
          </template>
       </el-dialog>
-   </div>
+</div>
 </template>
 
 <script setup name="User">
+
+
 import { getToken } from '@/utils/auth';
 import { treeselect } from '@/api/system/dept';
 import {
@@ -285,7 +288,7 @@ const upload = reactive({
    // 设置上传的请求头部
    headers: { Authorization: 'Bearer ' + getToken() },
    // 上传的地址
-   url: import.meta.env.VITE_APP_BASE_API + '/system/user/importData',
+   url: import.meta.env.VITE_APP_BASE_API + '/system/user/importExcel',
 });
 // 列显隐信息
 const columns = ref([
@@ -423,7 +426,7 @@ function handleDelete(row) {
 /** 导出按钮操作 */
 function handleExport() {
    proxy.download(
-      'system/user/export',
+      'system/user/exportExcel',
       {
          ...queryParams.value,
       },
@@ -494,7 +497,7 @@ function handleImport() {
 /** 下载模板操作 */
 function importTemplate() {
    proxy.download(
-      'system/user/importTemplate',
+      'system/user/exportExcelTemplate',
       {},
       `user_template_${new Date().getTime()}.xlsx`
    );

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class规则执行器
+ * 子规则表达式规则执行器
  *
  * @author xiaobin
  */

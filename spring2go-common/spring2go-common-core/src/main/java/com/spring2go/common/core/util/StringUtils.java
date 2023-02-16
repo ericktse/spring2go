@@ -12,7 +12,7 @@ import java.util.Map;
  * @author: xiaobin
  * @date: 2021-04-01 10:54
  */
-public class StringUtils {
+public class StringUtils extends org.apache.commons.lang3.StringUtils{
 
     /**
      * 空字符串

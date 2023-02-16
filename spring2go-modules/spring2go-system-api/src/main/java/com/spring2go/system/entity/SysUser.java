@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -23,6 +24,7 @@ public class SysUser extends BaseEntity {
      * 主键ID
      */
     @TableId(type = IdType.AUTO)
+    @Excel(name = "用户序号", cellType = Excel.CellType.NUMERIC, prompt = "用户编号")
     private Long userId;
 
     /**
@@ -38,11 +40,13 @@ public class SysUser extends BaseEntity {
     /**
      * 用户名
      */
+    @Excel(name = "用户名称")
     private String userName;
 
     /**
      * 昵称
      */
+    @Excel(name = "用户昵称")
     private String nickName;
 
     /**
@@ -53,16 +57,19 @@ public class SysUser extends BaseEntity {
     /**
      * 用户邮箱
      */
+    @Excel(name = "用户邮箱")
     private String email;
 
     /**
      * 手机号
      */
+    @Excel(name = "手机号码")
     private String phone;
 
     /**
      * 性别
      */
+    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
     /**
@@ -78,6 +85,7 @@ public class SysUser extends BaseEntity {
     /**
      * 帐号状态（0正常 1停用）
      */
+    @Excel(name = "帐号状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /**
@@ -89,11 +97,13 @@ public class SysUser extends BaseEntity {
     /**
      * 最后登录IP
      */
+    @Excel(name = "最后登录IP", operateType = Excel.OperateType.EXPORT)
     private String loginIp;
 
     /**
      * 最后登录时间
      */
+    @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", operateType = Excel.OperateType.EXPORT)
     private Date loginDate;
 
 }

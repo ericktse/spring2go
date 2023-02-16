@@ -1,6 +1,6 @@
 # 端口
 server:
-  port: 4000
+  port: 4100
 
 spring:
   application:

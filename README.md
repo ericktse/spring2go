@@ -34,16 +34,15 @@ spring2go
 ```
 
 ## 微服务技术栈
-SpringCloud Alibaba 技术栈
 
 1. 服务注册发现 Nacos √
 2. 统一配置中心 Nacos √
 3. 路由网关 Gateway √
 4. 分布式 http feign √
-5. 熔断降级、限流 Sentinel √
-6. 分布式任务 xxl-job √
+5. 熔断降级、限流 Sentinel 
+6. 分布式任务 xxl-job 
 7. Redisson分布式锁 √
-8. 服务监控 SpringBootAdmin √
+8. 服务监控 SpringBootAdmin 
 9. 消息中间件 RabbitMQ √
 10. 消息总线 √
 11. 分布式事务 Seata 
@@ -52,18 +51,27 @@ SpringCloud Alibaba 技术栈
 14. 分库分表 shardingsphere 
 15. 分布式文件 Minio、阿里OSS √
 16. 统一权限控制 JWT + Shiro √
-17. CAS 单点登录
 18. 链路跟踪 Skywarking 
 19. 分布式日志 elk + kafaka
 
-
 ## 待办事项
-- spring2go-ui
-- spring2go-nacos
-- spring2go-sentinel
-- spring2go-common-seata
-- spring2go-common-shardingsphere
-- spring2go-common-rocketmq
-- spring2go-modules
-  - spring2go-demo-api
-  - spring2go-demo-biz
+1. 升级SpringBoot版本为3.0，升级Java版本为17
+2. 实现excel导出功能
+3. 实现动态字典功能 
+4. 实现代码生成器 
+5. 引入XXL-Job
+   spring2go-visual
+   - spring2go-xxl-job 
+6. 引入seata
+   spring2go-visual
+   - spring2go-seata
+7. 引入sentinel
+   spring2go-visual
+   - spring2go-sentinel
+8. 新增shardingsphere支持
+   spring2go-common
+   - spirng2go-shardingsphere
+9. 新增rocketmq支持
+   spring2go-common
+   - spirng2go-rocketmq
+  
