@@ -33,21 +33,21 @@ public class ServletUtils {
      * 获取String参数
      */
     public static String getParameter(String name, String defaultValue) {
-        return Convert.toStr(getRequest().getParameter(name), defaultValue);
+        return ConvertUtils.toStr(getRequest().getParameter(name), defaultValue);
     }
 
     /**
      * 获取Integer参数
      */
     public static Integer getParameterToInt(String name) {
-        return Convert.toInt(getRequest().getParameter(name));
+        return ConvertUtils.toInt(getRequest().getParameter(name));
     }
 
     /**
      * 获取Integer参数
      */
     public static Integer getParameterToInt(String name, Integer defaultValue) {
-        return Convert.toInt(getRequest().getParameter(name), defaultValue);
+        return ConvertUtils.toInt(getRequest().getParameter(name), defaultValue);
     }
 
     /**

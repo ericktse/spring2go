@@ -2,6 +2,7 @@ package com.spring2go.common.security.util;
 
 import com.spring2go.common.security.domain.SimpleAuthorizeUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -116,5 +117,30 @@ public class SecurityUtils {
      */
     public static boolean isAdmin(Integer userId) {
         return userId != null && 1 == userId;
+    }
+
+    /**
+     * 生成BCryptPasswordEncoder密码
+     *
+     * @param password 密码
+     * @return 加密字符串
+     */
+    public static String encryptPassword(String password)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+    /**
+     * 判断密码是否相同
+     *
+     * @param rawPassword 真实密码
+     * @param encodedPassword 加密后字符
+     * @return 结果
+     */
+    public static boolean matchesPassword(String rawPassword, String encodedPassword)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 }

@@ -12,7 +12,7 @@ import java.util.Set;
  * @author: xiaobin
  * @date: 2021-04-01 11:09
  */
-public class Convert {
+public class ConvertUtils {
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>
@@ -855,5 +855,29 @@ public class Convert {
             s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
         }
         return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+    }
+
+    /**
+     * 将驼峰命名转化成下划线
+     *
+     * @param para
+     * @return
+     */
+    public static String camelToUnderline(String para) {
+        int length = 3;
+        if (para.length() < length) {
+            return para.toLowerCase();
+        }
+        StringBuilder sb = new StringBuilder(para);
+        //定位
+        int temp = 0;
+        //从第三个字符开始 避免命名不规范
+        for (int i = 2; i < para.length(); i++) {
+            if (Character.isUpperCase(para.charAt(i))) {
+                sb.insert(i + temp, "_");
+                temp += 1;
+            }
+        }
+        return sb.toString().toLowerCase();
     }
 }

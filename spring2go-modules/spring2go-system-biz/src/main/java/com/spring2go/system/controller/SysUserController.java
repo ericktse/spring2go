@@ -1,14 +1,18 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.excel.ExcelUtils;
 import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysRole;
+import com.spring2go.system.service.SysConfigService;
 import com.spring2go.system.service.SysRoleService;
 import com.spring2go.system.service.SysUserRoleService;
 import com.spring2go.system.vo.UserInfo;
@@ -22,9 +26,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * @Description: 系统用户
@@ -39,6 +45,7 @@ public class SysUserController {
     private final SysUserService userService;
     private final SysRoleService sysRoleService;
     private final SysUserRoleService sysUserRoleService;
+    private final SysConfigService sysConfigService;
 
     /**
      * 获取当前用户全部信息
@@ -93,12 +100,12 @@ public class SysUserController {
     /**
      * 删除用户信息
      *
-     * @param id ID
+     * @param ids ID数组
      * @return R
      */
-    @DeleteMapping("/{id}")
-    public R delete(@PathVariable Integer id) {
-        return R.ok(userService.removeById(id));
+    @DeleteMapping("/{ids}")
+    public R delete(@PathVariable Long[] ids) {
+        return R.ok(userService.removeByIds(Arrays.asList(ids)));
     }
 
     /**
@@ -172,7 +179,9 @@ public class SysUserController {
     @Log("用户数据导出")
     @PostMapping("/exportExcel")
     public void export(HttpServletResponse response, SysUser user) {
-        List<SysUser> list = userService.list(Wrappers.emptyWrapper());
+        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(user, null);
+
+        List<SysUser> list = userService.list(wrapper);
         ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
         util.exportExcel(response, list);
     }
@@ -182,13 +191,31 @@ public class SysUserController {
     public R importData(MultipartFile file, boolean updateSupport) throws Exception {
         ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
         List<SysUser> userList = util.importExcel(file.getInputStream());
-        //String message = userService.importUser(userList, updateSupport, operName);
-        return R.ok("导入成功");
+
+        if (null == userList || userList.size() == 0) {
+            return R.failed("导入失败，数据不能为空");
+        }
+        String currentUserName = SecurityUtils.getUsername();
+        try {
+            for (SysUser user : userList) {
+                user.setCreateBy(currentUserName);
+                user.setCreateTime(DateUtils.now());
+                String initPwd = sysConfigService.selectConfigByKey("sys.user.initPassword");
+                user.setPassword(SecurityUtils.encryptPassword(initPwd));
+                userService.save(user);
+            }
+            return R.ok("", "文件导入成功！数据行数:" + userList.size());
+
+        } catch (Exception e) {
+            return R.failed("文件导入失败:" + e.getMessage());
+        } finally {
+            file.getInputStream().close();
+        }
     }
 
     @PostMapping("/exportExcelTemplate")
-    public void importTemplate(HttpServletResponse response) throws Exception {
+    public void importTemplate(HttpServletResponse response) {
         ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
-        util.exportExcelTemplate(response, "用户数据");
+        util.exportExcelTemplate(response);
     }
 }

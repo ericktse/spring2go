@@ -162,7 +162,7 @@ public class ReflectUtils
                 {
                     if (cs[i] == String.class)
                     {
-                        args[i] = Convert.toStr(args[i]);
+                        args[i] = ConvertUtils.toStr(args[i]);
                         if (StringUtils.endsWith((String) args[i], ".0"))
                         {
                             args[i] = StringUtils.substringBefore((String) args[i], ".0");
@@ -170,19 +170,19 @@ public class ReflectUtils
                     }
                     else if (cs[i] == Integer.class)
                     {
-                        args[i] = Convert.toInt(args[i]);
+                        args[i] = ConvertUtils.toInt(args[i]);
                     }
                     else if (cs[i] == Long.class)
                     {
-                        args[i] = Convert.toLong(args[i]);
+                        args[i] = ConvertUtils.toLong(args[i]);
                     }
                     else if (cs[i] == Double.class)
                     {
-                        args[i] = Convert.toDouble(args[i]);
+                        args[i] = ConvertUtils.toDouble(args[i]);
                     }
                     else if (cs[i] == Float.class)
                     {
-                        args[i] = Convert.toFloat(args[i]);
+                        args[i] = ConvertUtils.toFloat(args[i]);
                     }
                     else if (cs[i] == Date.class)
                     {
@@ -197,7 +197,7 @@ public class ReflectUtils
                     }
                     else if (cs[i] == boolean.class || cs[i] == Boolean.class)
                     {
-                        args[i] = Convert.toBool(args[i]);
+                        args[i] = ConvertUtils.toBool(args[i]);
                     }
                 }
             }

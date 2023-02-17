@@ -12,11 +12,23 @@
     <description>mybatis plus 工具类</description>
 
     <dependencies>
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- mybatis -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
         </dependency>
 
     </dependencies>
