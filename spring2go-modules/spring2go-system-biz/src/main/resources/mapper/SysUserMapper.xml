@@ -63,7 +63,7 @@
         <where>
             `user`.del_flag = '0'
             <if test="query.userName != null and query.userName != ''">
-                and `user`.user_name LIKE CONCAT('%',#{query.userName},'%')
+                and `user`.user_name =  #{query.userName}
             </if>
             <if test="query.status != null and query.status != ''">
                 AND `user`.status = #{query.status}

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Mybatis Plus Query Wrapper Utils
  *
- * @author xiexiaobin
+ * @author xiaobin
  */
 @Slf4j
 public class QueryWrapperUtils {
@@ -44,27 +44,42 @@ public class QueryWrapperUtils {
     /**
      * 日期格式化yyyy-MM-dd
      */
-    public static final String YYYY_MM_DD = "yyyy-MM-dd";
+    private static final String YYYY_MM_DD = "yyyy-MM-dd";
     /**
      * to_date
      */
-    public static final String TO_DATE = "to_date";
-
+    private static final String TO_DATE = "to_date";
     /**
      * mysql 模糊查询之特殊字符下划线 （_、\）
      */
-    public static final String LIKE_MYSQL_SPECIAL_STRS = "_,%";
+    private static final String LIKE_MYSQL_SPECIAL_STRS = "_,%";
+    /**
+     * 时间格式化
+     */
+    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<SimpleDateFormat>();
+
 
     /**
      * 获取查询条件构造器QueryWrapper实例 通用查询条件已被封装完成
      *
-     * @param searchObj    查询实体
-     * @param parameterMap request.getParameterMap()
+     * @param queryObj 查询实体
      * @return QueryWrapper实例
      */
-    public static <T> QueryWrapper<T> initQueryWrapper(T searchObj, Map<String, String[]> parameterMap) {
+    public static <T> QueryWrapper<T> initQueryWrapper(Object queryObj) {
         QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
-        initMybatisPlusQueryWrapper(queryWrapper, searchObj, parameterMap);
+        initMybatisPlusQueryWrapper(queryWrapper, queryObj, null);
+        return queryWrapper;
+    }
+
+    /**
+     * 获取查询条件构造器QueryWrapper实例 通用查询条件已被封装完成
+     *
+     * @param queryObj 查询实体
+     * @return QueryWrapper实例
+     */
+    public static <T> QueryWrapper<T> initQueryWrapper(T queryObj, Map<String, String[]> parameterMap) {
+        QueryWrapper<T> queryWrapper = new QueryWrapper<T>();
+        initMybatisPlusQueryWrapper(queryWrapper, queryObj, parameterMap);
         return queryWrapper;
     }
 
@@ -73,69 +88,62 @@ public class QueryWrapperUtils {
      * <p>使用此方法 需要有如下几点注意:
      * <br>1.使用QueryWrapper 而非LambdaQueryWrapper;
      * <br>2.实例化QueryWrapper时不可将实体传入参数
-     * <br>错误示例:如QueryWrapper<JeecgDemo> queryWrapper = new QueryWrapper<JeecgDemo>(jeecgDemo);
-     * <br>正确示例:QueryWrapper<JeecgDemo> queryWrapper = new QueryWrapper<JeecgDemo>();
+     * <br>错误示例:如QueryWrapper<Demo> queryWrapper = new QueryWrapper<Demo>(demo);
+     * <br>正确示例:QueryWrapper<Demo> queryWrapper = new QueryWrapper<Demo>();
      * <br>3.也可以不使用这个方法直接调用 {@link #initQueryWrapper}直接获取实例
      */
-    private static void initMybatisPlusQueryWrapper(QueryWrapper<?> queryWrapper, Object searchObj, Map<String, String[]> parameterMap) {
+    private static void initMybatisPlusQueryWrapper(QueryWrapper<?> queryWrapper, Object queryObj, Map<String, String[]> parameterMap) {
 
         //获取对象属性描述器
-        PropertyDescriptor[] origDescriptors = PropertyUtils.getPropertyDescriptors(searchObj);
+        PropertyDescriptor[] propertyDescriptors = PropertyUtils.getPropertyDescriptors(queryObj);
+        //String name, type, column;
 
-        String name, type, column;
-        // update-begin--Author:taoyan  Date:20200923 for：issues/1671 如果字段加注解了@TableField(exist = false),不走DB查询-------
-        //定义实体字段和数据库字段名称的映射 高级查询中 只能获取实体字段 如果设置TableField注解 那么查询条件会出问题
         Map<String, String> fieldColumnMap = new HashMap<>(5);
-        for (int i = 0; i < origDescriptors.length; i++) {
-            //aliasName = origDescriptors[i].getName();  mybatis  不存在实体属性 不用处理别名的情况
-            name = origDescriptors[i].getName();
-            type = origDescriptors[i].getPropertyType().toString();
+        for (int i = 0; i < propertyDescriptors.length; i++) {
+
+            String name = propertyDescriptors[i].getName();
+            String type = propertyDescriptors[i].getPropertyType().toString();
             try {
-                if (judgedIsUselessField(name) || !PropertyUtils.isReadable(searchObj, name)) {
+                if (isUselessField(name) || !PropertyUtils.isReadable(queryObj, name)) {
                     continue;
                 }
 
-                Object value = PropertyUtils.getSimpleProperty(searchObj, name);
-                column = getTableFieldName(searchObj.getClass(), name);
+                Object value = PropertyUtils.getSimpleProperty(queryObj, name);
+                String column = getTableFieldName(queryObj.getClass(), name);
                 if (column == null) {
-                    //column为null只有一种情况 那就是 添加了注解@TableField(exist = false) 后续都不用处理了
+                    // column为null只有一种情况 那就是 添加了注解@TableField(exist = false)
+                    // 如果字段加注解了@TableField(exist = false),不走DB查询
                     continue;
                 }
                 fieldColumnMap.put(name, column);
                 //区间查询
                 doIntervalQuery(queryWrapper, parameterMap, type, name, column);
+
                 //判断单值  参数带不同标识字符串 走不同的查询
-                //TODO 这种前后带逗号的支持分割后模糊查询(多选字段查询生效) 示例：,1,3,
+                //支持前后带逗号的支持分割后模糊查询(多选字段查询生效) 示例：,1,3,
                 if (null != value && value.toString().startsWith(COMMA) && value.toString().endsWith(COMMA)) {
-                    String multiLikeval = value.toString().replace(",,", COMMA);
-                    String[] vals = multiLikeval.substring(1, multiLikeval.length()).split(COMMA);
+                    String multiLikeVal = value.toString().replace(",,", COMMA);
+                    String[] vals = multiLikeVal.substring(1, multiLikeVal.length()).split(COMMA);
                     final String field = ConvertUtils.camelToUnderline(column);
                     if (vals.length > 1) {
                         queryWrapper.and(j -> {
-                            log.info("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", field, "like", vals[0]);
+                            log.debug("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", field, "like", vals[0]);
                             j = j.like(field, vals[0]);
                             for (int k = 1; k < vals.length; k++) {
                                 j = j.or().like(field, vals[k]);
-                                log.info("---查询过滤器，Query规则 .or()---field:{}, rule:{}, value:{}", field, "like", vals[k]);
+                                log.debug("---查询过滤器，Query规则 .or()---field:{}, rule:{}, value:{}", field, "like", vals[k]);
                             }
                         });
                     } else {
-                        log.info("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", field, "like", vals[0]);
+                        log.debug("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", field, "like", vals[0]);
                         queryWrapper.and(j -> j.like(field, vals[0]));
                     }
                 } else {
-                    //根据参数值带什么关键字符串判断走什么类型的查询
+                    //根据参数值关键字符串判断查询类型
                     QueryRuleEnum rule = convert2Rule(value);
                     value = replaceValue(rule, value);
-                    // add -begin 添加判断为字符串时设为全模糊查询
-                    //if( (rule==null || QueryRuleEnum.EQ.equals(rule)) && "class java.lang.String".equals(type)) {
-                    // 可以设置左右模糊或全模糊，因人而异
-                    //rule = QueryRuleEnum.LIKE;
-                    //}
-                    // add -end 添加判断为字符串时设为全模糊查询
                     addEasyQuery(queryWrapper, column, rule, value);
                 }
-
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
@@ -148,7 +156,7 @@ public class QueryWrapperUtils {
      * @param name
      * @return
      */
-    private static boolean judgedIsUselessField(String name) {
+    private static boolean isUselessField(String name) {
         return "class".equals(name) || "ids".equals(name)
                 || "page".equals(name) || "rows".equals(name)
                 || "sort".equals(name) || "order".equals(name);
@@ -162,36 +170,37 @@ public class QueryWrapperUtils {
      * @return
      */
     private static String getTableFieldName(Class<?> clazz, String name) {
+        //如果字段加注解了@TableField(exist = false),不走DB查询
+        Field field = null;
         try {
-            //如果字段加注解了@TableField(exist = false),不走DB查询
-            Field field = clazz.getDeclaredField(name);
+            field = clazz.getDeclaredField(name);
+        } catch (NoSuchFieldException e) {
+            log.debug("获取 {} 字段数据表字段名异常", name);
+        }
 
-            //如果为空，则去父类查找字段
-            if (field == null) {
-                List<Field> allFields = getClassFields(clazz);
-                List<Field> searchFields = allFields.stream().filter(a -> a.getName().equals(name)).collect(Collectors.toList());
-                if (searchFields != null && searchFields.size() > 0) {
-                    field = searchFields.get(0);
-                }
+        //如果为空，则去父类查找字段
+        if (field == null) {
+            List<Field> allFields = getClassFields(clazz);
+            List<Field> searchFields = allFields.stream().filter(a -> a.getName().equals(name)).collect(Collectors.toList());
+            if (searchFields != null && searchFields.size() > 0) {
+                field = searchFields.get(0);
             }
+        }
 
-            if (field != null) {
-                TableField tableField = field.getAnnotation(TableField.class);
-                if (tableField != null) {
-                    if (tableField.exist() == false) {
-                        //如果设置了TableField false 这个字段不需要处理
-                        return null;
-                    } else {
-                        String column = tableField.value();
-                        //如果设置了TableField value 这个字段是实体字段
-                        if (!"".equals(column)) {
-                            return column;
-                        }
+        if (field != null) {
+            TableField tableField = field.getAnnotation(TableField.class);
+            if (tableField != null) {
+                if (tableField.exist() == false) {
+                    //如果设置了TableField false 这个字段不需要处理
+                    return null;
+                } else {
+                    String column = tableField.value();
+                    //如果设置了TableField value 这个字段是实体字段
+                    if (!"".equals(column)) {
+                        return column;
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return name;
     }
@@ -225,7 +234,7 @@ public class QueryWrapperUtils {
      * @param columnName   列名称
      */
     private static void doIntervalQuery(QueryWrapper<?> queryWrapper, Map<String, String[]> parameterMap, String type, String filedName, String columnName) throws ParseException {
-        // 添加 判断是否有区间值
+        // 添加 判断是否有区间查询值
         String endValue = null, beginValue = null;
         if (parameterMap != null && parameterMap.containsKey(filedName + BEGIN)) {
             beginValue = parameterMap.get(filedName + BEGIN)[0].trim();
@@ -243,14 +252,14 @@ public class QueryWrapperUtils {
         }
     }
 
+
     private static void addQueryByRule(QueryWrapper<?> queryWrapper, String name, String type, String value, QueryRuleEnum rule) throws ParseException {
         if (StringUtils.isNotEmpty(value)) {
-            //update-begin--Author:sunjianlei  Date:20220104 for：【JTC-409】修复逗号分割情况下没有转换类型，导致类型严格的数据库查询报错 -------------------
             // 针对数字类型字段，多值查询
             if (value.contains(COMMA)) {
                 Object[] temp = Arrays.stream(value.split(COMMA)).map(v -> {
                     try {
-                        return QueryWrapperUtils.parseByType(v, type, rule);
+                        return parseByType(v, type, rule);
                     } catch (ParseException e) {
                         log.error("字段类型转换失败", e);
                         return v;
@@ -259,9 +268,8 @@ public class QueryWrapperUtils {
                 addEasyQuery(queryWrapper, name, rule, temp);
                 return;
             }
-            Object temp = QueryWrapperUtils.parseByType(value, type, rule);
+            Object temp = parseByType(value, type, rule);
             addEasyQuery(queryWrapper, name, rule, temp);
-            //update-end--Author:sunjianlei  Date:20220104 for：【JTC-409】修复逗号分割情况下没有转换类型，导致类型严格的数据库查询报错 -------------------
         }
     }
 
@@ -332,10 +340,6 @@ public class QueryWrapperUtils {
         return date;
     }
 
-    /**
-     * 时间格式化
-     */
-    private static final ThreadLocal<SimpleDateFormat> LOCAL = new ThreadLocal<SimpleDateFormat>();
 
     private static SimpleDateFormat getTime() {
         SimpleDateFormat time = LOCAL.get();
@@ -354,12 +358,12 @@ public class QueryWrapperUtils {
      * @param rule         查询规则
      * @param value        查询条件值
      */
-    public static void addEasyQuery(QueryWrapper<?> queryWrapper, String name, QueryRuleEnum rule, Object value) {
+    private static void addEasyQuery(QueryWrapper<?> queryWrapper, String name, QueryRuleEnum rule, Object value) {
         if (value == null || rule == null) {
             return;
         }
         name = ConvertUtils.camelToUnderline(name);
-        log.info("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", name, rule.getValue(), value);
+        log.debug("---查询过滤器，Query规则---field:{}, rule:{}, value:{}", name, rule.getValue(), value);
         switch (rule) {
             case GT:
                 queryWrapper.gt(name, value);
@@ -385,14 +389,11 @@ public class QueryWrapperUtils {
                     queryWrapper.in(name, (Object[]) value.toString().split(COMMA));
                 } else if (value instanceof String[]) {
                     queryWrapper.in(name, (Object[]) value);
-                }
-                //update-begin-author:taoyan date:20200909 for:【bug】in 类型多值查询 不适配postgresql #1671
-                else if (value.getClass().isArray()) {
+                } else if (value.getClass().isArray()) {
                     queryWrapper.in(name, (Object[]) value);
                 } else {
                     queryWrapper.in(name, value);
                 }
-                //update-end-author:taoyan date:20200909 for:【bug】in 类型多值查询 不适配postgresql #1671
                 break;
             case LIKE:
                 queryWrapper.like(name, value);
@@ -404,7 +405,7 @@ public class QueryWrapperUtils {
                 queryWrapper.likeRight(name, value);
                 break;
             default:
-                log.info("--查询规则未匹配到---");
+                log.debug("--查询规则未匹配到---");
                 break;
         }
     }
@@ -417,9 +418,8 @@ public class QueryWrapperUtils {
      * @param value
      * @return
      */
-    public static QueryRuleEnum convert2Rule(Object value) {
-        // 避免空数据
-        // update-begin-author:taoyan date:20210629 for: 查询条件输入空格导致return null后续判断导致抛出null异常
+    private static QueryRuleEnum convert2Rule(Object value) {
+        // 避免空数据:查询条件输入空格导致return null后续判断导致抛出null异常
         if (value == null) {
             return QueryRuleEnum.EQ;
         }
@@ -427,12 +427,10 @@ public class QueryWrapperUtils {
         if (val.length() == 0) {
             return QueryRuleEnum.EQ;
         }
-        // update-end-author:taoyan date:20210629 for: 查询条件输入空格导致return null后续判断导致抛出null异常
         QueryRuleEnum rule = null;
 
-        //update-begin--Author:scott  Date:20190724 for：initQueryWrapper组装sql查询条件错误 #284-------------------
-        //TODO 此处规则，只适用于 le lt ge gt
-        // step 2 .>= =<
+        // 此处规则，只适用于 le lt ge gt
+        // step 1 .>= =<
         int length2 = 2;
         int length3 = 3;
         if (rule == null && val.length() >= length3) {
@@ -440,20 +438,19 @@ public class QueryWrapperUtils {
                 rule = QueryRuleEnum.getByValue(val.substring(0, 2));
             }
         }
-        // step 1 .> <
+        // step 2 .> <
         if (rule == null && val.length() >= length2) {
             if (QUERY_SEPARATE_KEYWORD.equals(val.substring(1, length2))) {
                 rule = QueryRuleEnum.getByValue(val.substring(0, 1));
             }
         }
-        //update-end--Author:scott  Date:20190724 for：initQueryWrapper组装sql查询条件错误 #284---------------------
 
         // step 3 like
-        //update-begin-author:taoyan for: /issues/3382 默认带*就走模糊，但是如果只有一个*，那么走等于查询
+        // 默认带*就走模糊，但是如果只有一个*，那么走等于查询
         if (rule == null && val.equals(STAR)) {
             rule = QueryRuleEnum.EQ;
         }
-        //update-end-author:taoyan for: /issues/3382  默认带*就走模糊，但是如果只有一个*，那么走等于查询
+
         if (rule == null && val.contains(STAR)) {
             if (val.startsWith(STAR) && val.endsWith(STAR)) {
                 rule = QueryRuleEnum.LIKE;
@@ -478,12 +475,10 @@ public class QueryWrapperUtils {
             rule = QueryRuleEnum.EQ_WITH_ADD;
         }
 
-        //update-begin--Author:taoyan  Date:20201229 for：initQueryWrapper组装sql查询条件错误 #284---------------------
         //特殊处理：Oracle的表达式to_date('xxx','yyyy-MM-dd')含有逗号，会被识别为in查询，转为等于查询
         if (rule == QueryRuleEnum.IN && val.indexOf(YYYY_MM_DD) >= 0 && val.indexOf(TO_DATE) >= 0) {
             rule = QueryRuleEnum.EQ;
         }
-        //update-end--Author:taoyan  Date:20201229 for：initQueryWrapper组装sql查询条件错误 #284---------------------
 
         return rule != null ? rule : QueryRuleEnum.EQ;
     }
@@ -503,11 +498,10 @@ public class QueryWrapperUtils {
             return value;
         }
         String val = (value + "").toString().trim();
-        //update-begin-author:taoyan date:20220302 for: 查询条件的值为等号（=）bug #3443
         if (QueryRuleEnum.EQ.getValue().equals(val)) {
             return val;
         }
-        //update-end-author:taoyan date:20220302 for: 查询条件的值为等号（=）bug #3443
+
         if (rule == QueryRuleEnum.LIKE) {
             value = val.substring(1, val.length() - 1);
             //mysql 模糊查询之特殊字符下划线 （_、\）
@@ -525,14 +519,12 @@ public class QueryWrapperUtils {
         } else if (rule == QueryRuleEnum.EQ_WITH_ADD) {
             value = val.replaceAll("\\+\\+", COMMA);
         } else {
-            //update-begin--Author:scott  Date:20190724 for：initQueryWrapper组装sql查询条件错误 #284-------------------
             if (val.startsWith(rule.getValue())) {
                 //TODO 此处逻辑应该注释掉-> 如果查询内容中带有查询匹配规则符号，就会被截取的（比如：>=您好）
                 value = val.replaceFirst(rule.getValue(), "");
             } else if (val.startsWith(rule.getCondition() + QUERY_SEPARATE_KEYWORD)) {
                 value = val.replaceFirst(rule.getCondition() + QUERY_SEPARATE_KEYWORD, "").trim();
             }
-            //update-end--Author:scott  Date:20190724 for：initQueryWrapper组装sql查询条件错误 #284-------------------
         }
         return value;
     }

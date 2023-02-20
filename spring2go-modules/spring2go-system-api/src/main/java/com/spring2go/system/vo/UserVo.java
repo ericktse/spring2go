@@ -19,13 +19,11 @@ public class UserVo extends SysUser {
 
     private Long roleId;
 
-    private String beginTime;
-
-    private String endTime;
-
-    private Long deptId;
-
     private String oldPassword;
 
     private String newPassword;
+
+    private String createTimeBegin;
+
+    private String createTimeEnd;
 }

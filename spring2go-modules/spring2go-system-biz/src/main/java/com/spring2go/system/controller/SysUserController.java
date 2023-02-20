@@ -21,9 +21,11 @@ import com.spring2go.system.entity.SysUser;
 import com.spring2go.system.service.SysUserService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -150,8 +152,12 @@ public class SysUserController {
      * @return 用户集合
      */
     @GetMapping("/page")
-    public R getPage(Page page, UserVo userVo) {
-        return R.ok(userService.getUserWithRolePage(page, userVo));
+    public R getPage(Page page, UserVo userVo, HttpServletRequest request) {
+
+        //QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(userVo, request.getParameterMap());
+        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(userVo;
+
+        return R.ok(userService.page(page, wrapper));
     }
 
     /**
@@ -178,9 +184,8 @@ public class SysUserController {
 
     @Log("用户数据导出")
     @PostMapping("/exportExcel")
-    public void export(HttpServletResponse response, SysUser user) {
-        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(user, null);
-
+    public void export(HttpServletRequest request, HttpServletResponse response, UserVo user) {
+        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(user, request.getParameterMap());
         List<SysUser> list = userService.list(wrapper);
         ExcelUtils<SysUser> util = new ExcelUtils<SysUser>(SysUser.class);
         util.exportExcel(response, list);

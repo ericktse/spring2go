@@ -1,5 +1,6 @@
 package com.spring2go.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.system.entity.SysDepartment;
 import com.spring2go.system.mapper.SysUserMapper;
 import com.spring2go.system.service.SysDepartmentService;

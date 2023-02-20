@@ -240,6 +240,19 @@
 <script setup name="User">
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { getToken } from '@/utils/auth';
 import { treeselect } from '@/api/system/dept';
 import {
@@ -310,8 +323,8 @@ const data = reactive({
       phone: undefined,
       status: undefined,
       deptId: undefined,
-      beginTime: undefined,
-      endTime: undefined,
+      createTimeBegin: undefined,
+      createTimeEnd: undefined,
    },
    rules: {
       userName: [
@@ -377,8 +390,8 @@ function getList() {
       dateRange.value[0] !== 'undefined' &&
       dateRange.value[1] !== 'undefined'
    ) {
-      queryParams.value.beginTime = dateRange.value[0];
-      queryParams.value.endTime = dateRange.value[1];
+      queryParams.value.createTimeBegin = dateRange.value[0];
+      queryParams.value.createTimeEnd = dateRange.value[1];
    }
 
    listUser(queryParams.value).then((res) => {
@@ -406,7 +419,9 @@ function handleQuery() {
 /** 重置按钮操作 */
 function resetQuery() {
    dateRange.value = [];
+   queryParams.value.deptId = undefined;
    proxy.resetForm('queryRef');
+
    handleQuery();
 }
 /** 删除按钮操作 */
