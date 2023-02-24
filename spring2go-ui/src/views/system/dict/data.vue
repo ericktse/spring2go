@@ -3,8 +3,7 @@
       <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
          <el-form-item label="字典名称" prop="dictType">
             <el-select v-model="queryParams.dictType">
-               <el-option v-for="item in typeOptions" :key="item.dictId" :label="item.dictName"
-                  :value="item.dictType" />
+               <el-option v-for="item in typeOptions" :key="item.dictId" :label="item.dictName" :value="item.dictType" />
             </el-select>
          </el-form-item>
          <el-form-item label="字典标签" prop="dictLabel">
@@ -12,8 +11,7 @@
          </el-form-item>
          <el-form-item label="状态" prop="status">
             <el-select v-model="queryParams.status" placeholder="数据状态" clearable>
-               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
-                  :value="dict.value" />
+               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item>
@@ -79,8 +77,8 @@
          </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize" @pagination="getList" />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
+         @pagination="getList" />
 
       <!-- 添加或修改参数配置对话框 -->
       <el-dialog :title="title" v-model="open" width="500px" append-to-body>
@@ -123,10 +121,11 @@
             </div>
          </template>
       </el-dialog>
-   </div>
+</div>
 </template>
 
 <script setup name="Data">
+
 import { optionselect as getDictOptionselect, getType } from "@/api/system/dict/type";
 import { listData, getData, delData, addData, updateData } from "@/api/system/dict/data";
 
@@ -287,7 +286,7 @@ function handleDelete(row) {
 }
 /** 导出按钮操作 */
 function handleExport() {
-   proxy.download("system/dict/data/export", {
+   proxy.download("system/dict/data/exportExcel", {
       ...queryParams.value
    }, `dict_data_${new Date().getTime()}.xlsx`);
 }

@@ -152,10 +152,8 @@ public class SysUserController {
      * @return 用户集合
      */
     @GetMapping("/page")
-    public R getPage(Page page, UserVo userVo, HttpServletRequest request) {
-
-        //QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(userVo, request.getParameterMap());
-        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(userVo;
+    public R getPage(Page page, UserVo userVo) {
+        QueryWrapper<SysUser> wrapper = QueryWrapperUtils.initQueryWrapper(userVo);
 
         return R.ok(userService.page(page, wrapper));
     }

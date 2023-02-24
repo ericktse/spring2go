@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -19,27 +20,32 @@ public class SysPosition extends BaseEntity {
     /**
      * 岗位序号
      */
+    @Excel(name = "岗位序号", cellType = Excel.CellType.NUMERIC)
     @TableId(type = IdType.AUTO)
     private Long postId;
 
     /**
      * 岗位编码
      */
+    @Excel(name = "岗位编码")
     private String postCode;
 
     /**
      * 岗位名称
      */
+    @Excel(name = "岗位名称")
     private String postName;
 
     /**
      * 岗位排序
      */
+    @Excel(name = "岗位排序")
     private String postSort;
 
     /**
      * 状态
      */
+    @Excel(name = "状态", readConverterExp = "0=正常,1=停用")
     private String status;
 
     /**

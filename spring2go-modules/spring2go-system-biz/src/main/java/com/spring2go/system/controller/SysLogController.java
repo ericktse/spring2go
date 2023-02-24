@@ -1,16 +1,26 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.constant.PageConstants;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
+import com.spring2go.common.core.util.excel.ExcelUtils;
+import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.common.security.annotation.Inner;
+import com.spring2go.system.entity.SysConfig;
+import com.spring2go.system.vo.ConfigVo;
 import com.spring2go.system.vo.LogVo;
 import com.spring2go.system.entity.SysLog;
 import com.spring2go.system.service.SysLogService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @Description: 系统日志
@@ -46,9 +56,16 @@ public class SysLogController extends BaseController {
      */
     @Inner
     @PostMapping
-    public R save(@RequestBody SysLog sysLog) throws InterruptedException {
-//        //TODO 测试，等待5秒，后续删除
-//        Thread.sleep(5000);
+    public R save(@RequestBody SysLog sysLog)  {
         return R.ok(sysLogService.save(sysLog));
+    }
+
+    @Log("日志数据导出")
+    @PostMapping("/exportExcel")
+    public void export(HttpServletRequest request, HttpServletResponse response, LogVo sysLog) {
+        QueryWrapper<SysLog> wrapper = QueryWrapperUtils.initQueryWrapper(sysLog, request.getParameterMap());
+        List<SysLog> list = sysLogService.list(wrapper);
+        ExcelUtils<SysLog> util = new ExcelUtils<>(SysLog.class);
+        util.exportExcel(response, list);
     }
 }

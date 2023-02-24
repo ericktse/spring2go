@@ -11,8 +11,7 @@
          </el-form-item>
          <el-form-item label="状态" prop="status">
             <el-select v-model="queryParams.status" placeholder="字典状态" clearable style="width: 240px">
-               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label"
-                  :value="dict.value" />
+               <el-option v-for="dict in sys_normal_disable" :key="dict.value" :label="dict.label" :value="dict.value" />
             </el-select>
          </el-form-item>
          <el-form-item label="创建时间" style="width: 308px">
@@ -81,8 +80,8 @@
          </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize" @pagination="getList" />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
+         @pagination="getList" />
 
       <!-- 添加或修改参数配置对话框 -->
       <el-dialog :title="title" v-model="open" width="500px" append-to-body>
@@ -110,10 +109,11 @@
             </div>
          </template>
       </el-dialog>
-   </div>
+</div>
 </template>
 
 <script setup name="Dict">
+
 import { listType, getType, delType, addType, updateType, refreshCache } from "@/api/system/dict/type";
 
 const { proxy } = getCurrentInstance();
@@ -237,7 +237,7 @@ function handleDelete(row) {
 }
 /** 导出按钮操作 */
 function handleExport() {
-   proxy.download("system/dict/type/export", {
+   proxy.download("system/dict/type/exportExcel", {
       ...queryParams.value
    }, `dict_${new Date().getTime()}.xlsx`);
 }

@@ -1,13 +1,16 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.DateUtils;
+import com.spring2go.common.core.util.excel.ExcelUtils;
+import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.system.service.SysUserRoleService;
-import com.spring2go.system.service.SysUserService;
 import com.spring2go.system.vo.RoleVo;
 import com.spring2go.system.entity.SysRole;
 import com.spring2go.system.service.SysRoleMenuService;
@@ -18,6 +21,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -178,5 +183,14 @@ public class SysRoleController extends BaseController {
     @PutMapping("/authUser/selectAll")
     public R selectAuthUserAll(Long roleId, Long[] userIds) {
         return R.ok(sysUserRoleService.insertAuthUsers(roleId, userIds));
+    }
+
+    @Log("角色数据导出")
+    @PostMapping("/exportExcel")
+    public void export(HttpServletRequest request, HttpServletResponse response, RoleVo roleVo) {
+        QueryWrapper<SysRole> wrapper = QueryWrapperUtils.initQueryWrapper(roleVo, request.getParameterMap());
+        List<SysRole> list = sysRoleService.list(wrapper);
+        ExcelUtils<SysRole> util = new ExcelUtils<SysRole>(SysRole.class);
+        util.exportExcel(response, list);
     }
 }

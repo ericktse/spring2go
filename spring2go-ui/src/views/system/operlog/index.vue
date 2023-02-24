@@ -64,8 +64,8 @@
          </el-table-column>
       </el-table>
 
-      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum"
-         v-model:limit="queryParams.pageSize" @pagination="getList" />
+      <pagination v-show="total > 0" :total="total" v-model:page="queryParams.pageNum" v-model:limit="queryParams.pageSize"
+         @pagination="getList" />
 
       <!-- 操作日志详细 -->
       <el-dialog title="操作日志详细" v-model="open" width="700px" append-to-body>
@@ -109,10 +109,13 @@
             </div>
          </template>
       </el-dialog>
-   </div>
+</div>
 </template>
 
 <script setup name="Operlog">
+
+
+
 import { list, delOperlog, cleanOperlog } from "@/api/monitor/operlog";
 
 const { proxy } = getCurrentInstance();
@@ -222,7 +225,7 @@ function handleClean() {
 }
 /** 导出按钮操作 */
 function handleExport() {
-   proxy.download("monitor/operlog/export", {
+   proxy.download("system/log/exportExcel", {
       ...queryParams.value,
    }, `config_${new Date().getTime()}.xlsx`);
 }

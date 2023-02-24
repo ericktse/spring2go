@@ -1,19 +1,25 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.DateUtils;
+import com.spring2go.common.core.util.excel.ExcelUtils;
+import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysConfig;
-import com.spring2go.system.entity.SysPosition;
 import com.spring2go.system.service.SysConfigService;
 import com.spring2go.system.vo.ConfigVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 /**
@@ -78,5 +84,14 @@ public class SysConfigController extends BaseController {
 
         //TODO refresh cache
         return R.ok();
+    }
+
+    @Log("参数数据导出")
+    @PostMapping("/exportExcel")
+    public void export(HttpServletRequest request, HttpServletResponse response, ConfigVo configVo) {
+        QueryWrapper<SysConfig> wrapper = QueryWrapperUtils.initQueryWrapper(configVo, request.getParameterMap());
+        List<SysConfig> list = sysConfigService.list(wrapper);
+        ExcelUtils<SysConfig> util = new ExcelUtils<>(SysConfig.class);
+        util.exportExcel(response, list);
     }
 }

@@ -1,13 +1,16 @@
 package com.spring2go.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.spring2go.common.core.controller.BaseController;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.DateUtils;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.common.core.util.excel.ExcelUtils;
+import com.spring2go.common.log.annotation.Log;
+import com.spring2go.common.mybatis.util.QueryWrapperUtils;
 import com.spring2go.common.security.util.SecurityUtils;
-import com.spring2go.system.entity.SysConfig;
 import com.spring2go.system.entity.SysDictData;
 import com.spring2go.system.entity.SysDictType;
 import com.spring2go.system.service.SysDictDataService;
@@ -17,6 +20,8 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +84,14 @@ public class SysDictController extends BaseController {
         return R.ok();
     }
 
+    @Log("字典类型数据导出")
+    @PostMapping("/type/exportExcel")
+    public void exportType(HttpServletRequest request, HttpServletResponse response,DictVo dictVo) {
+        QueryWrapper<SysDictType> wrapper = QueryWrapperUtils.initQueryWrapper(dictVo, request.getParameterMap());
+        List<SysDictType> list = sysDictTypeService.list(wrapper);
+        ExcelUtils<SysDictType> util = new ExcelUtils<>(SysDictType.class);
+        util.exportExcel(response, list);
+    }
 
     @GetMapping("/data/page")
     public R list(DictVo dictVo,
@@ -120,6 +133,15 @@ public class SysDictController extends BaseController {
     @DeleteMapping("/data/{id}")
     public R removeData(@PathVariable Long id) {
         return R.ok(sysDictDataService.removeById(id));
+    }
+
+    @Log("字典数据导出")
+    @PostMapping("/data/exportExcel")
+    public void exportData(HttpServletRequest request, HttpServletResponse response,DictVo dictVo) {
+        QueryWrapper<SysDictData> wrapper = QueryWrapperUtils.initQueryWrapper(dictVo, request.getParameterMap());
+        List<SysDictData> list = sysDictDataService.list(wrapper);
+        ExcelUtils<SysDictData> util = new ExcelUtils<>(SysDictData.class);
+        util.exportExcel(response, list);
     }
 
 }

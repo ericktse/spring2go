@@ -251,8 +251,6 @@
 
 
 
-
-
 import { getToken } from '@/utils/auth';
 import { treeselect } from '@/api/system/dept';
 import {
@@ -322,9 +320,7 @@ const data = reactive({
       userName: undefined,
       phone: undefined,
       status: undefined,
-      deptId: undefined,
-      createTimeBegin: undefined,
-      createTimeEnd: undefined,
+      deptId: undefined
    },
    rules: {
       userName: [
@@ -386,25 +382,12 @@ function getTreeselect() {
 function getList() {
    loading.value = true;
 
-   if (
-      dateRange.value[0] !== 'undefined' &&
-      dateRange.value[1] !== 'undefined'
-   ) {
-      queryParams.value.createTimeBegin = dateRange.value[0];
-      queryParams.value.createTimeEnd = dateRange.value[1];
-   }
-
-   listUser(queryParams.value).then((res) => {
+   let params = proxy.addDateRange(queryParams.value, dateRange.value, 'createTime');
+   listUser(params).then((res) => {
       loading.value = false;
       userList.value = res.data.records;
       total.value = res.data.total;
    });
-
-   //   listUser(proxy.addDateRange(queryParams.value, dateRange.value)).then(res => {
-   //     loading.value = false;
-   //     userList.value = res.data.records;
-   //     total.value = res.data.total;
-   //   });
 }
 /** 节点单击事件 */
 function handleNodeClick(data) {
