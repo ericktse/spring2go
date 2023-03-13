@@ -2,6 +2,7 @@ package com.spring2go.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
 
@@ -37,4 +38,10 @@ public class SysNotice extends BaseEntity {
      * 公告状态（0正常 1关闭）
      */
     private String status;
+
+    /**
+     * 删除标志（0-代表存在 1-代表删除）
+     */
+    @TableLogic
+    private String delFlag;
 }

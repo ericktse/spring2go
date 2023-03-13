@@ -81,7 +81,7 @@ public class SysMenu extends BaseEntity {
     private String icon;
 
     /**
-     * 删除标志（0代表存在 1代表删除）
+     * 删除标志（0-代表存在 1-代表删除）
      */
     @TableLogic
     private String delFlag;

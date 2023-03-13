@@ -2,6 +2,7 @@ package com.spring2go.system.entity;
 
 
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
@@ -98,5 +99,11 @@ public class SysLog extends BaseEntity {
     @Excel(name = "状态", readConverterExp = "0=成功,1=失败")
     @ApiModelProperty(value = "返回状态")
     private String responseStatus;
+
+    /**
+     * 删除标志（0-代表存在 1-代表删除）
+     */
+    @TableLogic
+    private String delFlag;
 
 }

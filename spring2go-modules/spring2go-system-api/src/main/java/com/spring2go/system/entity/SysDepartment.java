@@ -49,7 +49,7 @@ public class SysDepartment extends BaseEntity {
     private String status;
 
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标志（0-代表存在 2-代表删除）
      */
     @ApiModelProperty(value = "删除标志")
     @TableLogic

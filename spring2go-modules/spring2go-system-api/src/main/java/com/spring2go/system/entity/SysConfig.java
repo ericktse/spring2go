@@ -2,6 +2,7 @@ package com.spring2go.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
@@ -43,4 +44,10 @@ public class SysConfig extends BaseEntity {
      */
     @Excel(name = "系统内置", readConverterExp = "Y=是,N=否")
     private String configType;
+
+    /**
+     * 删除标志（0-代表存在 1-代表删除）
+     */
+    @TableLogic
+    private String delFlag;
 }
