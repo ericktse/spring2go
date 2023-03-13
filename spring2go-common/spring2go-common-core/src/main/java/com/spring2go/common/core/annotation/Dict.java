@@ -21,8 +21,6 @@ public @interface Dict {
 
     /**
      * 数据字典表
-     *
-     * @return 返回类型： String
      */
     String table() default "";
 

@@ -40,7 +40,7 @@ spring2go
 3. 路由网关 Gateway √
 4. 分布式 http feign √
 5. 熔断降级、限流 Sentinel 
-6. 分布式任务 xxl-job 
+6. 分布式任务 xxl-job √
 7. Redisson分布式锁 √
 8. 服务监控 SpringBootAdmin 
 9. 消息中间件 RabbitMQ √
@@ -56,12 +56,12 @@ spring2go
 
 ## 待办事项
 1. 升级SpringBoot版本为3.0，升级Java版本为17
-2. 实现excel导出功能
-3. 实现动态字典功能 
+2. 实现excel导出功能 √
+3. 实现动态字典功能  √
 4. 实现代码生成器 
-5. 引入XXL-Job
+5. 引入XXL-Job √
    spring2go-visual
-   - spring2go-xxl-job 
+   - spring2go-xxl-job (移除，通过docker部署xxl-job-admin)
 6. 引入seata
    spring2go-visual
    - spring2go-seata
