@@ -28,5 +28,6 @@
         <module>spring2go-common-state-machine</module>
         <module>spring2go-common-state-engine</module>
         <module>spring2go-common-interceptor</module>
+        <module>spring2go-common-dictionary</module>
     </modules>
 </project>

@@ -3,9 +3,9 @@ package com.spring2go.system.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
+import com.spring2go.common.core.annotation.Dict;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,6 +30,7 @@ public class SysUser extends BaseEntity {
     /**
      * 部门ID
      */
+    @Dict(table = "sys_dept", code = "dept_id", text = "dept_name")
     private Long deptId;
 
 //    /**
@@ -69,6 +70,7 @@ public class SysUser extends BaseEntity {
     /**
      * 性别
      */
+    @Dict(code = "sys_user_sex")
     @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
     private String sex;
 
@@ -89,7 +91,7 @@ public class SysUser extends BaseEntity {
     private String status;
 
     /**
-     * 删除标志（0代表存在 1代表删除）
+     * 删除标志（0-代表存在 1-代表删除）
      */
     @TableLogic
     private String delFlag;

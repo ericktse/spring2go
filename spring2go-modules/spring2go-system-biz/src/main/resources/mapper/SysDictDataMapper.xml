@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.spring2go.system.mapper.SysDictDataMapper">
 
-	
+    <!-- 查询字典表数据 -->
+    <select id="queryDict" parameterType="String" resultType="com.spring2go.system.vo.DictModel">
+        select dict_label as "text",dict_value as "value",dict_type as "code" from sys_dict_data
+        where del_flag = 0
+        <if test="code != null and code != ''">
+            and dict_type = #{code}
+        </if>
+    </select>
+
+    <!-- 通过查询指定table的text code获取字典数据 -->
+    <select id="queryDictFromTable" parameterType="String" resultType="com.spring2go.system.vo.DictModel">
+        select ${text} as "text", ${code} as "value", '${code}' as "code" from ${table}
+        where del_flag = 0
+        <if test="code != null and code != '' and value !=null and value != ''">
+            and ${code} = #{value}
+        </if>
+    </select>
 </mapper> 

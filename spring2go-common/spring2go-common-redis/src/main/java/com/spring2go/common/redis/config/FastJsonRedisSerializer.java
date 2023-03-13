@@ -1,37 +1,35 @@
 package com.spring2go.common.redis.config;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONB;
+import com.alibaba.fastjson2.support.config.FastJsonConfig;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.SerializationException;
-import org.springframework.util.Assert;
 
-import java.nio.charset.Charset;
 
 /**
- * @description: FastJson系列化工具类
- * @author: xiaobin
- * @date: 2021-05-12 16:35
+ * Fastjson for Spring Data Redis Serializer.
+ *
+ * @author lihengming
+ * @author Victor.Zxy
+ * @see RedisSerializer
+ * @since 2.0.23
  */
-public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
-    @SuppressWarnings("unused")
-    private ObjectMapper objectMapper = new ObjectMapper();
+public class FastJsonRedisSerializer<T>
+        implements RedisSerializer<T> {
+    private FastJsonConfig config = new FastJsonConfig();
+    private final Class<T> type;
 
-    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
-
-    private Class<T> clazz;
-
-    static {
-        ParserConfig.getGlobalInstance().setAutoTypeSupport(true);
+    public FastJsonRedisSerializer(Class<T> type) {
+        this.type = type;
     }
 
-    public FastJsonRedisSerializer(Class<T> clazz) {
-        super();
-        this.clazz = clazz;
+    public FastJsonConfig getFastJsonConfig() {
+        return config;
+    }
+
+    public void setFastJsonConfig(FastJsonConfig fastJsonConfig) {
+        this.config = fastJsonConfig;
     }
 
     @Override
@@ -39,25 +37,30 @@ public class FastJsonRedisSerializer<T> implements RedisSerializer<T> {
         if (t == null) {
             return new byte[0];
         }
-        return JSON.toJSONString(t, SerializerFeature.WriteClassName).getBytes(DEFAULT_CHARSET);
+        try {
+            if (config.isJSONB()) {
+                return JSONB.toBytes(t, config.getSymbolTable(), config.getWriterFilters(), config.getWriterFeatures());
+            } else {
+                return JSON.toJSONBytes(t, config.getDateFormat(), config.getWriterFilters(), config.getWriterFeatures());
+            }
+        } catch (Exception ex) {
+            throw new SerializationException("Could not serialize: " + ex.getMessage(), ex);
+        }
     }
 
     @Override
     public T deserialize(byte[] bytes) throws SerializationException {
-        if (bytes == null || bytes.length <= 0) {
+        if (bytes == null || bytes.length == 0) {
             return null;
         }
-        String str = new String(bytes, DEFAULT_CHARSET);
-
-        return JSON.parseObject(str, clazz);
-    }
-
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        Assert.notNull(objectMapper, "'objectMapper' must not be null");
-        this.objectMapper = objectMapper;
-    }
-
-    protected JavaType getJavaType(Class<?> clazz) {
-        return TypeFactory.defaultInstance().constructType(clazz);
+        try {
+            if (config.isJSONB()) {
+                return JSONB.parseObject(bytes, type, config.getSymbolTable(), config.getReaderFilters(), config.getReaderFeatures());
+            } else {
+                return JSON.parseObject(bytes, type, config.getDateFormat(), config.getReaderFilters(), config.getReaderFeatures());
+            }
+        } catch (Exception ex) {
+            throw new SerializationException("Could not deserialize: " + ex.getMessage(), ex);
+        }
     }
 }

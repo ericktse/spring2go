@@ -41,6 +41,7 @@
         <dynamic-datasource-spring-boot-starter.version>3.3.6</dynamic-datasource-spring-boot-starter.version>
         <hutool.version>5.3.8</hutool.version>
         <poi.version>4.1.2</poi.version>
+        <fastjson2.version>2.0.24</fastjson2.version>
     </properties>
     <dependencies>
 

@@ -2,6 +2,7 @@ package com.spring2go.auth.service.impl;
 
 import com.spring2go.auth.domain.LoginUser;
 import com.spring2go.auth.service.AuthorizeService;
+import com.spring2go.common.core.constant.CommonConstants;
 import com.spring2go.common.core.constant.SecurityConstants;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.EncryptUtils;
@@ -42,7 +43,7 @@ public class InnerAuthorizeService implements AuthorizeService {
         // 查询用户信息
         R<SysUser> userResult = remoteUserService.getInfoByUserName(username, SecurityConstants.FROM_IN);
         if (userResult == null
-                || R.FAIL == userResult.getCode()
+                || CommonConstants.FAIL == userResult.getCode()
                 || StringUtils.isNull(userResult.getData())) {
             return R.failed("用户不存在");
         }
@@ -60,12 +61,12 @@ public class InnerAuthorizeService implements AuthorizeService {
         //获取用户权限
         R<Set<String>> roleResult = remoteUserService.getRoleByUserName(username, SecurityConstants.FROM_IN);
         if (roleResult == null
-                || R.FAIL == roleResult.getCode()) {
+                || CommonConstants.FAIL == roleResult.getCode()) {
             return R.failed("获取角色异常");
         }
         R<Set<String>> permsResult = remoteUserService.getPermsByUserName(username, SecurityConstants.FROM_IN);
         if (permsResult == null
-                || R.FAIL == permsResult.getCode()) {
+                || CommonConstants.FAIL == permsResult.getCode()) {
             return R.failed("获取权限异常");
         }
 

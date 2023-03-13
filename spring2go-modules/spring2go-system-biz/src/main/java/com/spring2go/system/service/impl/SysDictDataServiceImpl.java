@@ -9,6 +9,7 @@ import com.spring2go.system.entity.SysDictData;
 import com.spring2go.system.entity.SysDictType;
 import com.spring2go.system.mapper.SysDictDataMapper;
 import com.spring2go.system.service.SysDictDataService;
+import com.spring2go.system.vo.DictModel;
 import com.spring2go.system.vo.DictVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,15 @@ public class SysDictDataServiceImpl extends ServiceImpl<SysDictDataMapper, SysDi
         }
 
         return this.page(page, queryWrapper);
+    }
+
+    @Override
+    public List<DictModel> queryDict(String code) {
+        return baseMapper.queryDict(code);
+    }
+
+    @Override
+    public List<DictModel> queryDictFromTable(String table, String code, String text,String value) {
+        return baseMapper.queryDictFromTable(table, code, text,value);
     }
 }

@@ -39,8 +39,6 @@ public class SysLogController extends BaseController {
      * 分页查询
      *
      * @param sysLog   系统日志
-     * @param pageNo   分页下标
-     * @param pageSize 分页大小
      * @return
      */
     @GetMapping("/page")

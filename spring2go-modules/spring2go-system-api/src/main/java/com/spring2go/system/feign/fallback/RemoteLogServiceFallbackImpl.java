@@ -3,6 +3,7 @@ package com.spring2go.system.feign.fallback;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.system.entity.SysLog;
 import com.spring2go.system.feign.service.RemoteLogService;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
  * @date: 2021-04-06 15:01
  */
 @Slf4j
+@RequiredArgsConstructor
 public class RemoteLogServiceFallbackImpl implements RemoteLogService {
 
-    @Setter
-    private Throwable cause;
+    private final Throwable cause;
 
     @Override
     public R<Boolean> saveLog(SysLog sysLog, String from) {

@@ -10,11 +10,13 @@ import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.core.util.excel.ExcelUtils;
 import com.spring2go.common.log.annotation.Log;
 import com.spring2go.common.mybatis.util.QueryWrapperUtils;
+import com.spring2go.common.security.annotation.Inner;
 import com.spring2go.common.security.util.SecurityUtils;
 import com.spring2go.system.entity.SysDictData;
 import com.spring2go.system.entity.SysDictType;
 import com.spring2go.system.service.SysDictDataService;
 import com.spring2go.system.service.SysDictTypeService;
+import com.spring2go.system.vo.DictModel;
 import com.spring2go.system.vo.DictVo;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -86,7 +88,7 @@ public class SysDictController extends BaseController {
 
     @Log("字典类型数据导出")
     @PostMapping("/type/exportExcel")
-    public void exportType(HttpServletRequest request, HttpServletResponse response,DictVo dictVo) {
+    public void exportType(HttpServletRequest request, HttpServletResponse response, DictVo dictVo) {
         QueryWrapper<SysDictType> wrapper = QueryWrapperUtils.initQueryWrapper(dictVo, request.getParameterMap());
         List<SysDictType> list = sysDictTypeService.list(wrapper);
         ExcelUtils<SysDictType> util = new ExcelUtils<>(SysDictType.class);
@@ -137,11 +139,23 @@ public class SysDictController extends BaseController {
 
     @Log("字典数据导出")
     @PostMapping("/data/exportExcel")
-    public void exportData(HttpServletRequest request, HttpServletResponse response,DictVo dictVo) {
+    public void exportData(HttpServletRequest request, HttpServletResponse response, DictVo dictVo) {
         QueryWrapper<SysDictData> wrapper = QueryWrapperUtils.initQueryWrapper(dictVo, request.getParameterMap());
         List<SysDictData> list = sysDictDataService.list(wrapper);
         ExcelUtils<SysDictData> util = new ExcelUtils<>(SysDictData.class);
         util.exportExcel(response, list);
     }
 
+
+    @Inner
+    @PostMapping("/queryDict")
+    public R<List<DictModel>> queryDict(String code) {
+        return R.ok(sysDictDataService.queryDict(code));
+    }
+
+    @Inner
+    @PostMapping("/queryDictFromTable")
+    public R<List<DictModel>> queryDictFromTable(String table, String code, String text,String value) {
+        return R.ok(sysDictDataService.queryDictFromTable(table, code, text,value));
+    }
 }

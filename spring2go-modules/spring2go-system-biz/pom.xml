@@ -44,10 +44,15 @@
             <version>${project.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-datasource</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-dictionary</artifactId>
             <version>${project.version}</version>
         </dependency>
 

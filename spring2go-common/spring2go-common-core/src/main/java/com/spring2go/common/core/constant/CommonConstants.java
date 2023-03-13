@@ -104,4 +104,8 @@ public class CommonConstants {
     public final static String INNER_LINK = "InnerLink";
 
 
+    /**
+     * 字典翻译文本后缀
+     */
+    public final static String DICT_TEXT_SUFFIX = "_dictText";
 }
