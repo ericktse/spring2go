@@ -1,7 +1,6 @@
 package com.spring2go.common.openai.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 /**
@@ -36,5 +35,6 @@ public enum Model {
      * 临时模型，不建议使用
      */
     GPT_4_32K_0314("gpt-4-32k-0314");
+
     private String name;
 }

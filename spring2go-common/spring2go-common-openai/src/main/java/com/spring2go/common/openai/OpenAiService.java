@@ -78,7 +78,6 @@ public class OpenAiService {
             client.proxy(proxy);
         }
         this.okHttpClient = client.build();
-
         return this;
     }
 

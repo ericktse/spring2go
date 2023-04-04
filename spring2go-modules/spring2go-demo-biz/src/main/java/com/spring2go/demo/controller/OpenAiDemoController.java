@@ -5,7 +5,6 @@ import com.spring2go.common.openai.OpenAiService;
 import com.spring2go.common.openai.listener.SseListener;
 import com.spring2go.common.openai.util.Proxys;
 import io.swagger.annotations.Api;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,7 @@ import java.net.Proxy;
 @RestController
 public class OpenAiDemoController {
 
-    @PostMapping("/chat")
+    @RequestMapping("/chat")
     public String chat(String input) {
         OpenAiService openAiService = initOpenAiService();
 
@@ -31,7 +30,7 @@ public class OpenAiDemoController {
         return res;
     }
 
-    @PostMapping("/chatContext")
+    @RequestMapping("/chatContext")
     public String chatContext(String input) {
         OpenAiService openAiService = initOpenAiService();
 
@@ -58,7 +57,7 @@ public class OpenAiDemoController {
     private OpenAiService initOpenAiService() {
         Proxy proxy = Proxys.http("127.0.0.1", 7890);
         OpenAiService openAiService = OpenAiService.builder()
-                .apiKey("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")
+                .apiKey("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")
                 .proxy(proxy)
                 .build()
                 .initialize();
