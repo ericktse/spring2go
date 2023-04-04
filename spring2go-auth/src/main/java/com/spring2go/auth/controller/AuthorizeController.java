@@ -7,6 +7,7 @@ import com.spring2go.auth.service.AuthorizeService;
 import com.spring2go.auth.service.CaptchaService;
 import com.spring2go.common.core.domain.R;
 import com.spring2go.common.core.util.StringUtils;
+import com.spring2go.common.log.annotation.Log;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class AuthorizeController {
     private final AuthorizeService authorizeService;
     private final CaptchaService captchaService;
 
+    @Log("登录")
     @ApiOperation("登录")
     @PostMapping("login")
     public R<?> login(@RequestBody LoginModel model) {
@@ -49,6 +51,7 @@ public class AuthorizeController {
         return result;
     }
 
+    @Log("登出")
     @ApiOperation("登出")
     @PostMapping("logout")
     public R<?> logout(HttpServletRequest request) {
@@ -56,6 +59,7 @@ public class AuthorizeController {
         return R.ok();
     }
 
+    @Log("获取当前登录用户信息")
     @ApiOperation("获取当前登录用户信息")
     @GetMapping(value = "/getUserInfo")
     public R getUserInfo() {
@@ -66,6 +70,7 @@ public class AuthorizeController {
         return R.ok(user);
     }
 
+    @Log("获取验证码")
     @ApiOperation("获取验证码")
     @GetMapping(value = "/captcha")
     public R randomImage() {

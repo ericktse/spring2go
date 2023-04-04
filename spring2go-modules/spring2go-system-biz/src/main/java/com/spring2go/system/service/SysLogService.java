@@ -16,8 +16,6 @@ public interface SysLogService extends IService<SysLog> {
      * 分页查询日志
      *
      * @param sysLog
-     * @param pageNo   分页下标
-     * @param pageSize 分页大小
      * @return
      */
     Page getLogByPage(LogVo sysLog);

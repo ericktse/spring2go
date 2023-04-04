@@ -36,6 +36,11 @@
             <artifactId>spring2go-common-swagger</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-log</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!--Spring boot依赖-->
         <dependency>

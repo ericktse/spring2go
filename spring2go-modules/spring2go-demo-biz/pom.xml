@@ -44,6 +44,12 @@
             <version>${project.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.spring2go</groupId>
+            <artifactId>spring2go-common-openai</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- spring boot 依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -74,7 +74,7 @@ public class DictAspect {
      *
      * @param result
      */
-    private Object parseDictText(Object result) throws IllegalAccessException {
+    private Object parseDictText(Object result) {
         if (result instanceof R) {
             if (((R) result).getData() instanceof IPage) {
                 List<Object> records = ((IPage) ((R) result).getData()).getRecords();
@@ -172,7 +172,7 @@ public class DictAspect {
             //如果缓存有，则从缓存取
             dictResult = redisUtils.getCacheObject(keyString);
             if (null == dictResult) {
-                //value 传null，把
+                //value 传null，把table所有字典值一次查询出来
                 R<List<DictModel>> result = remoteDictService.queryDictFromTable(table, code, text, null, SecurityConstants.FROM_IN);
                 if (result.getCode() == CommonConstants.SUCCESS) {
                     List<DictModel> models = result.getData();
