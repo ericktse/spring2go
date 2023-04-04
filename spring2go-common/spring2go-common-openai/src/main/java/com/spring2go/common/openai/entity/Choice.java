@@ -15,6 +15,11 @@ public class Choice {
      * 请求参数stream为false返回是message
      */
     private Message message;
+    /**
+     * 请求参数stream为true返回是delta
+     */
+    private Message delta;
+
     @JsonProperty("finish_reason")
     private String finishReason;
 }

@@ -21,14 +21,14 @@ public class ChatContextHolder {
     /**
      * 获取对话历史
      *
-     * @param id
+     * @param key
      * @return
      */
-    public static List<Message> get(String id) {
-        List<Message> messages = context.get(id);
+    public static List<Message> get(String key) {
+        List<Message> messages = context.get(key);
         if (messages == null) {
             messages = new ArrayList<>();
-            context.put(id, messages);
+            context.put(key, messages);
         }
 
         return messages;
@@ -38,27 +38,27 @@ public class ChatContextHolder {
     /**
      * 添加对话
      *
-     * @param id
+     * @param key
      * @return
      */
-    public static void add(String id, String msg) {
+    public static void add(String key, String msg) {
 
         Message message = Message.builder().content(msg).build();
-        add(id, message);
+        add(key, message);
     }
 
 
     /**
      * 添加对话
      *
-     * @param id
+     * @param key
      * @return
      */
-    public static void add(String id, Message message) {
-        List<Message> messages = context.get(id);
+    public static void add(String key, Message message) {
+        List<Message> messages = context.get(key);
         if (messages == null) {
             messages = new ArrayList<>();
-            context.put(id, messages);
+            context.put(key, messages);
         }
         messages.add(message);
     }

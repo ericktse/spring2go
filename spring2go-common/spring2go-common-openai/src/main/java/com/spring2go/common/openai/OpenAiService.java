@@ -3,21 +3,26 @@ package com.spring2go.common.openai;
 import cn.hutool.http.ContentType;
 import cn.hutool.http.Header;
 import com.alibaba.fastjson2.JSON;
+import com.spring2go.common.core.util.StringUtils;
 import com.spring2go.common.openai.constant.OpenAiConstants;
 import com.spring2go.common.openai.entity.BaseResponse;
 import com.spring2go.common.openai.entity.ChatCompletion;
 import com.spring2go.common.openai.entity.ChatCompletionResponse;
 import com.spring2go.common.openai.entity.Message;
 import com.spring2go.common.openai.exception.OpenAiException;
+import com.spring2go.common.openai.util.ChatContextHolder;
 import lombok.Builder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import okhttp3.sse.EventSource;
+import okhttp3.sse.EventSourceListener;
+import okhttp3.sse.EventSources;
 
 import java.net.Proxy;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -49,17 +54,6 @@ public class OpenAiService {
 
     public OpenAiService initialize() {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
-//        client.addInterceptor(chain -> {
-//            Request original = chain.request();
-//            String key = apiKey;
-//
-//            Request request = original.newBuilder()
-//                    .header(Header.AUTHORIZATION.getValue(), "Bearer " + key)
-//                    .header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
-//                    .method(original.method(), original.body())
-//                    .build();
-//            return chain.proceed(request);
-//        })
         client.addInterceptor(chain -> {
             Request original = chain.request();
             Response response = chain.proceed(original);
@@ -83,8 +77,7 @@ public class OpenAiService {
         if (Objects.nonNull(proxy)) {
             client.proxy(proxy);
         }
-        OkHttpClient httpClient = client.build();
-        this.okHttpClient = httpClient;
+        this.okHttpClient = client.build();
 
         return this;
     }
@@ -103,18 +96,60 @@ public class OpenAiService {
                 .build();
 
         try (Response response = okHttpClient.newCall(request).execute()) {
-            ChatCompletionResponse chatCompletionResponse = JSON.parseObject(response.body().string(), ChatCompletionResponse.class);
-            return chatCompletionResponse;
+            return JSON.parseObject(response.body().string(), ChatCompletionResponse.class);
         } catch (Exception e) {
-            throw e;
+            throw new OpenAiException(e.getMessage());
         }
+    }
+
+    public void streamChatCompletion(ChatCompletion chatCompletion,
+                                     EventSourceListener eventSourceListener) {
+
+        chatCompletion.setStream(true);
+
+        MediaType type = MediaType.get(ContentType.build(ContentType.JSON.toString(), StandardCharsets.UTF_8));
+        RequestBody body = RequestBody.create(type, JSON.toJSONString(chatCompletion));
+
+        Request request = new Request.Builder()
+                .header(Header.AUTHORIZATION.getValue(), "Bearer " + apiKey)
+                .header(Header.CONTENT_TYPE.getValue(), ContentType.JSON.getValue())
+                .url(OpenAiConstants.CHAT_COMPLETION_API)
+                .post(body)
+                .build();
+
+        EventSource.Factory factory = EventSources.createFactory(okHttpClient);
+        factory.newEventSource(request, eventSourceListener);
     }
 
     public String chat(String message) {
         ChatCompletion chatCompletion = ChatCompletion.builder()
-                .messages(Arrays.asList(Message.of(message)))
+                .messages(Arrays.asList(Message.ofUser(message)))
                 .build();
         ChatCompletionResponse response = this.chatCompletion(chatCompletion);
         return response.getChoices().get(0).getMessage().getContent();
+    }
+
+    public String chatContext(String message, String chat) {
+        chat = StringUtils.isEmpty(chat) ? "new chat" : chat;
+        List<Message> messages = ChatContextHolder.get(chat);
+        Message currentMessage = Message.ofUser(message);
+        messages.add(currentMessage);
+
+        ChatCompletion chatCompletion = ChatCompletion.builder()
+                .messages(messages)
+                .build();
+        ChatCompletionResponse response = this.chatCompletion(chatCompletion);
+        Message responseMessage = response.getChoices().get(0).getMessage();
+        messages.add(responseMessage);
+
+        return responseMessage.getContent();
+    }
+
+    public void streamChat(String message, EventSourceListener eventSourceListener) {
+        ChatCompletion chatCompletion = ChatCompletion.builder()
+                .messages(Arrays.asList(Message.ofUser(message)))
+                .stream(true)
+                .build();
+        streamChatCompletion(chatCompletion, eventSourceListener);
     }
 }
