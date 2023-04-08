@@ -7,6 +7,7 @@ import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import com.spring2go.common.core.annotation.Dict;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.Date;
  * @date: 2021-03-30 10:09
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysUser extends BaseEntity {
 
     /**

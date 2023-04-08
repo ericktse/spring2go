@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 系统通知
@@ -12,6 +13,7 @@ import lombok.Data;
  * @author xiaobin
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysNotice extends BaseEntity {
     /**
      * 公告ID

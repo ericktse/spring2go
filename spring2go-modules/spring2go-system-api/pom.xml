@@ -34,7 +34,6 @@
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-mybatis</artifactId>
             <version>${project.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

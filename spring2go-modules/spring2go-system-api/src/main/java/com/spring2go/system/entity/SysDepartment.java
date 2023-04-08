@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Description: 系统部门信息
@@ -14,6 +17,7 @@ import lombok.Data;
  * @date: 2021-03-31 17:07
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @TableName("sys_dept")
 public class SysDepartment extends BaseEntity {
 

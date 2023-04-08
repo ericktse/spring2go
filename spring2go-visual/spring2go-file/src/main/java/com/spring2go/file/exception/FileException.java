@@ -1,6 +1,7 @@
 package com.spring2go.file.exception;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @description: 自定义文件运行时异常
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date: 2021-05-21 9:57
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class FileException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 

@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -13,6 +16,7 @@ import lombok.Data;
  * @date: 2021-04-08 10:28
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysMenu extends BaseEntity {
     /**
      * 菜单ID

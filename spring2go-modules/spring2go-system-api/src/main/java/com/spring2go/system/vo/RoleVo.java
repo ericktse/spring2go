@@ -2,6 +2,7 @@ package com.spring2go.system.vo;
 
 import com.spring2go.system.entity.SysRole;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 角色权限字段
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date: 2021-06-18 15:00
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class RoleVo extends SysRole {
 
     /**

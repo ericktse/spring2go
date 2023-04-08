@@ -2,6 +2,7 @@ package com.spring2go.system.vo;
 
 import com.spring2go.common.core.domain.TreeNode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description: 菜单树
@@ -9,6 +10,7 @@ import lombok.Data;
  * @date: 2021-04-08 11:27
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class MenuTree extends TreeNode {
     /**
      * 菜单名称

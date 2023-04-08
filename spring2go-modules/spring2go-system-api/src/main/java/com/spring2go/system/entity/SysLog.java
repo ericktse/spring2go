@@ -7,6 +7,9 @@ import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @Description: 操作日志
@@ -14,6 +17,7 @@ import lombok.Data;
  * @date: 2021-04-02 16:35
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysLog extends BaseEntity {
 
     /**

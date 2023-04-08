@@ -2,6 +2,9 @@ package com.spring2go.common.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +14,8 @@ import java.util.Date;
  * @author: xiaobin
  * @date: 2021-03-31 17:07
  */
-@Data
+@Getter
+@Setter
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

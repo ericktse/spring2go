@@ -3,6 +3,7 @@ package com.spring2go.system.vo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description: 部门查询对象
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date: 2021-04-08 9:57
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ApiModel(value = "部门查询对象")
 public class DepartmentVo {
 

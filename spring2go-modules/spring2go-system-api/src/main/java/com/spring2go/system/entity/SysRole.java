@@ -7,6 +7,7 @@ import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description: 系统角色
@@ -14,6 +15,7 @@ import lombok.Data;
  * @date: 2021-04-08 10:18
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysRole extends BaseEntity {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "角色编号")

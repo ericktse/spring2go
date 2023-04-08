@@ -64,7 +64,7 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     public int deleteAuthUsers(Long roleId, Long[] userIds) {
         LambdaQueryWrapper<SysUserRole> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(SysUserRole::getRoleId, roleId);
-        wrapper.in(SysUserRole::getUserId, userIds);
+        wrapper.in(SysUserRole::getUserId, (Object[]) userIds);
 
         return baseMapper.delete(wrapper);
     }

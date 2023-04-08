@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Description: 岗位
@@ -14,6 +15,7 @@ import lombok.Data;
  * @date: 2021-04-08 10:22
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 @TableName("sys_post")
 public class SysPosition extends BaseEntity {
 

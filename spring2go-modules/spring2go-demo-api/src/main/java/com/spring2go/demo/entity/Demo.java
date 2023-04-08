@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * demo实体
@@ -12,6 +13,7 @@ import lombok.Data;
  * @author xiaobin
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class Demo extends BaseEntity {
 
     /**

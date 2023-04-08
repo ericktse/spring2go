@@ -3,6 +3,7 @@ package com.spring2go.system.entity;
 import com.spring2go.common.core.domain.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @date: 2021-04-08 10:32
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysRoleMenu extends BaseEntity {
 
     /**

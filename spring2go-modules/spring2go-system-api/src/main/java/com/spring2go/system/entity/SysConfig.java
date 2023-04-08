@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.spring2go.common.core.annotation.Excel;
 import com.spring2go.common.core.domain.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 配置项
@@ -13,6 +16,7 @@ import lombok.Data;
  * @author xiaobin
  */
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class SysConfig extends BaseEntity {
     /**
      * 参数主键
