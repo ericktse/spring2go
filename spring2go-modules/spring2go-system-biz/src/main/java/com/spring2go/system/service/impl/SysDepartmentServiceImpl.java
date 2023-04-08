@@ -121,7 +121,7 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, S
                 .eq("del_flag", "0")
                 .eq("parent_id", deptId);
 
-        int result = this.count(queryWrapper);
+        long result = this.count(queryWrapper);
         return result > 0 ? true : false;
     }
 
@@ -139,7 +139,7 @@ public class SysDepartmentServiceImpl extends ServiceImpl<SysDepartmentMapper, S
                 .eq("del_flag", "0")
                 .eq("dept_id", deptId);
 
-        int result = sysUserService.count(queryWrapper);
+        long result = sysUserService.count(queryWrapper);
 
         return result > 0 ? true : false;
     }

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.spring2go</groupId>
         <artifactId>spring2go-modules</artifactId>
-        <version>0.0.1</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>spring2go-system-api</artifactId>
@@ -27,12 +27,6 @@
         <dependency>
             <groupId>com.spring2go</groupId>
             <artifactId>spring2go-common-feign</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- mybatis-->
-        <dependency>
-            <groupId>com.spring2go</groupId>
-            <artifactId>spring2go-common-mybatis</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
